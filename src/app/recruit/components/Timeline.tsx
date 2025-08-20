@@ -3,7 +3,7 @@ import { STEPS } from '@/static/recruit/timeLine';
 export default function BeginnerTimeLine() {
   return (
     <>
-      <div className="text-[34px] font-medium text-neutral-100">
+      <div className="title">
         비기너에서 <span className="font-bold">레귤러</span>로
       </div>
       <div className="relative mt-28 h-42.5 w-full">
