@@ -134,3 +134,7 @@
     border-spacing: 0;
   }
 }
+
+.member-swiper .swiper-wrapper {
+  gap: 35px;
+}
