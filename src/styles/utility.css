@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+@utility title {
+  font-weight: var(--font-weight-medium);
+  font-size: 34px;
+  color: var(--color-neutral-100);
+  line-height: var(--leading-tight);
+  text-align: center;
+}
