@@ -25,7 +25,7 @@ export default function QnADropdown() {
         </Link>
       </div>
 
-      <div className="max-w-md space-y-4">
+      <div className="w-1/3 space-y-4">
         {QnAData.map((qna, index) => (
           <div key={qna.id} className="overflow-hidden rounded-lg border border-gray-200">
             <div
