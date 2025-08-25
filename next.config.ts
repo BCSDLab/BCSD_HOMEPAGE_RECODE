@@ -9,6 +9,22 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.slack-edge.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ca.slack-edge.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.koreatech.in',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
