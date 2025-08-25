@@ -1,7 +1,7 @@
 import { Curriculum } from '@/types/curriculum';
 import Python from '@/assets/svg/techstack/security/python.svg';
 import BigQuery from '@/assets/svg/techstack/data-analyst/bigquery-icon.svg';
-// import GA4 from '@/assets/svg/techstack/data-analyst/ga4-icon.svg';
+import GA from '@/assets/svg/techstack/data-analyst/ga-icon.svg';
 import Tableau from '@/assets/svg/techstack/data-analyst/tableau-icon.svg';
 
 const DATA_ANALYST: Curriculum = {
@@ -125,7 +125,7 @@ const DATA_ANALYST: Curriculum = {
       ],
     },
   ],
-  techStack: [Python, BigQuery, Tableau],
+  techStack: [Python, BigQuery, GA, Tableau],
 };
 
 export default DATA_ANALYST;
