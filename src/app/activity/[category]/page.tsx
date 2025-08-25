@@ -4,6 +4,7 @@ import { getActivity } from '@/static/activity';
 import ActivityCards from '../components/ActivityCards';
 import YearSelect from '../components/YearSelector';
 import ActivityTabs from '../components/ActivityTabs';
+import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 const getYears = (groups: ActivityList[]) => groups.map((g) => g.year).sort((a, b) => Number(b) - Number(a));
 
@@ -35,9 +36,10 @@ export default async function ActivityPage({ params, searchParams }: ActivityPag
             <div>이런 활동을 하고 있어요.</div>
           </div>
         </div>
+        <GlobalNavigationBar location="Activity" />
       </div>
 
-      <div className="mt-20 px-50">
+      <div className="mt-20 mb-30 px-50">
         <div className="flex justify-between">
           <ActivityTabs current={category} />
           <YearSelect years={years} selectedYear={selectedYear} defaultYear={defaultYear} />
