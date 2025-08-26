@@ -1,5 +1,5 @@
 import type { Curriculum, StudyInfo, TrackName } from '@/types/curriculum';
-import { Member } from '@/types/trackMember';
+import type { Member } from '@/types/trackMember';
 
 export async function getCurriculum(track: TrackName): Promise<Curriculum> {
   switch (track) {

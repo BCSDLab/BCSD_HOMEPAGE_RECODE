@@ -109,6 +109,24 @@ const FRONTEND_MEMBER: Member[] = [
     role: 'REGULAR',
     image: 'https://image.bcsdlab.com/junyoung.jpg',
   },
+  {
+    id: 19,
+    name: '김아영',
+    role: 'REGULAR',
+    image: 'https://image.bcsdlab.com/ayoung.jpg',
+  },
+  {
+    id: 20,
+    name: '이동훈',
+    role: 'REGULAR',
+    image: 'https://image.bcsdlab.com/donghoonfe.png',
+  },
+  {
+    id: 21,
+    name: '이재익',
+    role: 'REGULAR',
+    image: 'https://image.bcsdlab.com/jaeik.jpg',
+  },
 ];
 
 export default FRONTEND_MEMBER;

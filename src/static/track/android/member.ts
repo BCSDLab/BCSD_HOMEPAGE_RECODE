@@ -67,6 +67,12 @@ const ANDROID_MEMBER: Member[] = [
     role: 'REGULAR',
     image: 'https://image.bcsdlab.com/dohyeok.png',
   },
+  {
+    id: 12,
+    name: '김영수',
+    role: 'REGULAR',
+    image: 'https://image.bcsdlab.com/youngsu.png',
+  },
 ];
 
 export default ANDROID_MEMBER;
