@@ -3,9 +3,11 @@
 import Image from 'next/image';
 import type { ActivityList } from '@/types/activity';
 import ImageModal from './ImageModal';
-import LeftArrow from '@/assets/svg/left-arrow.svg';
-import RightArrow from '@/assets/svg/right-arrow.svg';
 import useBooleanState from '@/hooks/useBooleanState';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 interface ActivityCardProps {
   year: string;
@@ -18,6 +20,8 @@ interface ActivityCardProps {
 
 function ActivityCard({ year, month, title, description, images, priority }: ActivityCardProps) {
   const [isOpenImageModal, openImageModal, closeImageModal] = useBooleanState(false);
+  const canSwipe = images.length > 1;
+
   return (
     <div className="flex justify-between gap-5">
       <div className="w-80 leading-[150%] whitespace-pre-line">
@@ -29,27 +33,23 @@ function ActivityCard({ year, month, title, description, images, priority }: Act
       </div>
 
       <div className="relative h-[386px] w-[686px] shrink-0">
-        <button type="button" onClick={openImageModal} className="relative block h-full w-full">
-          <Image
-            src={images[0]}
-            alt={`${title} 대표 이미지`}
-            fill
-            sizes="(max-width: 768px) 100vw, 686px"
-            priority={priority}
-            fetchPriority={priority ? 'high' : undefined}
-          />
-        </button>
-        {images.length > 1 && (
-          <>
-            <div className="absolute top-1/2 left-10 -translate-y-1/2">
-              <LeftArrow className="drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]" />
-            </div>
-            <div className="absolute top-1/2 right-10 -translate-y-1/2">
-              <RightArrow className="drop-shadow-[0_0_3px_rgba(0,0,0,0.8)]" />
-            </div>
-          </>
-        )}
+        <Swiper modules={[Navigation]} navigation={canSwipe} className="h-full w-full">
+          {images.map((src, i) => (
+            <SwiperSlide key={src} className="relative">
+              <button type="button" onClick={openImageModal} className="relative block h-[386px] w-[686px]">
+                <Image
+                  src={src}
+                  alt={`${title} 이미지 ${i + 1}/${images.length}`}
+                  fill
+                  sizes="686px"
+                  className="object-cover"
+                />
+              </button>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
+
       {isOpenImageModal && <ImageModal images={images} alt={`${title} 이미지`} onClose={closeImageModal} />}
     </div>
   );
