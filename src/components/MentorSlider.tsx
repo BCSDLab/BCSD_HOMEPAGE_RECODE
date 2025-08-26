@@ -52,8 +52,8 @@ export default function MentorSlider() {
                 height={128}
                 className="mb-4 h-32 w-32 rounded-full object-cover"
               />
-              <p className="">{mentor.name}</p>
-              <p className="text-sm text-gray-600">{mentor.description}</p>
+              <p className="text-[20px] font-medium text-[#75109C]">{mentor.name}</p>
+              <p className="text-[16px] text-[#414141]">{mentor.description}</p>
             </div>
           </SwiperSlide>
         ))}
