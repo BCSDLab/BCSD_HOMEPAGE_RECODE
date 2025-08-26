@@ -5,10 +5,27 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
-
+import StopButtonIcon from '@/assets/svg/main/stop-button-icon.svg';
+import PlayButtonIcon from '@/assets/svg/main/play-button-icon.svg';
 import { mentorData } from '@/static/main/mentor';
+import { useState, useRef } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
 
 export default function MentorSlider() {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const swiperRef = useRef<SwiperType | null>(null);
+
+  const handleTogglePlay = () => {
+    if (swiperRef.current) {
+      if (isPlaying) {
+        swiperRef.current.autoplay.stop();
+      } else {
+        swiperRef.current.autoplay.start();
+      }
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="px-[120px]">
       <Swiper
@@ -17,14 +34,17 @@ export default function MentorSlider() {
         slidesPerView={5}
         loop={true}
         autoplay={{
-          delay: 2500,
+          delay: 2000,
           disableOnInteraction: false,
+        }}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
         }}
         className="w-full"
       >
         {mentorData.mentors.map((mentor) => (
           <SwiperSlide key={mentor.id}>
-            <div className="flex h-full w-[220px] flex-col items-center rounded-[19px] bg-gradient-to-b from-[#F5DBFF] to-[#F9E8FF] p-4 text-center">
+            <div className="flex h-full w-[220px] flex-col items-center rounded-[19px] bg-gradient-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 py-8 text-center">
               <Image
                 src={mentor.image}
                 alt={mentor.name}
@@ -38,6 +58,11 @@ export default function MentorSlider() {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="mt-4 flex w-full justify-end px-16">
+        <button className="cursor-pointer" onClick={handleTogglePlay}>
+          {isPlaying ? <StopButtonIcon /> : <PlayButtonIcon />}
+        </button>
+      </div>
     </div>
   );
 }
