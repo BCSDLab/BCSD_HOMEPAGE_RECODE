@@ -27,8 +27,10 @@ function MemberCard(memberInfo: Member) {
 }
 
 export default function MemberCarousel({ members }: { members: Member[] }) {
+  const canLoop = members.length > 4;
+
   return (
-    <Swiper modules={[Navigation, A11y]} navigation slidesPerView="auto" loop className="member-swiper">
+    <Swiper modules={[Navigation, A11y]} navigation slidesPerView="auto" loop={canLoop} className="member-swiper">
       {members.map((member, index) => (
         <SwiperSlide key={index} className="!w-[298px]">
           <MemberCard {...member} />
