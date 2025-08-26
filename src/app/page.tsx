@@ -70,9 +70,7 @@ export default function Home() {
         </div>
         <div className="relative flex h-[980px] flex-col items-center justify-center bg-gradient-to-b from-white to-[#F5DBFF]">
           <div className="text-center">
-            <p className="text-center text-[34px] font-medium font-normal text-[#414141]">
-              중력과 유대, BCSD에서의 원동력.
-            </p>
+            <p className="text-center text-[34px] font-medium text-[#414141]">중력과 유대, BCSD에서의 원동력.</p>
             <p className="mt-[14px] text-center text-[17px]">
               행성들이 중력을 통해 서로 영향을 주고 받으며 균형을 유지하듯이,
               <br /> BCSD에서는 비기너, 레귤러, 멘토가 각자의 위치에서 상호작용하며
