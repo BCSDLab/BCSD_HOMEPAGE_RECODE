@@ -15,17 +15,19 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
   const { track } = await params;
 
   return (
-    <div>
-      <div className="w-100vw relative h-[587px]">
-        <Image src="https://image.bcsdlab.com/bcsd_track_page.png" alt="track Image" fill sizes="100vw" />
-        <GlobalNavigationBar location="Track" />
-      </div>
+    <div className="hide-scrollbar w-full overflow-x-auto">
+      <div className="min-w-[1440px]">
+        <div className="w-100vw relative h-[587px]">
+          <Image src="https://image.bcsdlab.com/bcsd_track_page.png" alt="track Image" fill sizes="100vw" />
+          <GlobalNavigationBar location="Track" />
+        </div>
 
-      <div className="place-items-center">
-        <TrackTabs track={track} />
-        <StudyCards track={track} />
-        <Curriculum track={track} />
-        <TrackMember track={track} />
+        <div className="place-items-center">
+          <TrackTabs track={track} />
+          <StudyCards track={track} />
+          <Curriculum track={track} />
+          <TrackMember track={track} />
+        </div>
       </div>
     </div>
   );
