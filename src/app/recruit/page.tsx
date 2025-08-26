@@ -2,6 +2,7 @@ import Image from 'next/image';
 import BeginnerTimeLine from './components/Timeline';
 import BenefitCards from './components/BenefitCards';
 import TrackSection from './components/TrackSection';
+import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 export default function Recruit() {
   return (
@@ -20,6 +21,7 @@ export default function Recruit() {
             <div>BCSD와 함께 성장하세요.</div>
           </div>
         </div>
+        <GlobalNavigationBar location="Recruit" />
       </div>
 
       <div className="mt-23 grid w-full place-items-center bg-[linear-gradient(180deg,_#FFF_0%,_#FEF2FF_76.44%,_#FFF_100%)] pb-48">

@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'static.koreatech.in',
       },
+      {
+        protocol: 'https',
+        hostname: 'avatars.slack-edge.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ca.slack-edge.com',
+      },
     ],
   },
   webpack: (config) => {
