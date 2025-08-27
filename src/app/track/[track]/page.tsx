@@ -5,6 +5,7 @@ import StudyCards from '@/app/track/components/StudyCard';
 import Curriculum from '@/app/track/components/Curriculum';
 import TrackMember from '@/app/track/components/TrackMember';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
+import ScrollUpButton from '@/components/ScrollUpButton';
 
 interface TrackPage {
   track: TrackName;
@@ -28,6 +29,7 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
           <Curriculum track={track} />
           <TrackMember track={track} />
         </div>
+        <ScrollUpButton />
       </div>
     </div>
   );
