@@ -37,13 +37,7 @@ function ActivityCard({ year, month, title, description, images, priority }: Act
           {images.map((src, i) => (
             <SwiperSlide key={src} className="relative">
               <button type="button" onClick={openImageModal} className="relative block h-[386px] w-[686px]">
-                <Image
-                  src={src}
-                  alt={`${title} 이미지 ${i + 1}/${images.length}`}
-                  fill
-                  sizes="686px"
-                  className="object-cover"
-                />
+                <Image src={src} alt={`${title} 이미지 ${i + 1}/${images.length}`} fill sizes="686px" />
               </button>
             </SwiperSlide>
           ))}
