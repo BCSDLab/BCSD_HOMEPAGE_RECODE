@@ -7,3 +7,12 @@
   line-height: var(--leading-tight);
   text-align: center;
 }
+
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

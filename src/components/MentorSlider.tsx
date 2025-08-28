@@ -44,15 +44,15 @@ export default function MentorSlider() {
       >
         {mentorData.mentors.map((mentor) => (
           <SwiperSlide key={mentor.id}>
-            <div className="flex h-full w-[220px] flex-col items-center rounded-[19px] bg-gradient-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 py-8 text-center">
+            <div className="flex min-h-71 w-[220px] flex-col items-center rounded-[19px] bg-gradient-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 pt-9 pb-7 text-center">
               <Image
                 src={mentor.image}
                 alt={mentor.name}
                 width={128}
                 height={128}
-                className="mb-4 h-32 w-32 rounded-full object-cover"
+                className="mb-5 h-32 w-32 rounded-full object-cover"
               />
-              <p className="text-[20px] font-medium text-[#75109C]">{mentor.name}</p>
+              <p className="mb-2 text-[20px] font-medium text-[#75109C]">{mentor.name}</p>
               <p className="text-[16px] text-[#414141]">{mentor.description}</p>
             </div>
           </SwiperSlide>
