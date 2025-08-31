@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import type { ActivityList } from '@/types/activity';
 import ImageModal from './ImageModal';
 import useBooleanState from '@/hooks/useBooleanState';
@@ -15,12 +16,18 @@ interface ActivityCardProps {
   title: string;
   description: string;
   images: string[];
-  priority?: boolean;
 }
 
-function ActivityCard({ year, month, title, description, images, priority }: ActivityCardProps) {
+function ActivityCard({ year, month, title, description, images }: ActivityCardProps) {
   const [isOpenImageModal, openImageModal, closeImageModal] = useBooleanState(false);
+  const [imageIndex, setImageIndex] = useState(0);
+
   const canSwipe = images.length > 1;
+
+  const handleImageClick = (index: number) => {
+    setImageIndex(index);
+    openImageModal();
+  };
 
   return (
     <div className="flex justify-between gap-5">
@@ -34,17 +41,29 @@ function ActivityCard({ year, month, title, description, images, priority }: Act
 
       <div className="relative h-[386px] w-[686px] shrink-0">
         <Swiper modules={[Navigation]} navigation={canSwipe} className="h-full w-full">
-          {images.map((src, i) => (
+          {images.map((src, index) => (
             <SwiperSlide key={src} className="relative">
-              <button type="button" onClick={openImageModal} className="relative block h-[386px] w-[686px]">
-                <Image src={src} alt={`${title} 이미지 ${i + 1}/${images.length}`} fill sizes="686px" />
+              <button
+                type="button"
+                onClick={() => handleImageClick(index)}
+                className="relative block h-[386px] w-[686px]"
+              >
+                <Image
+                  src={src}
+                  alt={`${title} 이미지 ${index + 1}/${images.length}`}
+                  fill
+                  sizes="686px"
+                  className="object-contain"
+                />
               </button>
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
 
-      {isOpenImageModal && <ImageModal images={images} alt={`${title} 이미지`} onClose={closeImageModal} />}
+      {isOpenImageModal && (
+        <ImageModal images={images} alt={`${title} 이미지`} initialIndex={imageIndex} onClose={closeImageModal} />
+      )}
     </div>
   );
 }
@@ -80,7 +99,6 @@ export default function ActivityCardList({ year, activityList }: ActivityCardLis
             title={activity.title}
             description={activity.description}
             images={activity.images}
-            priority={index === 0}
           />
         ))
       )}

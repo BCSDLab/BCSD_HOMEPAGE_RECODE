@@ -1,82 +1,72 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Keyboard, A11y } from 'swiper/modules';
 import Portal from '@/components/Portal';
 import CloseIcon from '@/assets/svg/x-icon.svg';
 import useScrollLock from '@/hooks/useScrollLock';
-import useOverlayPosition from '@/hooks/usePosition';
-import useHandleOutside from '@/hooks/useOutsideClick';
 import useEscapeKeyDown from '@/hooks/useEscapeKeyDown';
+import useHandleOutside from '@/hooks/useOutsideClick';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 interface ImageModalProps {
   images: string[];
   alt: string;
+  initialIndex: number;
   onClose: () => void;
 }
 
-export default function ImageModal({ images, alt, onClose }: ImageModalProps) {
+export default function ImageModal({ images, alt, initialIndex, onClose }: ImageModalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [naturalSizeMap, setNaturalSizeMap] = useState<Record<string, { width: number; height: number }>>({});
-
-  const naturalSize = useMemo(() => {
-    const src = images[activeIndex];
-    return naturalSizeMap[src] ?? null;
-  }, [images, activeIndex, naturalSizeMap]);
-
-  const ButtonPosition = useOverlayPosition({ containerRef, naturalSize });
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
 
   useScrollLock(true);
   useEscapeKeyDown((e) => {
     e.stopPropagation();
     onClose();
   });
+
   useHandleOutside({
     containerRef,
     backgroundRef: backdropRef,
     onOutsideClick: onClose,
   });
 
-  const handleImageLoad = (src: string) => (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = e.currentTarget;
-    setNaturalSizeMap((prev) =>
-      prev[src] ? prev : { ...prev, [src]: { width: img.naturalWidth, height: img.naturalHeight } },
-    );
-  };
-
   return (
     <Portal>
       <div
         ref={backdropRef}
-        className="image-modal fixed inset-0 z-[1000] flex items-center justify-center bg-black/70"
         role="dialog"
+        className="image-modal fixed inset-0 z-[1000] grid place-items-center bg-black/70"
       >
-        <div ref={containerRef} className="relative h-[80vh] w-[80vw]">
+        <div
+          ref={containerRef}
+          className="relative h-[75vh] w-[75vw] overflow-hidden rounded-xl bg-black/40 p-3 shadow-2xl ring-1 ring-white/20"
+        >
           <Swiper
             modules={[Navigation, Keyboard, A11y]}
             onSlideChange={(s) => setActiveIndex(s.realIndex ?? s.activeIndex)}
             navigation
             keyboard={{ enabled: true }}
             loop={images.length > 1}
+            initialSlide={initialIndex}
             className="h-full w-full"
           >
             {images.map((src, index) => (
               <SwiperSlide key={index}>
-                <div className="relative h-[80vh] w-[80vw]">
+                <div className="relative h-full w-full">
                   <Image
                     src={src}
                     alt={`${alt} ${index + 1}`}
                     fill
                     sizes="100vw"
                     className="object-contain select-none"
-                    onLoad={handleImageLoad(src)}
+                    draggable={false}
                   />
                 </div>
               </SwiperSlide>
@@ -85,8 +75,7 @@ export default function ImageModal({ images, alt, onClose }: ImageModalProps) {
 
           <button
             onClick={onClose}
-            className="absolute z-100 cursor-pointer"
-            style={ButtonPosition ?? undefined}
+            className="absolute top-3 right-3 z-10 rounded-full bg-black/55 p-2"
             aria-label="닫기"
           >
             <CloseIcon />
