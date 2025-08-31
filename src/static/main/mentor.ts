@@ -12,7 +12,7 @@ export const mentorData: mentorList = {
       id: 2,
       name: '최원빈',
       image: 'https://avatars.slack-edge.com/2023-03-05/4884398229607_47fd718c1d92da383fcf_512.jpg',
-      description: '토스 합격',
+      description: '토스뱅크 합격',
     },
     {
       id: 3,
@@ -43,6 +43,12 @@ export const mentorData: mentorList = {
       name: '최준호',
       image: 'https://avatars.slack-edge.com/2025-01-07/8261108212564_efec5426bd1b56983344_512.png',
       description: '한국신용데이터 합격',
+    },
+    {
+      id: 8,
+      name: '박종호',
+      image: 'https://ca.slack-edge.com/T0M5RJ3V2-U9LNEPRFB-ec7f726f5248-512',
+      description: '토스 합격',
     },
   ],
 };
