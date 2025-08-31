@@ -16,11 +16,11 @@ function WeekBox({ week }: WeekBoxProps) {
     <div className="flex w-300 justify-between">
       <div className="text-xl font-semibold">{formatWeekLabel(week.week)}</div>
 
-      <div className="border-t py-[11px]">
+      <div className="border-t">
         <div className="flex gap-25">
-          <div className="flex w-full flex-col gap-1.5">
+          <div className="flex w-full flex-col">
             {week.items.map((row, index) => (
-              <div key={index} className="flex gap-25 border-b border-b-[#E7E7E7] py-2 text-[17px]">
+              <div key={index} className="flex gap-25 border-b border-b-[#E7E7E7] py-[11px]">
                 <div className="flex gap-7">
                   <div>{row.index}</div>
                   <div className="w-67 text-xl font-semibold whitespace-pre-line">{row.title}</div>
