@@ -12,7 +12,7 @@ export default function TechStack({ techStack }: TechStackProps) {
   return (
     <div>
       {techStack.length > 0 && <h3 className="title mt-35">사용하는 기술스택</h3>}
-      <div className="mt-10">
+      <div className="mt-10 flex content-center justify-center">
         <div
           className={clsx(
             isEvenGrid
@@ -22,7 +22,7 @@ export default function TechStack({ techStack }: TechStackProps) {
                   cols === 4 && 'grid-cols-4',
                   cols === 5 && 'grid-cols-5',
                 )
-              : 'flex flex-wrap place-content-center gap-20',
+              : 'flex flex-wrap content-center justify-center gap-20',
             !isEvenGrid && (techStack.length === 7 ? 'max-w-190' : 'max-w-250'),
           )}
         >

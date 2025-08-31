@@ -31,11 +31,11 @@ export default function Recruit() {
           <GlobalNavigationBar location="Recruit" />
         </div>
 
-        <div className="mt-23 grid bg-[linear-gradient(180deg,_#FFF_0%,_#FEF2FF_76.44%,_#FFF_100%)] pb-48">
+        <div className="mt-23 bg-[linear-gradient(180deg,_#FFF_0%,_#FEF2FF_76.44%,_#FFF_100%)] pb-48">
           <BeginnerTimeLine />
           <BenefitCards />
         </div>
-        <div className="mb-42.5 place-items-center">
+        <div className="mb-42.5 flex content-center justify-center">
           <TrackSection />
         </div>
       </div>

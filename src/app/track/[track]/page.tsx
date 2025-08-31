@@ -23,7 +23,7 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
           <GlobalNavigationBar location="Track" />
         </div>
 
-        <div className="place-items-center">
+        <div className="flex flex-col items-center">
           <TrackTabs track={track} />
           <StudyCards track={track} />
           <Curriculum track={track} />
