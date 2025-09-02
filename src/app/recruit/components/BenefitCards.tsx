@@ -27,7 +27,7 @@ export default function BenefitCards() {
         <div>얻을 수 있는 것들</div>
       </div>
 
-      <div className="mt-21 flex gap-4.5">
+      <div className="mt-21 flex content-center justify-center gap-4.5">
         {BENEFITS.map((benefit) => (
           <BenefitCard key={benefit.title} {...benefit} />
         ))}

@@ -18,12 +18,12 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
   return (
     <div className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-[1440px]">
-        <div className="w-100vw relative h-[587px]">
-          <Image src="https://image.bcsdlab.com/bcsd_track_page.png" alt="track Image" fill sizes="100vw" />
+        <div className="relative aspect-[1440/587] w-full">
+          <Image src="https://image.bcsdlab.com/bcsd_track_page.png" alt="track Image" fill sizes="100vw" priority />
           <GlobalNavigationBar location="Track" />
         </div>
 
-        <div className="place-items-center">
+        <div className="flex flex-col items-center">
           <TrackTabs track={track} />
           <StudyCards track={track} />
           <Curriculum track={track} />

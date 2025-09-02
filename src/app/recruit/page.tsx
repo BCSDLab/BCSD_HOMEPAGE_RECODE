@@ -6,15 +6,14 @@ import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 export default function Recruit() {
   return (
-    <div className="hide-scrollbar mb-42.5 w-full overflow-x-auto">
-      <div className="w-full min-w-[1440px]">
-        <div className="relative h-[587px]">
+    <div className="hide-scrollbar w-full overflow-x-auto">
+      <div className="min-w-[1440px]">
+        <div className="relative aspect-[1440/587] w-full">
           <Image
             src="https://image.bcsdlab.com/bcsd_recruit_page.png"
-            alt="recruit background"
+            alt="recruit Image"
             fill
-            sizes="1440px"
-            className="object-cover object-center"
+            sizes="100vw"
             priority
           />
 
@@ -32,11 +31,11 @@ export default function Recruit() {
           <GlobalNavigationBar location="Recruit" />
         </div>
 
-        <div className="mt-23 grid bg-[linear-gradient(180deg,_#FFF_0%,_#FEF2FF_76.44%,_#FFF_100%)] pb-48">
+        <div className="mt-23 bg-[linear-gradient(180deg,_#FFF_0%,_#FEF2FF_76.44%,_#FFF_100%)] pb-48">
           <BeginnerTimeLine />
           <BenefitCards />
         </div>
-        <div className="place-items-center">
+        <div className="mb-42.5 flex content-center justify-center">
           <TrackSection />
         </div>
       </div>

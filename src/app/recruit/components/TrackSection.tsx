@@ -1,4 +1,5 @@
 import { type TrackItem, TRACKS } from '@/static/recruit/trackDescription';
+import Link from 'next/link';
 
 function TrackCard({ title, description, Icon }: TrackItem) {
   return (
@@ -20,10 +21,16 @@ export default function TrackSection() {
         <div className="title mt-3">
           <span className="font-bold">BCSD와 함께 할 준비</span>가 되었나요?
         </div>
-        <div className="mt-6 text-[17px] leading-[150%] text-neutral-200">
+        <div className="mt-6 mb-19 text-[17px] leading-[150%] text-neutral-200">
           <div>함께 프로젝트를 진행하며 자신의 능력을 향상시키고</div>
           <div>싶은 분들의 많은 지원바랍니다.</div>
         </div>
+        <Link
+          className="rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] font-medium text-white"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfMP9HZIE4TzVpoWX_o3nnUB_tAthRSIsJTfKw72F4mftA62w/viewform?edit2=2_ABaOnueiLzcPk7-tUYyUJ6fU1Zxy5Kpyr2uACwdIkIHWchOsPBhTOHJlF74Oo37Skw"
+        >
+          지원하기
+        </Link>
       </div>
 
       <div className="mt-15 grid grid-cols-3 gap-6">
