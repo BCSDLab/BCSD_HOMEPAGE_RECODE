@@ -19,31 +19,32 @@ jobs:
           script: |
             const fs = require('fs');
 
-            const REVIEWER_COUNT = 1;
-
             const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
             const prCreator = context.payload.pull_request.user.login;
             const prUrl = context.payload.pull_request.html_url;
             const prCreatorJson = developers.reviewers.find(person => person.githubName === prCreator);
+            const candidates = developers.reviewers.filter(person => person.githubName !== prCreator);
 
-            const teamHomepageMembers = developers.reviewers.filter((person) => person.team === "homepage" && person.githubName !== prCreator);
-            const randomReviewers = getUniqueReviewers(teamHomepageMembers, REVIEWER_COUNT);
-            if (!prCreatorJson) {
-              setOutput(prCreator, prUrl, randomReviewers[0]);
-            } else {
-              setOutput(prCreatorJson.name, prUrl, randomReviewers[0]);
+            // 랜덤 2명 뽑기
+            function pickTwo(arr) {
+              const a = arr[Math.floor(Math.random() * arr.length)];
+              const rest = arr.filter(item => item !== a);
+              const b = rest[Math.floor(Math.random() * rest.length)];
+
+              return [a, b];
             }
 
-            function getUniqueReviewers(reviewers, count) {
-              const shuffled = reviewers.sort(() => 0.5 - Math.random());
-              return shuffled.slice(0, count);
-            }
+            const [reviewer1, reviewer2] = pickTwo(candidates);
 
-            function setOutput(prCreator, prUrl, reviewer) {
+            setOutput(prCreatorJson.name, prUrl, reviewer1, reviewer2);
+
+            function setOutput(prCreator, prUrl, reviewer1, reviewer2) {
               core.setOutput('writer', JSON.stringify(prCreator));
               core.setOutput('pullRequestLink', JSON.stringify(prUrl));
-              core.setOutput('reviewer1Name', JSON.stringify(reviewer.name));
-              core.setOutput('reviewer1GithubName', reviewer.githubName);
+              core.setOutput('reviewer1Name', JSON.stringify(reviewer1.name));
+              core.setOutput('reviewer2Name', JSON.stringify(reviewer2.name));
+              core.setOutput('reviewer1GithubName', reviewer1.githubName);
+              core.setOutput('reviewer2GithubName', reviewer2.githubName);
             }
 
       - name: test variable
@@ -52,10 +53,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: console.log(${{ steps.pick_random_reviewer.outputs.reviewer1Name }})
 
-      - name: Add Reviewer
+      - name: Add Reviewers
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviewer.outputs.reviewer1GithubName }}
+          reviewers: ${{ steps.pick_random_reviewer.outputs.reviewer1GithubName }},${{ steps.pick_random_reviewer.outputs.reviewer2GithubName }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Send Slack Trigger
@@ -65,5 +66,5 @@ jobs:
           -d '{
                 "pullRequestLink": ${{ steps.pick_random_reviewer.outputs.pullRequestLink }},
                 "writer": ${{ steps.pick_random_reviewer.outputs.writer }},
-                "reviewers": [${{ steps.pick_random_reviewer.outputs.reviewer1Name }}]
+                "reviewers": [${{ steps.pick_random_reviewer.outputs.reviewer1Name }}, ${{ steps.pick_random_reviewer.outputs.reviewer2Name }}]
               }'
