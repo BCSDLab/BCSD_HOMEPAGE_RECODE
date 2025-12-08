@@ -91,9 +91,9 @@ export default function ActivityCardList({ year, activityList }: ActivityCardLis
       {filtered.length === 0 ? (
         <div className="py-10 text-center text-[#9d9d9d]">선택한 연도의 활동이 없습니다.</div>
       ) : (
-        filtered.map((activity, index) => (
+        filtered.map((activity) => (
           <ActivityCard
-            key={activity.id}
+            key={`${activity.title}-${activity.id}`}
             year={activity.year}
             month={activity.month}
             title={activity.title}

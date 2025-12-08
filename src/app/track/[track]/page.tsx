@@ -19,7 +19,15 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
     <div className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-[1440px]">
         <div className="relative aspect-[1440/587] w-full">
-          <Image src="https://image.bcsdlab.com/bcsd_track_page.png" alt="track Image" fill sizes="100vw" priority />
+          <Image
+            src="https://image.bcsdlab.com/bcsd_track_page.png"
+            alt="Track hero"
+            fill
+            sizes="100vw"
+            priority
+            fetchPriority="high"
+          />
+
           <GlobalNavigationBar location="Track" />
         </div>
 
