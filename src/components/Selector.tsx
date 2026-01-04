@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef } from 'react';
 import useHandleOutside from '@/hooks/useOutsideClick';
 import ArrowDown from '@/assets/svg/polygon-icon.svg';
@@ -66,7 +68,7 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
                 aria-selected={option.value === value}
                 key={option.value}
                 onClick={handleOptionSelect(option.value)}
-                className="cursor-pointer border-b-1 border-b-[#dbdbdb] py-2 text-center last:border-b-0"
+                className="cursor-pointer border-b border-b-[#dbdbdb] py-2 text-center last:border-b-0"
               >
                 {option.label}
               </div>

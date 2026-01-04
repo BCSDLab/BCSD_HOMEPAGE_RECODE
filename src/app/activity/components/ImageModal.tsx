@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Keyboard, A11y } from 'swiper/modules';
 import Portal from '@/components/Portal';
@@ -23,8 +23,6 @@ export default function ImageModal({ images, alt, initialIndex, onClose }: Image
   const containerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  const [activeIndex, setActiveIndex] = useState(initialIndex);
-
   useScrollLock(true);
   useEscapeKeyDown((e) => {
     e.stopPropagation();
@@ -42,7 +40,7 @@ export default function ImageModal({ images, alt, initialIndex, onClose }: Image
       <div
         ref={backdropRef}
         role="dialog"
-        className="image-modal fixed inset-0 z-[1000] grid place-items-center bg-black/70"
+        className="image-modal fixed inset-0 z-1000 grid place-items-center bg-black/70"
       >
         <div
           ref={containerRef}
@@ -50,7 +48,6 @@ export default function ImageModal({ images, alt, initialIndex, onClose }: Image
         >
           <Swiper
             modules={[Navigation, Keyboard, A11y]}
-            onSlideChange={(s) => setActiveIndex(s.realIndex ?? s.activeIndex)}
             navigation
             keyboard={{ enabled: true }}
             loop={images.length > 1}

@@ -1,6 +1,6 @@
 import { Curriculum } from '@/types/curriculum';
 import Cplus from '@/assets/svg/techstack/game/c++.svg';
-import Csharp from '@/assets/svg/techstack/game/c#.svg';
+import Csharp from '@/assets/svg/techstack/game/csharp.svg';
 import Unity from '@/assets/svg/techstack/game/unity.svg';
 import Unreal from '@/assets/svg/techstack/game/unreal.svg';
 

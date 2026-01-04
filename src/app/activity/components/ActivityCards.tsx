@@ -39,15 +39,11 @@ function ActivityCard({ year, month, title, description, images }: ActivityCardP
         <div className="text-[15px]">{description}</div>
       </div>
 
-      <div className="relative h-[386px] w-[686px] shrink-0">
+      <div className="relative h-96.5 w-171.5 shrink-0">
         <Swiper modules={[Navigation]} navigation={canSwipe} className="h-full w-full">
           {images.map((src, index) => (
             <SwiperSlide key={src} className="relative">
-              <button
-                type="button"
-                onClick={() => handleImageClick(index)}
-                className="relative block h-[386px] w-[686px]"
-              >
+              <button type="button" onClick={() => handleImageClick(index)} className="relative block h-96.5 w-171.5">
                 <Image
                   src={src}
                   alt={`${title} 이미지 ${index + 1}/${images.length}`}

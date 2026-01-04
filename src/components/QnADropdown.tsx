@@ -29,7 +29,7 @@ export default function QnADropdown() {
   };
 
   return (
-    <div className="mt-[130px] flex w-full justify-center gap-8 p-10">
+    <div className="mt-32.5 flex w-full justify-center gap-8 p-10">
       <div className="w-1/3">
         <h2 className="text-[34px] font-medium">자주 물어보는 질문</h2>
         <p className="text-[17px] font-normal">더 궁금한 사항이 있다면 아래 메일로 문의바랍니다.</p>
@@ -45,7 +45,7 @@ export default function QnADropdown() {
             <div key={qna.id} className="overflow-hidden rounded-lg border border-gray-200">
               <div
                 onClick={() => toggle(index)}
-                className="flex items-center justify-between bg-[#F9F9F9] p-[17px] text-left"
+                className="flex items-center justify-between bg-[#F9F9F9] p-4.25 text-left"
               >
                 <span className="text-[20px] font-medium">{qna.question}</span>
                 <span className={`transition-transform duration-300 ${isDropDownOpen ? 'rotate-180' : ''}`}>
@@ -59,7 +59,7 @@ export default function QnADropdown() {
               >
                 <div
                   ref={setItemRef(index)}
-                  className={`p-[17px] text-[17px] font-normal text-[#444] transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+                  className={`p-4.25 text-[17px] font-normal text-neutral-100 transition-opacity duration-200 ${isDropDownOpen ? 'opacity-100' : 'opacity-0'}`}
                 >
                   <p>{qna.answer}</p>
                 </div>

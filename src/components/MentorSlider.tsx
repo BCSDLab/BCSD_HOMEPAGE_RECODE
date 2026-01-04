@@ -27,7 +27,7 @@ export default function MentorSlider() {
   };
 
   return (
-    <div className="px-[120px]">
+    <div className="px-30">
       <Swiper
         modules={[Autoplay]}
         spaceBetween={30}
@@ -44,7 +44,7 @@ export default function MentorSlider() {
       >
         {mentorData.mentors.map((mentor) => (
           <SwiperSlide key={mentor.id}>
-            <div className="flex min-h-71 w-[220px] flex-col items-center rounded-[19px] bg-gradient-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 pt-9 pb-7 text-center">
+            <div className="flex min-h-71 w-55 flex-col items-center rounded-[19px] bg-linear-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 pt-9 pb-7 text-center">
               <Image
                 src={mentor.image}
                 alt={mentor.name}
@@ -53,7 +53,7 @@ export default function MentorSlider() {
                 className="mb-5 h-32 w-32 rounded-full object-cover"
               />
               <p className="mb-2 text-[20px] font-medium text-[#75109C]">{mentor.name}</p>
-              <p className="text-[16px] text-[#414141]">{mentor.description}</p>
+              <p className="text-[16px] text-neutral-100">{mentor.description}</p>
             </div>
           </SwiperSlide>
         ))}

@@ -12,7 +12,7 @@ export default function BeginnerTimeLine() {
             <div key={s.title} className="relative flex h-full w-62 flex-col pl-3">
               <div className="absolute top-0 left-0 h-full w-px bg-[#c7c7c7]" />
               <div className="min-h-14 w-42 text-[15px] leading-relaxed break-keep text-[#626262]">{s.description}</div>
-              <div className="mt-auto mb-[15px] text-2xl font-bold">{s.title}</div>
+              <div className="mt-auto mb-3.75 text-2xl font-bold">{s.title}</div>
               <div className="absolute bottom-0 left-0 z-10 h-2 w-2 -translate-x-1/2 translate-y-1/2 rounded-full bg-black" />
             </div>
           ))}

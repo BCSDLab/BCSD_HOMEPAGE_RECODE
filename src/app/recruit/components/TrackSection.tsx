@@ -1,5 +1,6 @@
 import { type TrackItem, TRACKS } from '@/static/recruit/trackDescription';
 import Link from 'next/link';
+import { URLS } from '@/constants/urls';
 
 function TrackCard({ title, description, Icon }: TrackItem) {
   return (
@@ -27,7 +28,7 @@ export default function TrackSection() {
         </div>
         <Link
           className="rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] font-medium text-white"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSfMP9HZIE4TzVpoWX_o3nnUB_tAthRSIsJTfKw72F4mftA62w/viewform?edit2=2_ABaOnueiLzcPk7-tUYyUJ6fU1Zxy5Kpyr2uACwdIkIHWchOsPBhTOHJlF74Oo37Skw"
+          href={URLS.APPLICATION_FORM}
         >
           지원하기
         </Link>
