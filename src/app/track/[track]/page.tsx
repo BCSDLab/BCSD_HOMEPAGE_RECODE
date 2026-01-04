@@ -6,6 +6,11 @@ import Curriculum from '@/app/track/components/Curriculum';
 import TrackMember from '@/app/track/components/TrackMember';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 import ScrollUpButton from '@/components/ScrollUpButton';
+import { tracks } from '@/app/track/components/TrackTabs';
+
+export function generateStaticParams() {
+  return tracks.map(({ slug }) => ({ track: slug }));
+}
 
 interface TrackPage {
   track: TrackName;
@@ -17,8 +22,8 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
 
   return (
     <div className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-[1440px]">
-        <div className="relative aspect-[1440/587] w-full">
+      <div className="min-w-360">
+        <div className="relative aspect-1440/587 w-full">
           <Image
             src="https://image.bcsdlab.com/bcsd_track_page.png"
             alt="Track hero"
