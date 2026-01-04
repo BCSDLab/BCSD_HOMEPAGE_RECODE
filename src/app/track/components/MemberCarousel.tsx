@@ -10,7 +10,7 @@ import 'swiper/css/a11y';
 
 function MemberCard(memberInfo: Member) {
   return (
-    <div className="w-[298px]">
+    <div className="w-74.5">
       <div className="relative aspect-square overflow-hidden rounded-t-2xl">
         <Image src={memberInfo.image} alt={memberInfo.name} fill sizes="298px" className="object-cover" />
       </div>
@@ -32,7 +32,7 @@ export default function MemberCarousel({ members }: { members: Member[] }) {
   return (
     <Swiper modules={[Navigation, A11y]} navigation slidesPerView="auto" loop={canLoop} className="member-swiper">
       {members.map((member, index) => (
-        <SwiperSlide key={index} className="!w-[298px]">
+        <SwiperSlide key={index} className="w-74.5!">
           <MemberCard {...member} />
         </SwiperSlide>
       ))}

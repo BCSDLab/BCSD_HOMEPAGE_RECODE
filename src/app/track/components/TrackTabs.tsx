@@ -20,7 +20,7 @@ interface TrackTabsProps {
 
 export default function TrackTabs({ track }: TrackTabsProps) {
   return (
-    <div className="mx-auto mt-17 flex w-175 flex-wrap content-center justify-center gap-x-3.5 gap-y-[15px]">
+    <div className="mx-auto mt-17 flex w-175 flex-wrap content-center justify-center gap-x-3.5 gap-y-3.75">
       {tracks.map(({ slug, label }) => {
         const isActive = track === slug;
         return (

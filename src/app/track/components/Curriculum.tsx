@@ -20,7 +20,7 @@ function WeekBox({ week }: WeekBoxProps) {
         <div className="flex gap-25">
           <div className="flex w-full flex-col">
             {week.items.map((row, index) => (
-              <div key={index} className="flex gap-25 border-b border-b-[#E7E7E7] py-[11px]">
+              <div key={index} className="flex gap-25 border-b border-b-[#E7E7E7] py-2.75">
                 <div className="flex gap-7">
                   <div>{row.index}</div>
                   <div className="w-67 text-xl font-semibold whitespace-pre-line">{row.title}</div>

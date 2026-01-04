@@ -16,7 +16,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ko">
       <body>
         {children}
-        <footer className="flex justify-between bg-[#555] px-[54px]">
+        <footer className="flex justify-between bg-[#555] px-13.5">
           <div className="flex flex-col justify-center py-10">
             <FooterCharacter />
             <p className="text-xs font-normal text-[#C4C4C4]">© 2025 BCSD. ALL RIGHTS RESERVED.</p>
