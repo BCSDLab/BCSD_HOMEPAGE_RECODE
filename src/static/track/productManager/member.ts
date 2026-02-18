@@ -2,12 +2,6 @@ import type { Member } from '@/types/trackMember';
 
 const PRODUCT_MANAGER_MEMBER: Member[] = [
   {
-    id: 1,
-    name: '박태영',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/taeyoung.png',
-  },
-  {
     id: 2,
     name: '권진영',
     role: 'REGULAR',
@@ -32,28 +26,10 @@ const PRODUCT_MANAGER_MEMBER: Member[] = [
     image: 'https://image.bcsdlab.com/wonbin.jpg',
   },
   {
-    id: 6,
-    name: '정예원',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/yewon.png',
-  },
-  {
     id: 7,
     name: '조여름',
     role: 'REGULAR',
     image: 'https://image.bcsdlab.com/summer.png',
-  },
-  {
-    id: 8,
-    name: '전아란',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/aran.png',
-  },
-  {
-    id: 9,
-    name: '김동하',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/dongha.png',
   },
 ];
 

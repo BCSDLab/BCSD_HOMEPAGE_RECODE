@@ -50,12 +50,6 @@ const FRONTEND_MEMBER: Member[] = [
     image: 'https://image.bcsdlab.com/jeonghoon.jpg',
   },
   {
-    id: 9,
-    name: '강성훈',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/seonghoon.jpg',
-  },
-  {
     id: 10,
     name: '김대관',
     role: 'REGULAR',
@@ -111,21 +105,9 @@ const FRONTEND_MEMBER: Member[] = [
   },
   {
     id: 19,
-    name: '김아영',
+    name: '박성주',
     role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/ayoung.jpg',
-  },
-  {
-    id: 20,
-    name: '이동훈',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/donghoonfe.png',
-  },
-  {
-    id: 21,
-    name: '이재익',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/jaeik.jpg',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U05S27RP6F7-aa8baa853ef3-512',
   },
 ];
 

@@ -43,6 +43,24 @@ const DATA_ANALYST_MEMBER: Member[] = [
     role: 'REGULAR',
     image: 'https://image.bcsdlab.com/sanheui.png',
   },
+  {
+    id: 8,
+    name: '윤여록',
+    role: 'REGULAR',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U08GP3LC9P0-5eb1b5d65877-512',
+  },
+  {
+    id: 9,
+    name: '고도형',
+    role: 'REGULAR',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U09CU191PDY-bc3ec201638d-512',
+  },
+  {
+    id: 10,
+    name: '이상민',
+    role: 'REGULAR',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U08GT5XBC21-aa06812d28e3-512',
+  },
 ];
 
 export default DATA_ANALYST_MEMBER;

@@ -67,6 +67,18 @@ const DESIGN_MEMBER: Member[] = [
     role: 'REGULAR',
     image: 'https://image.bcsdlab.com/jiyeon.png',
   },
+  {
+    id: 12,
+    name: '이예원',
+    role: 'REGULAR',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U09DTFCA23H-9b6038fbdd02-512',
+  },
+  {
+    id: 12,
+    name: '홍준혁',
+    role: 'REGULAR',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U09DY17D83F-bf7713511058-512',
+  },
 ];
 
 export default DESIGN_MEMBER;

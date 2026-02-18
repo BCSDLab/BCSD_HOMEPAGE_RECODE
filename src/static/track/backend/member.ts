@@ -86,12 +86,6 @@ const BACKEND_MEMBER: Member[] = [
     image: 'https://image.bcsdlab.com/wonkyung.jpg',
   },
   {
-    id: 15,
-    name: '박종범',
-    role: 'REGULAR',
-    image: 'https://image.bcsdlab.com/jongbeom.jpg',
-  },
-  {
     id: 16,
     name: '이동훈',
     role: 'REGULAR',
@@ -132,6 +126,12 @@ const BACKEND_MEMBER: Member[] = [
     name: '이인석',
     role: 'REGULAR',
     image: 'https://image.bcsdlab.com/inseok.jpg',
+  },
+  {
+    id: 23,
+    name: '이관우',
+    role: 'REGULAR',
+    image: 'https://ca.slack-edge.com/T0M5RJ3V2-U06NL089RQE-fafb10c3caa0-512',
   },
 ];
 
