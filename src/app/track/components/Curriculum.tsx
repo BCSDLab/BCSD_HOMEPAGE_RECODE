@@ -13,27 +13,26 @@ interface WeekBoxProps {
 
 function WeekBox({ week }: WeekBoxProps) {
   return (
-    <div className="flex w-300 justify-between">
-      <div className="text-xl font-semibold">{formatWeekLabel(week.week)}</div>
+    <div className="flex w-300 items-start gap-10">
+      <div className="w-24 shrink-0 pt-2.75 text-xl font-semibold whitespace-nowrap tabular-nums">
+        {formatWeekLabel(week.week)}
+      </div>
 
-      <div className="border-t">
-        <div className="flex gap-25">
-          <div className="flex w-full flex-col">
-            {week.items.map((row, index) => (
-              <div key={index} className="flex gap-25 border-b border-b-[#E7E7E7] py-2.75">
-                <div className="flex gap-7">
-                  <div>{row.index}</div>
-                  <div className="w-67 text-xl font-semibold whitespace-pre-line">{row.title}</div>
-                </div>
-                <div className="w-122">
-                  {row.detail?.map((detailRow, index) => (
-                    <div key={index}>{detailRow}</div>
-                  ))}
-                </div>
-              </div>
-            ))}
+      <div className="min-w-0 flex-1 border-t border-[#E7E7E7]">
+        {week.items.map((row, index) => (
+          <div
+            key={index}
+            className="grid grid-cols-[2.75rem_16.75rem_1fr] items-start gap-x-7 border-b border-[#E7E7E7] py-2.75"
+          >
+            <div className="text-right text-[17px] leading-[150%] text-neutral-200 tabular-nums">{row.index}</div>
+            <div className="text-xl leading-[130%] font-semibold whitespace-pre-line">{row.title}</div>
+            <div className="min-w-0 text-[17px] leading-[150%] break-words text-neutral-200">
+              {row.detail?.map((detailRow, index) => (
+                <div key={index}>{detailRow}</div>
+              ))}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

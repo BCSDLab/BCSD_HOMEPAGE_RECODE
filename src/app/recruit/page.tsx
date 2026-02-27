@@ -52,11 +52,11 @@ export default function Recruit() {
           />
 
           <div className="absolute inset-0 flex items-center justify-center text-center">
-            <div className="absolute z-0 translate-x-0.5 translate-y-2.25 bg-linear-to-t from-[#666] to-[#999] bg-clip-text text-[40px] font-semibold whitespace-nowrap text-transparent opacity-80">
+            <div className="absolute z-0 translate-x-0.5 translate-y-2.25 bg-linear-to-t from-[#666] to-[#999] bg-clip-text text-[40px] leading-[120%] font-semibold whitespace-nowrap text-transparent opacity-80">
               <div>각자의 궤도를 그리며</div>
               <div>BCSD와 함께 성장하세요.</div>
             </div>
-            <div className="font-inter relative z-10 text-[40px] font-semibold whitespace-nowrap text-white">
+            <div className="font-inter relative z-10 text-[40px] leading-[120%] font-semibold whitespace-nowrap text-white">
               <div>각자의 궤도를 그리며</div>
               <div>BCSD와 함께 성장하세요.</div>
             </div>

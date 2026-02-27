@@ -31,7 +31,7 @@ export default function QnADropdown() {
   return (
     <div className="mt-32.5 flex w-full justify-center gap-8 p-10">
       <div className="w-1/3">
-        <h2 className="text-[34px] font-medium">자주 물어보는 질문</h2>
+        <h2 className="text-[34px] leading-[120%] font-medium">자주 물어보는 질문</h2>
         <p className="text-[17px] font-normal">더 궁금한 사항이 있다면 아래 메일로 문의바랍니다.</p>
         <Link href="mailto:bcsdlab@gmail.com" className="hover:underline">
           bcsdlab@gmail.com
@@ -47,7 +47,7 @@ export default function QnADropdown() {
                 onClick={() => toggle(index)}
                 className="flex items-center justify-between bg-[#F9F9F9] p-4.25 text-left"
               >
-                <span className="text-[20px] font-medium">{qna.question}</span>
+                <span className="text-[20px] leading-[130%] font-medium">{qna.question}</span>
                 <span className={`transition-transform duration-300 ${isDropDownOpen ? 'rotate-180' : ''}`}>
                   <DownArrow />
                 </span>

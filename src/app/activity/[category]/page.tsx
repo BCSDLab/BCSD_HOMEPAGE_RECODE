@@ -76,7 +76,7 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
         <div className="relative aspect-1440/587 w-full">
           <Image src="https://image.bcsdlab.com/bcsd_activity_page.png" alt="Event Image" fill sizes="100vw" priority />
           <div className="absolute inset-0 flex items-end">
-            <div className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] font-semibold text-white">
+            <div className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] leading-[120%] font-semibold text-white">
               <div>BCSD에서는</div>
               <div>이런 활동을 하고 있어요.</div>
             </div>
