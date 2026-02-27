@@ -1,6 +1,6 @@
 import { type TrackItem, TRACKS } from '@/static/recruit/trackDescription';
-import Link from 'next/link';
-import { URLS } from '@/constants/urls';
+import ApplyButton from '@/components/ApplyButton';
+import { RECRUIT_TERM } from '@/constants/recruit';
 
 function TrackCard({ title, description, Icon }: TrackItem) {
   return (
@@ -17,7 +17,7 @@ export default function TrackSection() {
     <div className="mt-6">
       <div className="text-center">
         <div className="inline-block rounded-lg bg-[#f5dbff] px-3 py-1.5 text-center text-[15px] font-medium text-[#b611f5]">
-          2025년 하반기
+          {RECRUIT_TERM}
         </div>
         <div className="title mt-3">
           <span className="font-bold">BCSD와 함께 할 준비</span>가 되었나요?
@@ -26,12 +26,7 @@ export default function TrackSection() {
           <div>함께 프로젝트를 진행하며 자신의 능력을 향상시키고</div>
           <div>싶은 분들의 많은 지원바랍니다.</div>
         </div>
-        <Link
-          className="rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] font-medium text-white"
-          href={URLS.APPLICATION_FORM}
-        >
-          지원하기
-        </Link>
+        <ApplyButton className="rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] font-medium text-white" />
       </div>
 
       <div className="mt-15 grid grid-cols-3 gap-6">

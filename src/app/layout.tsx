@@ -73,6 +73,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const currentYear = new Date().getFullYear();
+
   return (
     <html lang="ko">
       <body>
@@ -80,7 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <footer className="flex justify-between bg-[#555] px-13.5">
           <div className="flex flex-col justify-center py-10">
             <FooterCharacter />
-            <p className="text-xs font-normal text-[#C4C4C4]">© 2025 BCSD. ALL RIGHTS RESERVED.</p>
+            <p className="text-xs font-normal text-[#C4C4C4]">© {currentYear} BCSD. ALL RIGHTS RESERVED.</p>
           </div>
           <div className="flex items-center justify-center gap-4">
             <Link href={URLS.SOCIAL.FACEBOOK}>

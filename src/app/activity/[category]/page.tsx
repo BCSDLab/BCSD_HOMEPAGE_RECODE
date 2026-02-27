@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import type { ActivityCategory, ActivityList } from '@/types/activity';
 import { getActivity } from '@/static/activity';
 import ActivityContent from '../components/ActivityContent';
@@ -23,13 +24,25 @@ const categoryInfo: Record<ActivityCategory, { title: string; description: strin
   },
 };
 
+const isActivityCategory = (value: string): value is ActivityCategory =>
+  Object.prototype.hasOwnProperty.call(categoryInfo, value);
+
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return [{ category: 'event' }, { category: 'game' }, { category: 'koin' }] satisfies { category: ActivityCategory }[];
+  return (Object.keys(categoryInfo) as ActivityCategory[]).map((category) => ({ category }));
 }
 
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
   const { category } = await params;
-  const info = categoryInfo[category];
+  const info = isActivityCategory(category) ? categoryInfo[category] : null;
+
+  if (!info) {
+    return {
+      title: '활동',
+      description: 'BCSD 활동 페이지',
+    };
+  }
 
   return {
     title: `${info.title} 활동`,
@@ -55,16 +68,16 @@ export async function generateMetadata({ params }: ActivityPageProps): Promise<M
   };
 }
 
-interface ActivityPage {
-  category: ActivityCategory;
-}
-
 interface ActivityPageProps {
-  params: Promise<ActivityPage>;
+  params: Promise<{ category: string }>;
 }
 
 export default async function ActivityPage({ params }: ActivityPageProps) {
   const { category } = await params;
+
+  if (!isActivityCategory(category)) {
+    notFound();
+  }
 
   const activityGroups = await getActivity(category);
   const years = getYears(activityGroups);
@@ -76,7 +89,7 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
         <div className="relative aspect-1440/587 w-full">
           <Image src="https://image.bcsdlab.com/bcsd_activity_page.png" alt="Event Image" fill sizes="100vw" priority />
           <div className="absolute inset-0 flex items-end">
-            <div className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] font-semibold text-white">
+            <div className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] leading-[120%] font-semibold text-white">
               <div>BCSD에서는</div>
               <div>이런 활동을 하고 있어요.</div>
             </div>

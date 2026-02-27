@@ -21,6 +21,8 @@ const trackDescriptions: Record<TrackName, string> = {
   security: '시스템과 네트워크의 보안을 강화하고 취약점을 분석합니다.',
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return tracks.map(({ slug }) => ({ track: slug }));
 }
@@ -55,10 +57,7 @@ export async function generateMetadata({ params }: { params: TrackPageParams }):
   };
 }
 
-interface TrackPage {
-  track: TrackName;
-}
-type TrackPageParams = Promise<TrackPage>;
+type TrackPageParams = Promise<{ track: TrackName }>;
 
 export default async function TrackPage({ params }: { params: TrackPageParams }) {
   const { track } = await params;
