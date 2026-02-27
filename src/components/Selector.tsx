@@ -28,6 +28,13 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
     onSelect(value);
     closeMenu();
   };
+  const handleOptionKeyDown = (optionValue: string) => (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelect(optionValue);
+      closeMenu();
+    }
+  };
 
   const selectedOption = options.find((option) => option.value === value);
   const showLabel = selectedOption ? selectedOption.label : 'Select an option';
@@ -70,16 +77,17 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
               const isSelected = option.value === value;
 
               return (
-                <button
-                  type="button"
+                <div
                   role="option"
+                  tabIndex={0}
                   aria-selected={isSelected}
                   key={option.value}
                   onClick={handleOptionSelect(option.value)}
+                  onKeyDown={handleOptionKeyDown(option.value)}
                   className="w-full cursor-pointer border-b border-b-[#dbdbdb] py-2 text-center last:border-b-0"
                 >
                   {option.label}
-                </button>
+                </div>
               );
             })}
           </div>
