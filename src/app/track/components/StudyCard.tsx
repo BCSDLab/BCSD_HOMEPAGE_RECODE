@@ -25,8 +25,8 @@ export default async function StudyCards({ track }: StudyCardsProps) {
       <div className="title">WHAT WE STUDY</div>
       <div className="mt-15 flex gap-4.5">
         <div className="flex gap-4.5">
-          {cards.map((card, index) => (
-            <StudyCard key={index} {...card} />
+          {cards.map((card) => (
+            <StudyCard key={card.title} {...card} />
           ))}
         </div>
       </div>

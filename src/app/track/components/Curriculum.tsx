@@ -19,16 +19,16 @@ function WeekBox({ week }: WeekBoxProps) {
       </div>
 
       <div className="min-w-0 flex-1 border-t border-[#E7E7E7]">
-        {week.items.map((row, index) => (
+        {week.items.map((row) => (
           <div
-            key={index}
+            key={`${row.index}-${row.title}`}
             className="grid grid-cols-[2.75rem_16.75rem_1fr] items-start gap-x-7 border-b border-[#E7E7E7] py-2.75"
           >
             <div className="text-right text-[17px] leading-[150%] text-neutral-200 tabular-nums">{row.index}</div>
             <div className="text-xl leading-[130%] font-semibold whitespace-pre-line">{row.title}</div>
-            <div className="min-w-0 text-[17px] leading-[150%] break-words text-neutral-200">
-              {row.detail?.map((detailRow, index) => (
-                <div key={index}>{detailRow}</div>
+            <div className="min-w-0 text-[17px] leading-[150%] wrap-break-word text-neutral-200">
+              {row.detail?.map((detailRow) => (
+                <div key={detailRow}>{detailRow}</div>
               ))}
             </div>
           </div>

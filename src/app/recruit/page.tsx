@@ -4,11 +4,12 @@ import BeginnerTimeLine from './components/Timeline';
 import BenefitCards from './components/BenefitCards';
 import TrackSection from './components/TrackSection';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
+import { RECRUIT_TERM } from '@/constants/recruit';
 
 export const metadata: Metadata = {
   title: '모집 안내',
   description:
-    'BCSD 2025년 하반기 신입 부원 모집. Frontend, Backend, Android, iOS, Design, Game, Data Analyst, PM, Security 트랙에서 함께 성장할 멤버를 찾습니다.',
+    `BCSD ${RECRUIT_TERM} 신입 부원 모집. Frontend, Backend, Android, iOS, Design, Game, Data Analyst, PM, Security 트랙에서 함께 성장할 멤버를 찾습니다.`,
   keywords: [
     'BCSD 모집',
     '동아리 모집',

@@ -41,19 +41,29 @@ export default function QnADropdown() {
       <div className="w-1/3 space-y-4">
         {QnAData.map((qna, index) => {
           const isDropDownOpen = isOpen[index];
+          const triggerId = `qna-trigger-${qna.id}`;
+          const contentId = `qna-content-${qna.id}`;
+
           return (
             <div key={qna.id} className="overflow-hidden rounded-lg border border-gray-200">
-              <div
+              <button
+                type="button"
+                id={triggerId}
+                aria-expanded={isDropDownOpen}
+                aria-controls={contentId}
                 onClick={() => toggle(index)}
-                className="flex items-center justify-between bg-[#F9F9F9] p-4.25 text-left"
+                className="flex w-full items-center justify-between bg-[#F9F9F9] p-4.25 text-left"
               >
                 <span className="text-[20px] leading-[130%] font-medium">{qna.question}</span>
                 <span className={`transition-transform duration-300 ${isDropDownOpen ? 'rotate-180' : ''}`}>
                   <DownArrow />
                 </span>
-              </div>
+              </button>
 
               <div
+                id={contentId}
+                role="region"
+                aria-labelledby={triggerId}
                 className={`bg-[#F9F9F9] transition-[max-height] duration-300 ease-out`}
                 style={{ maxHeight: isDropDownOpen ? heights[index] : 0 }}
               >

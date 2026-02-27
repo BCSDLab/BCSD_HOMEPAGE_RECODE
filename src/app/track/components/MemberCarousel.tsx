@@ -31,8 +31,8 @@ export default function MemberCarousel({ members }: { members: Member[] }) {
 
   return (
     <Swiper modules={[Navigation, A11y]} navigation slidesPerView="auto" loop={canLoop} className="member-swiper">
-      {members.map((member, index) => (
-        <SwiperSlide key={index} className="w-74.5!">
+      {members.map((member) => (
+        <SwiperSlide key={`${member.name}-${member.role}-${member.image}`} className="w-74.5!">
           <MemberCard {...member} />
         </SwiperSlide>
       ))}

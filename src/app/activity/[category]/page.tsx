@@ -1,12 +1,16 @@
 import { Suspense } from 'react';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import type { ActivityCategory, ActivityList } from '@/types/activity';
 import { getActivity } from '@/static/activity';
 import ActivityContent from '../components/ActivityContent';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 const getYears = (groups: ActivityList[]) => groups.map((g) => g.year).sort((a, b) => Number(b) - Number(a));
+const ACTIVITY_CATEGORIES = ['event', 'game', 'koin'] as const satisfies readonly ActivityCategory[];
+const activityCategorySet = new Set<string>(ACTIVITY_CATEGORIES);
+const isActivityCategory = (value: string): value is ActivityCategory => activityCategorySet.has(value);
 
 const categoryInfo: Record<ActivityCategory, { title: string; description: string }> = {
   event: {
@@ -23,13 +27,22 @@ const categoryInfo: Record<ActivityCategory, { title: string; description: strin
   },
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return [{ category: 'event' }, { category: 'game' }, { category: 'koin' }] satisfies { category: ActivityCategory }[];
+  return ACTIVITY_CATEGORIES.map((category) => ({ category }));
 }
 
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
   const { category } = await params;
-  const info = categoryInfo[category];
+  const info = isActivityCategory(category) ? categoryInfo[category] : null;
+
+  if (!info) {
+    return {
+      title: '활동',
+      description: 'BCSD 활동 페이지',
+    };
+  }
 
   return {
     title: `${info.title} 활동`,
@@ -55,16 +68,16 @@ export async function generateMetadata({ params }: ActivityPageProps): Promise<M
   };
 }
 
-interface ActivityPage {
-  category: ActivityCategory;
-}
-
 interface ActivityPageProps {
-  params: Promise<ActivityPage>;
+  params: Promise<{ category: string }>;
 }
 
 export default async function ActivityPage({ params }: ActivityPageProps) {
   const { category } = await params;
+
+  if (!isActivityCategory(category)) {
+    notFound();
+  }
 
   const activityGroups = await getActivity(category);
   const years = getYears(activityGroups);

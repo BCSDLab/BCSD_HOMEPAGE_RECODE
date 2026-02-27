@@ -26,7 +26,7 @@ export default function ScrollUpButton() {
   if (!isVisible) return null;
 
   return (
-    <button onClick={scrollToTop} className="fixed right-30 bottom-20 z-10">
+    <button type="button" aria-label="맨 위로 이동" onClick={scrollToTop} className="fixed right-30 bottom-20 z-10">
       <UpButton />
     </button>
   );

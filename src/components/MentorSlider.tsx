@@ -59,7 +59,12 @@ export default function MentorSlider() {
         ))}
       </Swiper>
       <div className="mt-4 flex w-full justify-end px-16">
-        <button className="cursor-pointer" onClick={handleTogglePlay}>
+        <button
+          type="button"
+          aria-label={isPlaying ? '멘토 슬라이더 자동재생 일시정지' : '멘토 슬라이더 자동재생 시작'}
+          className="cursor-pointer"
+          onClick={handleTogglePlay}
+        >
           {isPlaying ? <StopButtonIcon /> : <PlayButtonIcon />}
         </button>
       </div>

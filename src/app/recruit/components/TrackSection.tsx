@@ -1,5 +1,6 @@
 import { type TrackItem, TRACKS } from '@/static/recruit/trackDescription';
 import ApplyButton from '@/components/ApplyButton';
+import { RECRUIT_TERM } from '@/constants/recruit';
 
 function TrackCard({ title, description, Icon }: TrackItem) {
   return (
@@ -16,7 +17,7 @@ export default function TrackSection() {
     <div className="mt-6">
       <div className="text-center">
         <div className="inline-block rounded-lg bg-[#f5dbff] px-3 py-1.5 text-center text-[15px] font-medium text-[#b611f5]">
-          2025년 하반기
+          {RECRUIT_TERM}
         </div>
         <div className="title mt-3">
           <span className="font-bold">BCSD와 함께 할 준비</span>가 되었나요?

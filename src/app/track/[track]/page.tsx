@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import type { TrackName } from '@/types/curriculum';
 import TrackTabs from '@/app/track/components/TrackTabs';
 import StudyCards from '@/app/track/components/StudyCard';
@@ -8,6 +9,9 @@ import TrackMember from '@/app/track/components/TrackMember';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 import ScrollUpButton from '@/components/ScrollUpButton';
 import { tracks } from '@/app/track/components/TrackTabs';
+
+const trackSlugSet = new Set<string>(tracks.map(({ slug }) => slug));
+const isTrackName = (value: string): value is TrackName => trackSlugSet.has(value);
 
 const trackDescriptions: Record<TrackName, string> = {
   frontend: '사용자 인터페이스를 구축하고 웹 애플리케이션을 개발합니다.',
@@ -21,12 +25,22 @@ const trackDescriptions: Record<TrackName, string> = {
   security: '시스템과 네트워크의 보안을 강화하고 취약점을 분석합니다.',
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return tracks.map(({ slug }) => ({ track: slug }));
 }
 
 export async function generateMetadata({ params }: { params: TrackPageParams }): Promise<Metadata> {
   const { track } = await params;
+
+  if (!isTrackName(track)) {
+    return {
+      title: '트랙',
+      description: 'BCSD 트랙 소개 페이지',
+    };
+  }
+
   const trackInfo = tracks.find(({ slug }) => slug === track);
   const trackName = trackInfo?.label || track;
   const description = trackDescriptions[track];
@@ -55,13 +69,14 @@ export async function generateMetadata({ params }: { params: TrackPageParams }):
   };
 }
 
-interface TrackPage {
-  track: TrackName;
-}
-type TrackPageParams = Promise<TrackPage>;
+type TrackPageParams = Promise<{ track: string }>;
 
 export default async function TrackPage({ params }: { params: TrackPageParams }) {
   const { track } = await params;
+
+  if (!isTrackName(track)) {
+    notFound();
+  }
 
   return (
     <div className="hide-scrollbar w-full overflow-x-auto">

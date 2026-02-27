@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useId, useRef } from 'react';
 import useHandleOutside from '@/hooks/useOutsideClick';
 import ArrowDown from '@/assets/svg/polygon-icon.svg';
 import useEscapeKeyDown from '@/hooks/useEscapeKeyDown';
@@ -19,6 +19,7 @@ interface SelectorProps {
 
 export default function Selector({ options, value, onSelect }: SelectorProps) {
   const [isOpen, , closeMenu, triggerOpen] = useBooleanState(false);
+  const listboxId = useId();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
@@ -50,6 +51,9 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
         <button
           type="button"
           onClick={triggerOpen}
+          aria-haspopup="listbox"
+          aria-controls={listboxId}
+          aria-expanded={isOpen}
           className="relative flex w-full items-center justify-center rounded-full bg-[#f4f4f4] py-2"
         >
           <div className="mx-auto text-[17px]">{showLabel}</div>
@@ -61,18 +65,23 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
         </button>
 
         {isOpen && (
-          <div role="listbox" className="absolute mt-2 w-full rounded-[21px] bg-[#f4f4f4] px-7 shadow">
-            {options.map((option) => (
-              <div
-                role="option"
-                aria-selected={option.value === value}
-                key={option.value}
-                onClick={handleOptionSelect(option.value)}
-                className="cursor-pointer border-b border-b-[#dbdbdb] py-2 text-center last:border-b-0"
-              >
-                {option.label}
-              </div>
-            ))}
+          <div id={listboxId} role="listbox" className="absolute mt-2 w-full rounded-[21px] bg-[#f4f4f4] px-7 shadow">
+            {options.map((option) => {
+              const isSelected = option.value === value;
+
+              return (
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  key={option.value}
+                  onClick={handleOptionSelect(option.value)}
+                  className="w-full cursor-pointer border-b border-b-[#dbdbdb] py-2 text-center last:border-b-0"
+                >
+                  {option.label}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
