@@ -27,8 +27,8 @@ function WeekBox({ week }: WeekBoxProps) {
             <div className="text-right text-[17px] leading-[150%] text-neutral-200 tabular-nums">{row.index}</div>
             <div className="text-xl leading-[130%] font-semibold whitespace-pre-line">{row.title}</div>
             <div className="min-w-0 text-[17px] leading-[150%] wrap-break-word text-neutral-200">
-              {row.detail?.map((detailRow) => (
-                <div key={detailRow}>{detailRow}</div>
+              {row.detail?.map((detailRow, index) => (
+                <div key={index}>{detailRow}</div>
               ))}
             </div>
           </div>
