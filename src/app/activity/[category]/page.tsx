@@ -8,9 +8,6 @@ import ActivityContent from '../components/ActivityContent';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 const getYears = (groups: ActivityList[]) => groups.map((g) => g.year).sort((a, b) => Number(b) - Number(a));
-const ACTIVITY_CATEGORIES = ['event', 'game', 'koin'] as const satisfies readonly ActivityCategory[];
-const activityCategorySet = new Set<string>(ACTIVITY_CATEGORIES);
-const isActivityCategory = (value: string): value is ActivityCategory => activityCategorySet.has(value);
 
 const categoryInfo: Record<ActivityCategory, { title: string; description: string }> = {
   event: {
@@ -27,10 +24,13 @@ const categoryInfo: Record<ActivityCategory, { title: string; description: strin
   },
 };
 
+const isActivityCategory = (value: string): value is ActivityCategory =>
+  Object.prototype.hasOwnProperty.call(categoryInfo, value);
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return ACTIVITY_CATEGORIES.map((category) => ({ category }));
+  return (Object.keys(categoryInfo) as ActivityCategory[]).map((category) => ({ category }));
 }
 
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
