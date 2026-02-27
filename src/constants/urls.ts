@@ -1,7 +1,9 @@
 export const URLS = {
-  /** BCSD 지원 폼 URL */
-  APPLICATION_FORM:
-    'https://docs.google.com/forms/d/e/1FAIpQLSfMP9HZIE4TzVpoWX_o3nnUB_tAthRSIsJTfKw72F4mftA62w/viewform?edit2=2_ABaOnueiLzcPk7-tUYyUJ6fU1Zxy5Kpyr2uACwdIkIHWchOsPBhTOHJlF74Oo37Skw',
+  /** 코넥트 앱 스토어 URL */
+  STORE: {
+    PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.bcsdlab.konect',
+    APP_STORE: 'https://apps.apple.com/kr/app/konect-%EB%8F%99%EC%95%84%EB%A6%AC/id6756885059',
+  },
 
   /** 소셜 미디어 URL */
   SOCIAL: {

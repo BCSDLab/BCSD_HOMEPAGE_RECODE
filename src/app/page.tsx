@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import MainImage from '@/assets/svg/main/main-image.svg';
 import MainIconPipe from '@/assets/svg/main/main-icon-pipe.svg';
@@ -8,7 +7,7 @@ import MainIconPartner from '@/assets/svg/main/main-icon-partner.svg';
 import QnADropdown from '@/components/QnADropdown';
 import MentorSlider from '@/components/MentorSlider';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
-import { URLS } from '@/constants/urls';
+import ApplyButton from '@/components/ApplyButton';
 
 export default function Home() {
   return (
@@ -30,9 +29,7 @@ export default function Home() {
                 <br />
                 BCSD와 함께 성장하세요.
               </p>
-              <Link href={URLS.APPLICATION_FORM} className="mt-6 inline-block rounded-[10px] bg-[#C360F3] px-5 py-3.25">
-                <p className="text-white">지원하기</p>
-              </Link>
+              <ApplyButton className="mt-6 rounded-[10px] bg-[#C360F3] px-5 py-3.25 text-white" />
             </div>
           </div>
         </div>
@@ -84,12 +81,7 @@ export default function Home() {
             <div className="mt-16">
               <p className="text-center text-[34px] font-medium">또 하나의 행성 할 사람?</p>
               <div className="text-center">
-                <Link
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSfMP9HZIE4TzVpoWX_o3nnUB_tAthRSIsJTfKw72F4mftA62w/viewform?edit2=2_ABaOnueiLzcPk7-tUYyUJ6fU1Zxy5Kpyr2uACwdIkIHWchOsPBhTOHJlF74Oo37Skw"
-                  className="inline-block rounded-[10px] bg-[#D365FD] p-2.5"
-                >
-                  <p className="text-[17px] text-[#FFF]">저요!</p>
-                </Link>
+                <ApplyButton className="mt-6 rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] text-[#FFF]" label="저요!" />
               </div>
             </div>
             <MainCharacter className="absolute bottom-0 left-0" />
