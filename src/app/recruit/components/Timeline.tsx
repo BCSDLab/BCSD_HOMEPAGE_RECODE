@@ -3,9 +3,9 @@ import { STEPS } from '@/static/recruit/timeLine';
 export default function BeginnerTimeLine() {
   return (
     <>
-      <div className="title">
+      <h2 className="title">
         비기너에서 <span className="font-bold">레귤러</span>로
-      </div>
+      </h2>
       <div className="relative mt-28 h-42.5 w-full">
         <div className="relative flex h-full w-full justify-center gap-17">
           {STEPS.map((s) => (

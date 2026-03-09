@@ -46,11 +46,11 @@ export default async function Curriculum({ track }: CurriculumProps) {
   const data = await getCurriculum(track);
 
   return (
-    <div className="mt-42.5 place-items-center">
-      <div className="title mb-24">
+    <section className="mt-42.5 place-items-center">
+      <h2 className="title mb-24">
         <div>{data.displayName} 비기너</div>
         <div>커리큘럼을 소개합니다</div>
-      </div>
+      </h2>
 
       <div className="flex flex-col gap-16">
         {data.weeks.map((week) => (
@@ -61,6 +61,6 @@ export default async function Curriculum({ track }: CurriculumProps) {
         ))}
       </div>
       <TechStack techStack={data.techStack} />
-    </div>
+    </section>
   );
 }

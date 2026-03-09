@@ -9,11 +9,11 @@ interface TrackMemberProps {
 export default async function TrackMember({ track }: TrackMemberProps) {
   const member = await getTrackMembers(track);
   return (
-    <div className="mt-60 w-full bg-[#f4f4f4] pt-25 pb-60">
-      <div className="title">함께 할 멤버들</div>
+    <section className="mt-60 w-full bg-[#f4f4f4] pt-25 pb-60">
+      <h2 className="title">함께 할 멤버들</h2>
       <div className="mt-17.5 flex items-center justify-center">
         <MemberCarousel members={member} />
       </div>
-    </div>
+    </section>
   );
 }

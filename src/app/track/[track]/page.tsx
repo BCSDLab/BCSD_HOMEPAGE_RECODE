@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import type { TrackName } from '@/types/curriculum';
 import TrackTabs from '@/app/track/components/TrackTabs';
@@ -6,8 +7,9 @@ import StudyCards from '@/app/track/components/StudyCard';
 import Curriculum from '@/app/track/components/Curriculum';
 import TrackMember from '@/app/track/components/TrackMember';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
-import ScrollUpButton from '@/components/ScrollUpButton';
 import { tracks } from '@/app/track/components/TrackTabs';
+
+const ScrollUpButton = dynamic(() => import('@/components/ScrollUpButton'));
 
 const trackDescriptions: Record<TrackName, string> = {
   frontend: '사용자 인터페이스를 구축하고 웹 애플리케이션을 개발합니다.',
@@ -35,8 +37,12 @@ export async function generateMetadata({ params }: { params: TrackPageParams }):
 
   return {
     title: `${trackName} 트랙`,
+    alternates: {
+      canonical: `/track/${track}`,
+    },
     description: `BCSD ${trackName} 트랙 - ${description}`,
     openGraph: {
+      url: `https://bcsdlab.com/track/${track}`,
       title: `${trackName} 트랙 | BCSD`,
       description: `BCSD ${trackName} 트랙에서 함께 성장하세요. ${description}`,
       images: [
@@ -61,11 +67,14 @@ type TrackPageParams = Promise<{ track: TrackName }>;
 
 export default async function TrackPage({ params }: { params: TrackPageParams }) {
   const { track } = await params;
+  const trackInfo = tracks.find(({ slug }) => slug === track);
+  const trackName = trackInfo?.label ?? track;
+  const description = trackDescriptions[track];
 
   return (
-    <div className="hide-scrollbar w-full overflow-x-auto">
+    <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
-        <div className="relative aspect-1440/587 w-full">
+        <header className="relative aspect-1440/587 w-full">
           <Image
             src="https://image.bcsdlab.com/bcsd_track_page.png"
             alt="Track hero"
@@ -76,9 +85,13 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
           />
 
           <GlobalNavigationBar location="Track" />
-        </div>
+        </header>
 
         <div className="flex flex-col items-center">
+          <header className="mt-17 text-center">
+            <h1 className="text-[34px] leading-[120%] font-medium text-neutral-100">{trackName} 트랙</h1>
+            <p className="mt-3 text-[17px] text-neutral-200">{description}</p>
+          </header>
           <TrackTabs track={track} />
           <StudyCards track={track} />
           <Curriculum track={track} />
@@ -86,6 +99,6 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
         </div>
         <ScrollUpButton />
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,17 +1,49 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import localFont from 'next/font/local';
 import './globals.css';
-import FooterCharacter from '@/assets/svg/footer/character-icon.svg';
 import FacebookIcon from '@/assets/svg/footer/facebook-icon.svg';
 import InstagramIcon from '@/assets/svg/footer/instagram-icon.svg';
 import YoutubeIcon from '@/assets/svg/footer/youtube-icon.svg';
 import Link from 'next/link';
 import { URLS } from '@/constants/urls';
 
+const pretendard = localFont({
+  src: [
+    {
+      path: '../assets/fonts/Pretendard-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/Pretendard-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-pretendard',
+  display: 'swap',
+  fallback: ['system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+});
+
+const organizationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'BCSD',
+  url: 'https://bcsdlab.com',
+  description: '코리아텍 IT 동아리 BCSD',
+  email: 'bcsdlab@gmail.com',
+  sameAs: [URLS.SOCIAL.FACEBOOK, URLS.SOCIAL.INSTAGRAM, URLS.SOCIAL.YOUTUBE],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://bcsdlab.com'),
   title: {
     default: 'BCSD - Build Communities, Share Dreams',
     template: '%s | BCSD',
+  },
+  alternates: {
+    canonical: '/',
   },
   icons: {
     icon: '/favicon.ico',
@@ -73,16 +105,26 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const currentYear = new Date().getFullYear();
-
   return (
     <html lang="ko">
-      <body>
+      <body className={pretendard.variable}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
+        />
         {children}
         <footer className="flex justify-between bg-[#555] px-13.5">
           <div className="flex flex-col justify-center py-10">
-            <FooterCharacter />
-            <p className="text-xs font-normal text-[#C4C4C4]">© {currentYear} BCSD. ALL RIGHTS RESERVED.</p>
+            <Image
+              src="/images/footer/character-icon.svg"
+              alt=""
+              aria-hidden="true"
+              width="181"
+              height="65"
+              loading="lazy"
+              unoptimized
+            />
+            <p className="text-xs font-normal text-[#C4C4C4]">© 2025 BCSD. ALL RIGHTS RESERVED.</p>
           </div>
           <div className="flex items-center justify-center gap-4">
             <Link href={URLS.SOCIAL.FACEBOOK}>

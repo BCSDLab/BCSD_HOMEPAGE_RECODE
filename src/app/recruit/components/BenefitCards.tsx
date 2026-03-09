@@ -21,17 +21,17 @@ function BenefitCard({ title, descriptions, Icon, offset }: Benefit) {
 
 export default function BenefitCards() {
   return (
-    <div className="mt-70 place-items-center">
-      <div className="title">
+    <section className="mt-70 place-items-center">
+      <h2 className="title">
         <span className="font-bold">궤도</span>에 오르면
         <div>얻을 수 있는 것들</div>
-      </div>
+      </h2>
 
       <div className="mt-21 flex content-center justify-center gap-4.5">
         {BENEFITS.map((benefit) => (
           <BenefitCard key={benefit.title} {...benefit} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
