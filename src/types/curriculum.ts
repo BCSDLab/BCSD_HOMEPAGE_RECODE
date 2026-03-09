@@ -14,7 +14,7 @@ export type TrackName =
 export interface StudyInfo {
   title: string;
   descriptions: string;
-  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+  iconSrc: string;
 }
 
 export interface CurriculumItem {
