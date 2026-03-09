@@ -19,7 +19,7 @@ export default function GlobalNavigationBar({ location }: GlobalNavigationBarPro
           Tracks
         </Link>
         <Link
-          href="/activity"
+          href="/activity/event"
           className={`cursor-pointer hover:underline ${location === 'Activity' ? 'text-[#C360F3]' : ''}`}
         >
           Activity

@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -46,8 +45,12 @@ export async function generateMetadata({ params }: ActivityPageProps): Promise<M
 
   return {
     title: `${info.title} 활동`,
+    alternates: {
+      canonical: `/activity/${category}`,
+    },
     description: info.description,
     openGraph: {
+      url: `https://bcsdlab.com/activity/${category}`,
       title: `${info.title} 활동 | BCSD`,
       description: info.description,
       images: [
@@ -84,28 +87,27 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
   const defaultYear = years[0] ?? '';
 
   return (
-    <div className="hide-scrollbar w-full overflow-x-auto">
+    <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
-        <div className="relative aspect-1440/587 w-full">
-          <Image src="https://image.bcsdlab.com/bcsd_activity_page.png" alt="Event Image" fill sizes="100vw" priority />
+        <header className="relative aspect-1440/587 w-full">
+          <Image src="https://image.bcsdlab.com/bcsd_activity_page.png" alt="BCSD 활동 대표 이미지" fill sizes="100vw" priority />
           <div className="absolute inset-0 flex items-end">
-            <div className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] leading-[120%] font-semibold text-white">
-              <div>BCSD에서는</div>
-              <div>이런 활동을 하고 있어요.</div>
-            </div>
+            <h1 className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] leading-[120%] font-semibold text-white">
+              <span className="block">BCSD에서는</span>
+              <span className="block">이런 활동을 하고 있어요.</span>
+            </h1>
           </div>
           <GlobalNavigationBar location="Activity" />
-        </div>
+        </header>
 
-        <Suspense fallback={null}>
-          <ActivityContent
-            category={category}
-            activityGroups={activityGroups}
-            years={years}
-            defaultYear={defaultYear}
-          />
-        </Suspense>
+        <ActivityContent
+          category={category}
+          activityGroups={activityGroups}
+          years={years}
+          defaultYear={defaultYear}
+          pathname={`/activity/${category}`}
+        />
       </div>
-    </div>
+    </main>
   );
 }

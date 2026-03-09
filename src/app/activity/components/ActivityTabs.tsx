@@ -2,7 +2,6 @@
 
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { ActivityCategory } from '@/types/activity';
 
 interface TabProps {
@@ -19,11 +18,12 @@ const tabList: TabProps[] = [
 
 interface ActivityTabsProps {
   current: ActivityCategory;
+  selectedYear: string;
+  defaultYear: string;
 }
 
-export default function ActivityTabs({ current }: ActivityTabsProps) {
-  const searchParams = useSearchParams();
-  const qs = searchParams.toString();
+export default function ActivityTabs({ current, selectedYear, defaultYear }: ActivityTabsProps) {
+  const qs = selectedYear !== defaultYear ? `year=${selectedYear}` : '';
 
   return (
     <div className={'flex gap-6'}>

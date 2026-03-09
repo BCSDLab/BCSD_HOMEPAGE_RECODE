@@ -1,32 +1,15 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import Selector from '@/components/Selector';
 
 interface YearSelectProps {
   years: readonly string[];
   selectedYear: string;
-  defaultYear: string;
+  onSelect: (value: string) => void;
 }
 
-export default function YearSelect({ years, selectedYear, defaultYear }: YearSelectProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-
+export default function YearSelect({ years, selectedYear, onSelect }: YearSelectProps) {
   const options = years.map((year) => ({ label: year, value: year }));
 
-  const handleSelect = (value: string) => {
-    const params = new URLSearchParams(window.location.search);
-
-    if (value === defaultYear) {
-      params.delete('year');
-    } else {
-      params.set('year', value);
-    }
-
-    const queryString = params.toString();
-    router.replace(queryString ? `${pathname}?${queryString}` : pathname, { scroll: false });
-  };
-
-  return <Selector options={options} value={selectedYear} onSelect={handleSelect} />;
+  return <Selector options={options} value={selectedYear} onSelect={onSelect} />;
 }

@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
+import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Keyboard, A11y } from 'swiper/modules';
 import Portal from '@/components/Portal';
@@ -19,15 +20,41 @@ interface ImageModalProps {
   onClose: () => void;
 }
 
+function getNearbyImageIndices(activeIndex: number, imageCount: number) {
+  const indices = new Set([activeIndex]);
+
+  if (imageCount > 1) {
+    indices.add((activeIndex + 1) % imageCount);
+    indices.add((activeIndex - 1 + imageCount) % imageCount);
+  }
+
+  return indices;
+}
+
 export default function ImageModal({ images, alt, initialIndex, onClose }: ImageModalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
+  const [loadedIndices, setLoadedIndices] = useState(() => getNearbyImageIndices(initialIndex, images.length));
 
   useScrollLock(true);
-  useEscapeKeyDown((e) => {
+  const handleEscapeKeyDown = (e: KeyboardEvent) => {
     e.stopPropagation();
     onClose();
-  });
+  };
+
+  const handleSlideChange = (swiper: SwiperType) => {
+    setLoadedIndices((current) => {
+      const next = new Set(current);
+
+      for (const index of getNearbyImageIndices(swiper.realIndex, images.length)) {
+        next.add(index);
+      }
+
+      return next;
+    });
+  };
+
+  useEscapeKeyDown(handleEscapeKeyDown);
 
   useHandleOutside({
     containerRef,
@@ -53,18 +80,23 @@ export default function ImageModal({ images, alt, initialIndex, onClose }: Image
             loop={images.length > 1}
             initialSlide={initialIndex}
             className="h-full w-full"
+            onSlideChange={handleSlideChange}
           >
             {images.map((src, index) => (
               <SwiperSlide key={index}>
                 <div className="relative h-full w-full">
-                  <Image
-                    src={src}
-                    alt={`${alt} ${index + 1}`}
-                    fill
-                    sizes="100vw"
-                    className="object-contain select-none"
-                    draggable={false}
-                  />
+                  {loadedIndices.has(index) ? (
+                    <Image
+                      src={src}
+                      alt={`${alt} ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 92vw, 75vw"
+                      className="object-contain select-none"
+                      draggable={false}
+                    />
+                  ) : (
+                    <div aria-hidden="true" className="h-full w-full bg-black/20" />
+                  )}
                 </div>
               </SwiperSlide>
             ))}

@@ -1,14 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import type { ActivityList } from '@/types/activity';
-import ImageModal from './ImageModal';
-import useBooleanState from '@/hooks/useBooleanState';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
 
 interface ActivityCardProps {
   year: string;
@@ -18,17 +11,16 @@ interface ActivityCardProps {
   images: string[];
 }
 
+function ActivityMediaSkeleton() {
+  return <div aria-hidden="true" className="h-96.5 w-171.5 rounded-xl bg-[#f4f4f4]" />;
+}
+
+const ActivityMediaCarousel = dynamic(() => import('./ActivityMediaCarousel'), {
+  loading: ActivityMediaSkeleton,
+  ssr: false,
+});
+
 function ActivityCard({ year, month, title, description, images }: ActivityCardProps) {
-  const [isOpenImageModal, openImageModal, closeImageModal] = useBooleanState(false);
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const canSwipe = images.length > 1;
-
-  const handleImageClick = (index: number) => {
-    setImageIndex(index);
-    openImageModal();
-  };
-
   return (
     <div className="flex justify-between gap-5">
       <div className="w-80 leading-[150%] whitespace-pre-line">
@@ -39,27 +31,7 @@ function ActivityCard({ year, month, title, description, images }: ActivityCardP
         <div className="text-[15px]">{description}</div>
       </div>
 
-      <div className="relative h-96.5 w-171.5 shrink-0">
-        <Swiper modules={[Navigation]} navigation={canSwipe} className="h-full w-full">
-          {images.map((src, index) => (
-            <SwiperSlide key={src} className="relative">
-              <button type="button" onClick={() => handleImageClick(index)} className="relative block h-96.5 w-171.5">
-                <Image
-                  src={src}
-                  alt={`${title} 이미지 ${index + 1}/${images.length}`}
-                  fill
-                  sizes="686px"
-                  className="object-contain"
-                />
-              </button>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-
-      {isOpenImageModal && (
-        <ImageModal images={images} alt={`${title} 이미지`} initialIndex={imageIndex} onClose={closeImageModal} />
-      )}
+      <ActivityMediaCarousel images={images} title={title} />
     </div>
   );
 }
