@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useRef } from 'react';
+import { useId, useRef, type KeyboardEvent, type MouseEvent } from 'react';
 import useHandleOutside from '@/hooks/useOutsideClick';
 import ArrowDown from '@/assets/svg/polygon-icon.svg';
 import useEscapeKeyDown from '@/hooks/useEscapeKeyDown';
@@ -24,16 +24,34 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
 
-  const handleOptionSelect = (value: string) => () => {
-    onSelect(value);
+  const handleOptionSelect = (event: MouseEvent<HTMLDivElement>) => {
+    const optionValue = event.currentTarget.dataset.value;
+
+    if (!optionValue) {
+      return;
+    }
+
+    onSelect(optionValue);
     closeMenu();
   };
-  const handleOptionKeyDown = (optionValue: string) => (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
+
+  const handleOptionKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const optionValue = event.currentTarget.dataset.value;
+
+    if (!optionValue) {
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
       onSelect(optionValue);
       closeMenu();
     }
+  };
+
+  const handleEscapeKeyDown = (event: globalThis.KeyboardEvent) => {
+    event.stopPropagation();
+    closeMenu();
   };
 
   const selectedOption = options.find((option) => option.value === value);
@@ -45,10 +63,7 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
     onOutsideClick: closeMenu,
   });
 
-  useEscapeKeyDown((e) => {
-    e.stopPropagation();
-    closeMenu();
-  });
+  useEscapeKeyDown(handleEscapeKeyDown);
 
   return (
     <>
@@ -81,9 +96,10 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
                   role="option"
                   tabIndex={0}
                   aria-selected={isSelected}
+                  data-value={option.value}
                   key={option.value}
-                  onClick={handleOptionSelect(option.value)}
-                  onKeyDown={handleOptionKeyDown(option.value)}
+                  onClick={handleOptionSelect}
+                  onKeyDown={handleOptionKeyDown}
                   className="w-full cursor-pointer border-b border-b-[#dbdbdb] py-2 text-center last:border-b-0"
                 >
                   {option.label}

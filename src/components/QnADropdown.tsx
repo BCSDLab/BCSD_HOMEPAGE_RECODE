@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect, type MouseEvent } from 'react';
 import DownArrow from '@/assets/svg/main/dropdown-down-arrow.svg';
 import { QnAData } from '@/static/main/QnA';
 
@@ -16,17 +16,23 @@ export default function QnADropdown() {
       refs.current[index] = el;
     };
 
-  useLayoutEffect(() => {
-    setHeights((prev) => prev.map((_, i) => refs.current[i]?.scrollHeight ?? 0));
-  }, [isOpen]);
+  const handleToggleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    const index = Number(event.currentTarget.dataset.index);
 
-  const toggle = (i: number) => {
+    if (Number.isNaN(index)) {
+      return;
+    }
+
     setIsOpen((prev) => {
       const next = [...prev];
-      next[i] = !next[i];
+      next[index] = !next[index];
       return next;
     });
   };
+
+  useLayoutEffect(() => {
+    setHeights((prev) => prev.map((_, i) => refs.current[i]?.scrollHeight ?? 0));
+  }, [isOpen]);
 
   return (
     <div className="mt-32.5 flex w-full justify-center gap-8 p-10">
@@ -49,9 +55,10 @@ export default function QnADropdown() {
               <button
                 type="button"
                 id={triggerId}
+                data-index={index}
                 aria-expanded={isDropDownOpen}
                 aria-controls={contentId}
-                onClick={() => toggle(index)}
+                onClick={handleToggleClick}
                 className="flex w-full items-center justify-between bg-[#F9F9F9] p-4.25 text-left"
               >
                 <span className="text-[20px] leading-[130%] font-medium">{qna.question}</span>
