@@ -15,6 +15,10 @@ export default function MentorSlider() {
   const [isPlaying, setIsPlaying] = useState(true);
   const swiperRef = useRef<SwiperType | null>(null);
 
+  const handleSwiperMount = (swiper: SwiperType) => {
+    swiperRef.current = swiper;
+  };
+
   const handleTogglePlay = () => {
     if (swiperRef.current) {
       if (isPlaying) {
@@ -37,9 +41,7 @@ export default function MentorSlider() {
           delay: 2000,
           disableOnInteraction: false,
         }}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
+        onSwiper={handleSwiperMount}
         className="w-full"
       >
         {mentorData.mentors.map((mentor) => (

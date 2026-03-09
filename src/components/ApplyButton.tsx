@@ -28,11 +28,21 @@ export default function ApplyButton({ className, label = '지원하기' }: Apply
     triggerRef.current?.focus();
   }, [close]);
 
-  useEscapeKeyDown((e) => {
+  const handleEscapeKeyDown = (e: KeyboardEvent) => {
     if (!isOpen) return;
     e.stopPropagation();
     closeMenu();
-  });
+  };
+
+  const setPlayStoreItemRef = (element: HTMLAnchorElement | null) => {
+    menuItemRefs.current[0] = element;
+  };
+
+  const setAppStoreItemRef = (element: HTMLAnchorElement | null) => {
+    menuItemRefs.current[1] = element;
+  };
+
+  useEscapeKeyDown(handleEscapeKeyDown);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -118,9 +128,7 @@ export default function ApplyButton({ className, label = '지원하기' }: Apply
           className="absolute top-full left-1/2 z-50 mt-2 w-40 -translate-x-1/2 overflow-hidden rounded-xl bg-white shadow-lg"
         >
           <Link
-            ref={(el) => {
-              menuItemRefs.current[0] = el;
-            }}
+            ref={setPlayStoreItemRef}
             href={URLS.STORE.PLAY_STORE}
             target="_blank"
             rel="noopener noreferrer"
@@ -131,9 +139,7 @@ export default function ApplyButton({ className, label = '지원하기' }: Apply
             Play Store
           </Link>
           <Link
-            ref={(el) => {
-              menuItemRefs.current[1] = el;
-            }}
+            ref={setAppStoreItemRef}
             href={URLS.STORE.APP_STORE}
             target="_blank"
             rel="noopener noreferrer"
