@@ -107,7 +107,7 @@ export default function ImageModal({ images, alt, initialIndex, onClose }: Image
             className="absolute top-3 right-3 z-10 rounded-full bg-black/55 p-2"
             aria-label="닫기"
           >
-            <CloseIcon />
+            <Image src={CloseIcon} alt="" aria-hidden />
           </button>
         </div>
       </div>

@@ -1,8 +1,8 @@
-import type { ComponentType, SVGProps } from 'react';
+import Image, { type StaticImageData } from 'next/image';
 import clsx from 'clsx';
 
 interface TechStackProps {
-  techStack: ComponentType<SVGProps<SVGSVGElement>>[];
+  techStack: StaticImageData[];
 }
 
 export default function TechStack({ techStack }: TechStackProps) {
@@ -26,9 +26,9 @@ export default function TechStack({ techStack }: TechStackProps) {
             !isEvenGrid && (techStack.length === 7 ? 'max-w-190' : 'max-w-250'),
           )}
         >
-          {techStack.map((Icon, i) => (
+          {techStack.map((iconSrc, i) => (
             <div key={i} className="flex items-center justify-center">
-              <Icon aria-hidden />
+              <Image src={iconSrc} alt="" aria-hidden />
             </div>
           ))}
         </div>

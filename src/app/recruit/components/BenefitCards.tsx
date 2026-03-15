@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import clsx from 'clsx';
 import { type Benefit, BENEFITS } from '@/static/recruit/benefit';
 
-function BenefitCard({ title, descriptions, Icon, offset }: Benefit) {
+function BenefitCard({ title, descriptions, iconSrc, offset }: Benefit) {
   return (
     <div
       className={clsx(
@@ -14,7 +15,7 @@ function BenefitCard({ title, descriptions, Icon, offset }: Benefit) {
       <div className="mt-1.5 pb-25 text-center text-[17px] leading-[150%] whitespace-pre-line text-neutral-200">
         {descriptions}
       </div>
-      <Icon />
+      <Image src={iconSrc} alt="" aria-hidden />
     </div>
   );
 }

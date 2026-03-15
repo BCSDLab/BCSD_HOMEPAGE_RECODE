@@ -18,15 +18,6 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'ca.slack-edge.com' },
     ],
   },
-
-  turbopack: {
-    rules: {
-      '**/*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
-  },
 };
 
 export default nextConfig;

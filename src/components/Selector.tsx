@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useId, useRef, type KeyboardEvent, type MouseEvent } from 'react';
 import useHandleOutside from '@/hooks/useOutsideClick';
 import ArrowDown from '@/assets/svg/polygon-icon.svg';
@@ -79,7 +80,10 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
           className="relative flex w-full items-center justify-center rounded-full bg-[#f4f4f4] py-2"
         >
           <div className="mx-auto text-[17px]">{showLabel}</div>
-          <ArrowDown
+          <Image
+            src={ArrowDown}
+            alt=""
+            aria-hidden
             className={`absolute right-4 transform transition-transform duration-200 ${
               isOpen ? 'rotate-180' : 'rotate-0'
             }`}

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState, useLayoutEffect, type MouseEvent } from 'react';
 import DownArrow from '@/assets/svg/main/dropdown-down-arrow.svg';
@@ -63,7 +64,7 @@ export default function QnADropdown() {
               >
                 <span className="text-[20px] leading-[130%] font-medium">{qna.question}</span>
                 <span className={`transition-transform duration-300 ${isDropDownOpen ? 'rotate-180' : ''}`}>
-                  <DownArrow />
+                  <Image src={DownArrow} alt="" aria-hidden />
                 </span>
               </button>
 

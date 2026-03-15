@@ -1,4 +1,6 @@
 declare module '*.svg' {
-  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  import type { StaticImageData } from 'next/image';
+
+  const content: StaticImageData;
   export default content;
 }

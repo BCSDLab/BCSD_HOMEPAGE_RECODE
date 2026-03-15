@@ -1,4 +1,4 @@
-import type { ComponentType, SVGProps } from 'react';
+import type { StaticImageData } from 'next/image';
 
 export type TrackName =
   | 'frontend'
@@ -37,5 +37,5 @@ export interface Curriculum {
   track: TrackName;
   displayName: string;
   weeks: CurriculumWeek[];
-  techStack: ComponentType<SVGProps<SVGSVGElement>>[];
+  techStack: StaticImageData[];
 }

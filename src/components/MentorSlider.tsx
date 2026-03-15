@@ -67,7 +67,7 @@ export default function MentorSlider() {
           className="cursor-pointer"
           onClick={handleTogglePlay}
         >
-          {isPlaying ? <StopButtonIcon /> : <PlayButtonIcon />}
+          <Image src={isPlaying ? StopButtonIcon : PlayButtonIcon} alt="" aria-hidden />
         </button>
       </div>
     </div>

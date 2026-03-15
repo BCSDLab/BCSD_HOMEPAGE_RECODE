@@ -128,13 +128,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
           <div className="flex items-center justify-center gap-4">
             <Link href={URLS.SOCIAL.FACEBOOK}>
-              <FacebookIcon />
+              <Image src={FacebookIcon} alt="" aria-hidden />
             </Link>
             <Link href={URLS.SOCIAL.INSTAGRAM}>
-              <InstagramIcon />
+              <Image src={InstagramIcon} alt="" aria-hidden />
             </Link>
             <Link href={URLS.SOCIAL.YOUTUBE}>
-              <YoutubeIcon />
+              <Image src={YoutubeIcon} alt="" aria-hidden />
             </Link>
           </div>
         </footer>
