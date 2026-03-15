@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { tracks } from '@/app/track/components/TrackTabs';
 
+export const dynamic = 'force-static';
+
 const activityRoutes = ['/activity/event', '/activity/game', '/activity/koin'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
