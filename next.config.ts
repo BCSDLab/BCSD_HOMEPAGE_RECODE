@@ -1,11 +1,14 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'export',
+
   reactStrictMode: true,
 
   reactCompiler: true,
 
   images: {
+    unoptimized: true,
     deviceSizes: [640, 768, 1024, 1280, 1440, 1600, 1920],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
