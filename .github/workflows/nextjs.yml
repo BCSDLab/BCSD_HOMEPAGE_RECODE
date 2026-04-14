@@ -75,7 +75,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
   notify:
-    needs: [build-and-deploy]
+    needs: [build, deploy]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -93,12 +93,19 @@ jobs:
             core.setOutput('actorName', JSON.stringify(matched?.name ?? '${{ github.actor }}'));
 
       - name: Send Slack Notification
+        env:
+          ACTOR_RAW: ${{ fromJSON(steps.resolve_actor.outputs.actorName) }}
+          COMMIT_MSG_RAW: ${{ github.event.head_commit.message || '' }}
         run: |
-          STATUS="${{ needs.build-and-deploy.result }}"
+          if [[ "${{ needs.build.result }}" != "success" ]]; then
+            STATUS="${{ needs.build.result }}"
+          else
+            STATUS="${{ needs.deploy.result }}"
+          fi
           ENVIRONMENT=$([[ "${{ github.ref_name }}" == "main" ]] && echo "Production" || echo "Stage")
-          COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | head -1)
+          COMMIT_MSG=$(printf '%s\n' "$COMMIT_MSG_RAW" | head -1)
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          ACTOR=${{ steps.resolve_actor.outputs.actorName }}
+          ACTOR="$ACTOR_RAW"
 
           BODY=$(jq -n \
             --arg status "$STATUS" \
