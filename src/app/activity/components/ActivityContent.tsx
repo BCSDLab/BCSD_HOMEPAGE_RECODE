@@ -1,7 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
-import type { ActivityCategory, ActivityList } from '@/types/activity';
+import type { ActivityCategorySummary, ActivityTimelineGroup } from '@/api/activities';
 import ActivityCards from './ActivityCards';
 import YearSelect from './YearSelector';
 import ActivityTabs from './ActivityTabs';
@@ -29,16 +29,18 @@ function subscribeToSelectedYear(onStoreChange: () => void) {
 }
 
 interface ActivityContentProps {
-  category: ActivityCategory;
-  activityGroups: ActivityList[];
+  categories: ActivityCategorySummary[];
+  category: string;
+  timeline: ActivityTimelineGroup[];
   years: string[];
   defaultYear: string;
   pathname: string;
 }
 
 export default function ActivityContent({
+  categories,
   category,
-  activityGroups,
+  timeline,
   years,
   defaultYear,
   pathname,
@@ -67,15 +69,15 @@ export default function ActivityContent({
   return (
     <div className="mt-20 mb-30 px-50">
       <div className="flex justify-between">
-        <ActivityTabs current={category} selectedYear={selectedYear} defaultYear={defaultYear} />
+        <ActivityTabs categories={categories} current={category} selectedYear={selectedYear} defaultYear={defaultYear} />
         {defaultYear && selectedYear && (
           <YearSelect years={years} selectedYear={selectedYear} onSelect={handleSelectYear} />
         )}
       </div>
 
       <div className="mt-36">
-        {selectedYear && activityGroups.length > 0 && (
-          <ActivityCards year={selectedYear} activityList={activityGroups} />
+        {selectedYear && timeline.length > 0 && (
+          <ActivityCards category={category} year={selectedYear} timeline={timeline} />
         )}
       </div>
     </div>

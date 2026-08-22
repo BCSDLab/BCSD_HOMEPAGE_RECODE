@@ -9,6 +9,8 @@ WORKDIR /app
 RUN npm install -g pnpm@10.14.0
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ARG INTERNAL_API_ORIGIN
+ENV INTERNAL_API_ORIGIN=$INTERNAL_API_ORIGIN
 RUN pnpm build
 
 FROM node:22-alpine AS runner
