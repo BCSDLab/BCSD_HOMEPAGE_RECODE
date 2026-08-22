@@ -1,12 +1,10 @@
 import type { MetadataRoute } from 'next';
-import { tracks } from '@/app/track/components/TrackTabs';
+import { listTracks } from '@/api/tracks';
+import { listActivityCategories } from '@/api/activities';
 
-export const dynamic = 'force-static';
-
-const activityRoutes = ['/activity/event', '/activity/game', '/activity/koin'] as const;
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const [tracks, categories] = await Promise.all([listTracks(), listActivityCategories()]);
 
   return [
     {
@@ -21,8 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    ...activityRoutes.map((route) => ({
-      url: `https://bcsdlab.com${route}`,
+    ...categories.map(({ slug }) => ({
+      url: `https://bcsdlab.com/activity/${slug}`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.8,

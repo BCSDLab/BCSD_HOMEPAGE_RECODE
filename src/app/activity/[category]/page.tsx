@@ -1,40 +1,21 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { ActivityCategory, ActivityList } from '@/types/activity';
-import { getActivity } from '@/static/activity';
+import { getActivityTimeline, listActivityCategories } from '@/api/activities';
 import ActivityContent from '../components/ActivityContent';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
-const getYears = (groups: ActivityList[]) => groups.map((g) => g.year).sort((a, b) => Number(b) - Number(a));
+const DEFAULT_HERO_IMAGE = 'https://image.bcsdlab.com/bcsd_activity_page.png';
 
-const categoryInfo: Record<ActivityCategory, { title: string; description: string }> = {
-  event: {
-    title: '이벤트',
-    description: 'BCSD에서 진행한 다양한 이벤트와 행사를 확인하세요.',
-  },
-  game: {
-    title: '게임',
-    description: 'BCSD 멤버들이 개발한 게임 프로젝트를 만나보세요.',
-  },
-  koin: {
-    title: 'KOIN',
-    description: 'BCSD의 대표 프로젝트 KOIN의 개발 히스토리를 확인하세요.',
-  },
-};
-
-const isActivityCategory = (value: string): value is ActivityCategory =>
-  Object.prototype.hasOwnProperty.call(categoryInfo, value);
-
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return (Object.keys(categoryInfo) as ActivityCategory[]).map((category) => ({ category }));
+export async function generateStaticParams() {
+  const categories = await listActivityCategories();
+  return categories.map(({ slug }) => ({ category: slug }));
 }
 
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
   const { category } = await params;
-  const info = isActivityCategory(category) ? categoryInfo[category] : null;
+  const categories = await listActivityCategories();
+  const info = categories.find((c) => c.slug === category);
 
   if (!info) {
     return {
@@ -43,30 +24,32 @@ export async function generateMetadata({ params }: ActivityPageProps): Promise<M
     };
   }
 
+  const description = info.headline ?? `BCSD ${info.name} 활동을 확인하세요.`;
+
   return {
-    title: `${info.title} 활동`,
+    title: `${info.name} 활동`,
     alternates: {
       canonical: `/activity/${category}`,
     },
-    description: info.description,
+    description,
     openGraph: {
       url: `https://bcsdlab.com/activity/${category}`,
-      title: `${info.title} 활동 | BCSD`,
-      description: info.description,
+      title: `${info.name} 활동 | BCSD`,
+      description,
       images: [
         {
-          url: 'https://image.bcsdlab.com/bcsd_activity_page.png',
+          url: info.heroImageUrl ?? DEFAULT_HERO_IMAGE,
           width: 1440,
           height: 587,
-          alt: `BCSD ${info.title} 활동`,
+          alt: `BCSD ${info.name} 활동`,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${info.title} 활동 | BCSD`,
-      description: info.description,
-      images: ['https://image.bcsdlab.com/bcsd_activity_page.png'],
+      title: `${info.name} 활동 | BCSD`,
+      description,
+      images: [info.heroImageUrl ?? DEFAULT_HERO_IMAGE],
     },
   };
 }
@@ -78,19 +61,27 @@ interface ActivityPageProps {
 export default async function ActivityPage({ params }: ActivityPageProps) {
   const { category } = await params;
 
-  if (!isActivityCategory(category)) {
+  const [categories, timeline] = await Promise.all([listActivityCategories(), getActivityTimeline(category)]);
+  const currentCategory = categories.find((c) => c.slug === category);
+  if (!currentCategory) {
     notFound();
   }
 
-  const activityGroups = await getActivity(category);
-  const years = getYears(activityGroups);
+  const years = timeline.map((group) => String(group.year));
   const defaultYear = years[0] ?? '';
 
   return (
     <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
         <header className="relative aspect-1440/587 w-full">
-          <Image src="https://image.bcsdlab.com/bcsd_activity_page.png" alt="BCSD 활동 대표 이미지" fill sizes="100vw" priority />
+          <Image
+            src={currentCategory.heroImageUrl ?? DEFAULT_HERO_IMAGE}
+            alt="BCSD 활동 대표 이미지"
+            fill
+            sizes="100vw"
+            priority
+            unoptimized
+          />
           <div className="absolute inset-0 flex items-end">
             <h1 className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] leading-[120%] font-semibold text-white">
               <span className="block">BCSD에서는</span>
@@ -101,8 +92,9 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
         </header>
 
         <ActivityContent
+          categories={categories}
           category={category}
-          activityGroups={activityGroups}
+          timeline={timeline}
           years={years}
           defaultYear={defaultYear}
           pathname={`/activity/${category}`}

@@ -34,6 +34,8 @@ jobs:
           context: .
           push: true
           platforms: linux/arm64
+          build-args: |
+            INTERNAL_API_ORIGIN=${{ secrets.INTERNAL_API_ORIGIN }}
           tags: |
             ghcr.io/bcsdlab/bcsd-homepage:latest
             ghcr.io/bcsdlab/bcsd-homepage:${{ github.sha }}
@@ -56,4 +58,6 @@ jobs:
               --name bcsd-homepage \
               --restart unless-stopped \
               -p 127.0.0.1:3003:3000 \
+              -e REVALIDATE_SECRET='${{ secrets.REVALIDATE_SECRET }}' \
+              -e INTERNAL_API_ORIGIN='${{ secrets.INTERNAL_API_ORIGIN }}' \
               ghcr.io/bcsdlab/bcsd-homepage:latest

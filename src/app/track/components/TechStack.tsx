@@ -1,8 +1,9 @@
-import Image, { type StaticImageData } from 'next/image';
+import Image from 'next/image';
 import clsx from 'clsx';
+import type { TechStackItem } from '@/api/tracks';
 
 interface TechStackProps {
-  techStack: StaticImageData[];
+  techStack: TechStackItem[];
 }
 
 export default function TechStack({ techStack }: TechStackProps) {
@@ -26,9 +27,9 @@ export default function TechStack({ techStack }: TechStackProps) {
             !isEvenGrid && (techStack.length === 7 ? 'max-w-190' : 'max-w-250'),
           )}
         >
-          {techStack.map((iconSrc, i) => (
-            <div key={i} className="flex items-center justify-center">
-              <Image src={iconSrc} alt="" aria-hidden />
+          {techStack.map((tech) => (
+            <div key={tech.name} className="flex items-center justify-center">
+              <Image src={tech.iconUrl} alt={tech.name} width={64} height={64} unoptimized />
             </div>
           ))}
         </div>
