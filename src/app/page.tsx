@@ -1,17 +1,19 @@
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { QnAData } from '@/static/main/QnA';
+import { getHome } from '@/api/home';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 import ApplyButton from '@/components/ApplyButton';
 
 const MentorSlider = dynamic(() => import('@/components/MentorSlider'));
 const QnADropdown = dynamic(() => import('@/components/QnADropdown'));
 
-export default function Home() {
+export default async function Home() {
+  const { mentors, qna } = await getHome();
+
   const faqStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: QnAData.map((item) => ({
+    mainEntity: qna.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
@@ -110,7 +112,7 @@ export default function Home() {
                 />
               </div>
             </section>
-            <MentorSlider />
+            {mentors.length > 0 && <MentorSlider mentors={mentors} />}
           </div>
           <section className="relative flex h-245 flex-col items-center justify-center bg-linear-to-b from-white to-[#F5DBFF]">
             <div className="text-center">
@@ -138,7 +140,7 @@ export default function Home() {
               className="absolute bottom-0 left-0"
             />
           </section>
-          <QnADropdown />
+          <QnADropdown qna={qna} />
         </div>
       </div>
     </main>
