@@ -34,3 +34,8 @@ export async function getHome(): Promise<HomeData> {
   }
   return res.json();
 }
+
+export async function getRecruitLink(): Promise<HomeRecruitLink | null> {
+  const { recruit } = await getHome();
+  return recruit;
+}
