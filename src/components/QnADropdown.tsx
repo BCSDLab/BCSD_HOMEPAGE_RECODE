@@ -4,11 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState, useLayoutEffect, type MouseEvent } from 'react';
 import DownArrow from '@/assets/svg/main/dropdown-down-arrow.svg';
-import { QnAData } from '@/static/main/QnA';
+import type { HomeQna } from '@/api/home';
 
-export default function QnADropdown() {
-  const [isOpen, setIsOpen] = useState<boolean[]>(() => Array(QnAData.length).fill(false));
-  const [heights, setHeights] = useState<number[]>(() => Array(QnAData.length).fill(0));
+export default function QnADropdown({ qna: qnaData }: { qna: HomeQna[] }) {
+  const [isOpen, setIsOpen] = useState<boolean[]>(() => Array(qnaData.length).fill(false));
+  const [heights, setHeights] = useState<number[]>(() => Array(qnaData.length).fill(0));
   const refs = useRef<(HTMLDivElement | null)[]>([]);
 
   const setItemRef =
@@ -46,13 +46,13 @@ export default function QnADropdown() {
       </div>
 
       <div className="w-1/3 space-y-4">
-        {QnAData.map((qna, index) => {
+        {qnaData.map((qna, index) => {
           const isDropDownOpen = isOpen[index];
-          const triggerId = `qna-trigger-${qna.id}`;
-          const contentId = `qna-content-${qna.id}`;
+          const triggerId = `qna-trigger-${index}`;
+          const contentId = `qna-content-${index}`;
 
           return (
-            <div key={qna.id} className="overflow-hidden rounded-lg border border-gray-200">
+            <div key={index} className="overflow-hidden rounded-lg border border-gray-200">
               <button
                 type="button"
                 id={triggerId}
