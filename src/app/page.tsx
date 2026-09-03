@@ -8,7 +8,7 @@ const MentorSlider = dynamic(() => import('@/components/MentorSlider'));
 const QnADropdown = dynamic(() => import('@/components/QnADropdown'));
 
 export default async function Home() {
-  const { mentors, qna } = await getHome();
+  const { mentors, qna, recruit } = await getHome();
 
   const faqStructuredData = {
     '@context': 'https://schema.org',
@@ -43,7 +43,7 @@ export default async function Home() {
                 <br />
                 BCSD와 함께 성장하세요.
               </h1>
-              <ApplyButton className="mt-6 rounded-[10px] bg-[#C360F3] px-5 py-3.25 text-white" />
+              <ApplyButton className="mt-6 rounded-[10px] bg-[#C360F3] px-5 py-3.25 text-white" recruit={recruit} />
             </div>
           </div>
         </header>
@@ -126,7 +126,11 @@ export default async function Home() {
             <div className="mt-16">
               <h2 className="text-center text-[34px] leading-[120%] font-medium">또 하나의 행성 할 사람?</h2>
               <div className="text-center">
-                <ApplyButton className="mt-6 rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] text-[#FFF]" label="저요!" />
+                <ApplyButton
+                  className="mt-6 rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] text-[#FFF]"
+                  label="저요!"
+                  recruit={recruit}
+                />
               </div>
             </div>
             <Image

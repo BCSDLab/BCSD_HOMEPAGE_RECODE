@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { type TrackItem, TRACKS } from '@/static/recruit/trackDescription';
+import type { HomeRecruitLink } from '@/api/home';
 import ApplyButton from '@/components/ApplyButton';
 import { RECRUIT_TERM } from '@/constants/recruit';
 
@@ -22,7 +23,7 @@ function TrackCard({ title, description, iconSrc }: TrackItem) {
   );
 }
 
-export default function TrackSection() {
+export default function TrackSection({ recruit }: { recruit: HomeRecruitLink | null }) {
   return (
     <section className="mt-6">
       <div className="text-center">
@@ -36,7 +37,7 @@ export default function TrackSection() {
           <div>함께 프로젝트를 진행하며 자신의 능력을 향상시키고</div>
           <div>싶은 분들의 많은 지원바랍니다.</div>
         </div>
-        <ApplyButton className="rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] font-medium text-white" />
+        <ApplyButton className="rounded-[10px] bg-[#D365FD] p-2.5 text-[17px] font-medium text-white" recruit={recruit} />
       </div>
 
       <div className="mt-15 grid grid-cols-3 gap-6">

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import BeginnerTimeLine from './components/Timeline';
 import BenefitCards from './components/BenefitCards';
 import TrackSection from './components/TrackSection';
+import { getRecruitLink } from '@/api/home';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 import { RECRUIT_TERM } from '@/constants/recruit';
 
@@ -43,7 +44,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Recruit() {
+export default async function Recruit() {
+  const recruit = await getRecruitLink();
+
   return (
     <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
@@ -78,7 +81,7 @@ export default function Recruit() {
           <BenefitCards />
         </div>
         <div className="mb-42.5 flex content-center justify-center">
-          <TrackSection />
+          <TrackSection recruit={recruit} />
         </div>
       </div>
     </main>
