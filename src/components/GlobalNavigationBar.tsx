@@ -24,6 +24,12 @@ export default function GlobalNavigationBar({ location }: GlobalNavigationBarPro
         >
           Activity
         </Link>
+        <Link
+          href="/game"
+          className={`cursor-pointer hover:underline ${location === 'Game' ? 'text-[#C360F3]' : ''}`}
+        >
+          Game
+        </Link>
         <Link href="https://blog.bcsdlab.com" className="cursor-pointer hover:underline">
           Blog
         </Link>
