@@ -3,10 +3,12 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getGame, listGames } from '@/api/games';
+import GameInfoCard from '@/app/game/components/GameInfoCard';
 import GameMembers from '@/app/game/components/GameMembers';
 import GamePlayer from '@/app/game/components/GamePlayer';
 import GameRatingBadge from '@/app/game/components/GameRatingBadge';
 import GameScreenshots from '@/app/game/components/GameScreenshots';
+import RelatedGames from '@/app/game/components/RelatedGames';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 interface GameDetailPageProps {
@@ -32,79 +34,88 @@ export async function generateMetadata({ params }: GameDetailPageProps): Promise
 
 export default async function GameDetailPage({ params }: GameDetailPageProps) {
   const { slug } = await params;
-  const game = await getGame(slug);
+  const [game, allGames] = await Promise.all([getGame(slug), listGames()]);
 
   if (!game) {
     notFound();
   }
 
+  const relatedGames = allGames.filter((g) => g.slug !== slug).slice(0, 4);
+
   return (
     <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
-        <header className="relative flex h-70 w-full items-end bg-[linear-gradient(180deg,#1a1a1a_0%,#3a1a4a_100%)] pb-10 pl-30">
-          <div>
-            <div className="text-sm text-[#d9a6f5]">{game.trackName ?? '게임'} · {game.teamLabel ?? 'BCSD'}</div>
-            <h1 className="mt-1 text-[34px] leading-[120%] font-medium text-white">{game.name}</h1>
-          </div>
+        <header className="relative flex h-24 w-full items-center bg-[#111] pl-30">
+          <Link href="/game" className="text-[13px] text-[#9d9d9d] hover:text-white hover:underline">
+            ← 게임 목록으로
+          </Link>
           <GlobalNavigationBar location="Game" />
         </header>
 
-        <article className="mx-auto max-w-200 px-6 pt-16 pb-30">
-          <Link href="/game" className="text-[15px] text-[#9d9d9d] hover:underline">
-            ← 게임 목록으로
-          </Link>
-
-          <p className="mt-4 text-[19px] text-[#555]">{game.oneLiner}</p>
-
-          {game.activeBuild?.buildFileUrl ? (
-            <div className="mt-8">
-              <GamePlayer buildFileUrl={game.activeBuild.buildFileUrl} name={game.name} />
-            </div>
-          ) : (
-            <>
-              {game.thumbnailUrl && (
-                <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-2xl bg-[#f4f4f4]">
-                  <Image src={game.thumbnailUrl} alt={game.name} fill sizes="800px" className="object-cover" priority />
+        <div className="mx-auto max-w-300 px-6 py-14">
+          <div className="grid grid-cols-[1fr_320px] gap-12">
+            <div className="min-w-0">
+              {game.activeBuild?.buildFileUrl ? (
+                <GamePlayer buildFileUrl={game.activeBuild.buildFileUrl} name={game.name} />
+              ) : (
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-[#111]">
+                  {game.thumbnailUrl && (
+                    <Image src={game.thumbnailUrl} alt={game.name} fill sizes="900px" className="object-cover" priority />
+                  )}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-[15px] text-white">
+                    플레이 가능한 웹 빌드는 아직 준비 중입니다
+                  </div>
                 </div>
               )}
-              <div className="mt-8 rounded-2xl border border-[#eee] bg-[#fafafa] p-5 text-[15px] text-[#777]">
-                플레이 가능한 웹 빌드는 아직 준비 중입니다. 빌드가 등록되면 이 페이지에서 바로 플레이할 수 있습니다.
-              </div>
-            </>
-          )}
 
-          {game.members.length > 0 && (
-            <section className="mt-12">
-              <h2 className="text-xl font-semibold">만든 사람들</h2>
-              <div className="mt-4">
-                <GameMembers members={game.members} />
-              </div>
-            </section>
-          )}
+              <h1 className="mt-8 text-[32px] leading-[120%] font-bold">{game.name}</h1>
+              <p className="mt-2 text-[17px] text-[#777]">
+                {game.trackName ?? '게임'} · {game.teamLabel ?? 'BCSD'}
+              </p>
 
-          {game.screenshots.length > 0 && (
-            <section className="mt-12">
-              <h2 className="text-xl font-semibold">스크린샷</h2>
-              <div className="mt-4">
-                <GameScreenshots screenshots={game.screenshots} name={game.name} />
-              </div>
-            </section>
-          )}
+              {game.members.length > 0 && (
+                <section className="mt-10">
+                  <h2 className="text-xl font-semibold">만든 사람들</h2>
+                  <div className="mt-4">
+                    <GameMembers members={game.members} />
+                  </div>
+                </section>
+              )}
 
-          {game.description && (
-            // 백엔드에서 jsoup safelist로 저장 시점에 정제한다(ADR-008 재사용).
-            <div className="prose mt-12 max-w-none" dangerouslySetInnerHTML={{ __html: game.description }} />
-          )}
+              <section className="mt-10">
+                <h2 className="text-xl font-semibold">게임 소개</h2>
+                <p className="mt-3 text-[17px] leading-[150%] text-[#555]">{game.oneLiner}</p>
+                {game.description && (
+                  // 백엔드에서 jsoup safelist로 저장 시점에 정제한다(ADR-008 재사용).
+                  <div className="prose mt-6 max-w-none" dangerouslySetInnerHTML={{ __html: game.description }} />
+                )}
+              </section>
 
-          {game.rating && (
-            <section className="mt-12">
-              <h2 className="text-xl font-semibold">등급정보</h2>
-              <div className="mt-4">
-                <GameRatingBadge rating={game.rating} />
-              </div>
-            </section>
-          )}
-        </article>
+              {game.screenshots.length > 0 && (
+                <section className="mt-10">
+                  <h2 className="text-xl font-semibold">스크린샷</h2>
+                  <div className="mt-4">
+                    <GameScreenshots screenshots={game.screenshots} name={game.name} />
+                  </div>
+                </section>
+              )}
+
+              {game.rating && (
+                <section className="mt-10">
+                  <h2 className="text-xl font-semibold">등급정보</h2>
+                  <div className="mt-4">
+                    <GameRatingBadge rating={game.rating} />
+                  </div>
+                </section>
+              )}
+            </div>
+
+            <aside className="flex flex-none flex-col gap-6">
+              <GameInfoCard game={game} />
+              <RelatedGames games={relatedGames} />
+            </aside>
+          </div>
+        </div>
       </div>
     </main>
   );
