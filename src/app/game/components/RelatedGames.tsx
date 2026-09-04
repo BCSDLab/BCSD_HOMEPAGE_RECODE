@@ -9,8 +9,8 @@ export default function RelatedGames({ games }: { games: GameSummary[] }) {
 
   return (
     <div>
-      <div className="text-[11px] font-semibold tracking-[.1em] text-[#9d9d9d]">다른 게임</div>
-      <div className="mt-4 flex flex-col gap-3">
+      <div className="text-[11px] font-semibold tracking-[.1em] text-[#9d9d9d]">이어서 플레이</div>
+      <div className="mt-4 flex flex-col gap-2">
         {games.map((game) => (
           <Link
             key={game.slug}

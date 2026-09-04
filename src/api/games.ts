@@ -28,6 +28,8 @@ export interface GameActiveBuild {
   version: string;
   status: string;
   buildFileUrl: string | null;
+  canvasWidth: number | null;
+  canvasHeight: number | null;
 }
 
 export interface GameDetail {
