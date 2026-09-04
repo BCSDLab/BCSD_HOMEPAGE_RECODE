@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getGame, listGames } from '@/api/games';
 import GameMembers from '@/app/game/components/GameMembers';
+import GamePlayer from '@/app/game/components/GamePlayer';
 import GameRatingBadge from '@/app/game/components/GameRatingBadge';
 import GameScreenshots from '@/app/game/components/GameScreenshots';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
@@ -55,15 +56,22 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
 
           <p className="mt-4 text-[19px] text-[#555]">{game.oneLiner}</p>
 
-          {game.thumbnailUrl && (
-            <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-2xl bg-[#f4f4f4]">
-              <Image src={game.thumbnailUrl} alt={game.name} fill sizes="800px" className="object-cover" priority />
+          {game.activeBuild?.buildFileUrl ? (
+            <div className="mt-8">
+              <GamePlayer buildFileUrl={game.activeBuild.buildFileUrl} name={game.name} />
             </div>
+          ) : (
+            <>
+              {game.thumbnailUrl && (
+                <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-2xl bg-[#f4f4f4]">
+                  <Image src={game.thumbnailUrl} alt={game.name} fill sizes="800px" className="object-cover" priority />
+                </div>
+              )}
+              <div className="mt-8 rounded-2xl border border-[#eee] bg-[#fafafa] p-5 text-[15px] text-[#777]">
+                플레이 가능한 웹 빌드는 아직 준비 중입니다. 빌드가 등록되면 이 페이지에서 바로 플레이할 수 있습니다.
+              </div>
+            </>
           )}
-
-          <div className="mt-8 rounded-2xl border border-[#eee] bg-[#fafafa] p-5 text-[15px] text-[#777]">
-            플레이 가능한 웹 빌드는 아직 준비 중입니다. 빌드가 등록되면 이 페이지에서 바로 플레이할 수 있습니다.
-          </div>
 
           {game.members.length > 0 && (
             <section className="mt-12">
