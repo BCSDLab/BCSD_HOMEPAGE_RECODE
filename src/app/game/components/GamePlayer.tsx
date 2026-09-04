@@ -38,7 +38,7 @@ export default function GamePlayer({ buildFileUrl, name, version, canvasWidth, c
   const bugReportHref = `mailto:${BUG_REPORT_EMAIL}?subject=${encodeURIComponent(`[버그 신고] ${name}`)}`;
 
   return (
-    <section aria-label={name} className="overflow-hidden rounded-2xl bg-[#111]">
+    <section aria-label={name} className="bg-[#111]">
       <div className="flex items-center justify-between gap-4 px-5 py-3 text-white">
         <div className="flex min-w-0 items-center gap-3">
           <Link href="/game" aria-label="게임 목록으로" className="text-[#9d9d9d] hover:text-white">
