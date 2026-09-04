@@ -7,7 +7,6 @@ import GameMembers from '@/app/game/components/GameMembers';
 import GamePlayer from '@/app/game/components/GamePlayer';
 import GameScreenshots from '@/app/game/components/GameScreenshots';
 import RelatedGames from '@/app/game/components/RelatedGames';
-import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 interface GameDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -43,10 +42,6 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
   return (
     <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
-        <div className="relative h-24 bg-[#111]">
-          <GlobalNavigationBar location="Game" />
-        </div>
-
         {game.activeBuild?.buildFileUrl ? (
           <GamePlayer
             buildFileUrl={game.activeBuild.buildFileUrl}
