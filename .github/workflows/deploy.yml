@@ -65,4 +65,5 @@ jobs:
               -e GAME_BUILD_SECRET='${{ secrets.GAME_BUILD_SECRET }}' \
               -e GAME_BUILD_STORAGE_DIR='/app/game-builds' \
               -e ADMIN_ORIGIN='${{ secrets.ADMIN_ORIGIN }}' \
+              -e PUBLIC_ORIGIN='https://bcsdlab.com' \
               ghcr.io/bcsdlab/bcsd-homepage:latest

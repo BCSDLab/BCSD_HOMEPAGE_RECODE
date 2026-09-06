@@ -6,7 +6,13 @@ import { Readable } from 'node:stream';
 import os from 'node:os';
 import path from 'node:path';
 import { NextRequest, NextResponse } from 'next/server';
-import { ADMIN_ORIGIN, GAME_BUILD_STORAGE_DIR, INTERNAL_API_ORIGIN, GAME_BUILD_SECRET } from '@/lib/gameBuild/config';
+import {
+  ADMIN_ORIGIN,
+  GAME_BUILD_STORAGE_DIR,
+  INTERNAL_API_ORIGIN,
+  GAME_BUILD_SECRET,
+  PUBLIC_ORIGIN,
+} from '@/lib/gameBuild/config';
 import { verifyGameBuildToken } from '@/lib/gameBuild/token';
 import { ArchiveError, atomicSwapDir, extractZipSafely } from '@/lib/gameBuild/archive';
 import { directorySize, detectCanvasSize } from '@/lib/gameBuild/inspect';
@@ -49,7 +55,7 @@ export async function POST(request: NextRequest) {
     const liveDir = path.join(GAME_BUILD_STORAGE_DIR, payload.slug);
     await atomicSwapDir(buildRoot, liveDir);
 
-    const buildFileUrl = `${new URL(request.url).origin}/games/${payload.slug}/index.html`;
+    const buildFileUrl = `${PUBLIC_ORIGIN}/games/${payload.slug}/index.html`;
     await notifyWebhook(payload.buildId, {
       status: 'ACTIVE',
       canvasWidth: canvas?.width ?? null,
