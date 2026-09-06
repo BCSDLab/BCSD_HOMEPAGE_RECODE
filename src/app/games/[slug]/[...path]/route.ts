@@ -5,6 +5,7 @@ import path from 'node:path';
 import { NextRequest, NextResponse } from 'next/server';
 import { GAME_BUILD_STORAGE_DIR } from '@/lib/gameBuild/config';
 import { resolveContentType } from '@/lib/gameBuild/contentType';
+import { findUnityLoaderPrefix, renderUnityIndexHtml, resolveUnityBuildAssets } from '@/lib/gameBuild/unityLoader';
 
 /**
  * 업로드·압축해제된 게임 빌드 정적 파일을 직접 서빙한다(ADR-024). Range는
@@ -28,6 +29,11 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
   try {
     stat = await fs.stat(filePath);
   } catch {
+    // 실제 산출물 7개 전부 index.html 없이 Build 폴더 내용물만 들어있었다 —
+    // 그 자리는 로더 파일명으로 직접 만들어서 응답한다(unityLoader.ts).
+    if (segments.length === 1 && segments[0].toLowerCase() === 'index.html') {
+      return respondWithSynthesizedIndex(root, slug);
+    }
     return new NextResponse(null, { status: 404 });
   }
   if (!stat.isFile()) {
@@ -51,4 +57,19 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 
 function isValidSlug(slug: string): boolean {
   return /^[a-z0-9-]+$/.test(slug);
+}
+
+async function respondWithSynthesizedIndex(root: string, slug: string): Promise<NextResponse> {
+  const prefix = await findUnityLoaderPrefix(root).catch(() => null);
+  if (!prefix) {
+    return new NextResponse(null, { status: 404 });
+  }
+  const assets = await resolveUnityBuildAssets(root, prefix);
+  if (!assets) {
+    return new NextResponse(null, { status: 404 });
+  }
+  const html = renderUnityIndexHtml(slug, assets);
+  return new NextResponse(html, {
+    headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' },
+  });
 }

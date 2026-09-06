@@ -62,26 +62,34 @@ export async function extractZipSafely(zipPath: string, destRoot: string): Promi
     await fs.writeFile(destPath, data);
   }
 
-  const buildRoot = await findIndexHtmlRoot(resolvedDestRoot);
+  const buildRoot = await findBuildRoot(resolvedDestRoot);
   if (!buildRoot) {
-    throw new ArchiveError('index.html을 찾을 수 없습니다.');
+    throw new ArchiveError('index.html도, *.loader.js도 찾을 수 없습니다.');
   }
   return buildRoot;
 }
 
-async function findIndexHtmlRoot(root: string, depth = 0): Promise<string | null> {
+/**
+ * 완성된 사이트(HTML 포함)를 내보내는 빌드도 있고, Unity가 `Build/` 폴더 내용만
+ * 내보내는 빌드(index.html 없이 `*.loader.js`/`*.data`/`*.framework.js`/`*.wasm`만
+ * 있음 — 실제 구글 드라이브 산출물 7개가 전부 이 형태였다)도 있다. 후자는
+ * index.html을 서빙 시점에 직접 만들어 준다(contentType.ts/route.ts 참고).
+ */
+async function findBuildRoot(root: string, depth = 0): Promise<string | null> {
   if (depth > 3) {
     return null;
   }
   const entries = await fs.readdir(root, { withFileTypes: true });
-  if (entries.some((entry) => entry.isFile() && entry.name.toLowerCase() === 'index.html')) {
+  const hasIndexHtml = entries.some((entry) => entry.isFile() && entry.name.toLowerCase() === 'index.html');
+  const hasLoader = entries.some((entry) => entry.isFile() && /\.loader\.js$/i.test(entry.name));
+  if (hasIndexHtml || hasLoader) {
     return root;
   }
   const subdirs = entries.filter((entry) => entry.isDirectory());
   if (subdirs.length !== 1) {
     return null;
   }
-  return findIndexHtmlRoot(path.join(root, subdirs[0].name), depth + 1);
+  return findBuildRoot(path.join(root, subdirs[0].name), depth + 1);
 }
 
 /**
