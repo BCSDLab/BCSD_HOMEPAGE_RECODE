@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getGame, listGames } from '@/api/games';
+import GameInfoCard from '@/app/game/components/GameInfoCard';
 import GameMembers from '@/app/game/components/GameMembers';
-import GameRatingBadge from '@/app/game/components/GameRatingBadge';
+import GamePlayer from '@/app/game/components/GamePlayer';
 import GameScreenshots from '@/app/game/components/GameScreenshots';
-import GlobalNavigationBar from '@/components/GlobalNavigationBar';
+import RelatedGames from '@/app/game/components/RelatedGames';
 
 interface GameDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -31,72 +31,75 @@ export async function generateMetadata({ params }: GameDetailPageProps): Promise
 
 export default async function GameDetailPage({ params }: GameDetailPageProps) {
   const { slug } = await params;
-  const game = await getGame(slug);
+  const [game, allGames] = await Promise.all([getGame(slug), listGames()]);
 
   if (!game) {
     notFound();
   }
 
+  const relatedGames = allGames.filter((g) => g.slug !== slug).slice(0, 3);
+
   return (
     <main className="hide-scrollbar w-full overflow-x-auto">
       <div className="min-w-360">
-        <header className="relative flex h-70 w-full items-end bg-[linear-gradient(180deg,#1a1a1a_0%,#3a1a4a_100%)] pb-10 pl-30">
-          <div>
-            <div className="text-sm text-[#d9a6f5]">{game.trackName ?? '게임'} · {game.teamLabel ?? 'BCSD'}</div>
-            <h1 className="mt-1 text-[34px] leading-[120%] font-medium text-white">{game.name}</h1>
+        {game.activeBuild?.buildFileUrl ? (
+          <GamePlayer
+            buildFileUrl={game.activeBuild.buildFileUrl}
+            name={game.name}
+            version={game.activeBuild.version}
+            canvasWidth={game.activeBuild.canvasWidth}
+            canvasHeight={game.activeBuild.canvasHeight}
+          />
+        ) : (
+          <div className="relative flex aspect-video w-full items-center justify-center bg-[#111]">
+            {game.thumbnailUrl && (
+              <Image src={game.thumbnailUrl} alt={game.name} fill sizes="100vw" className="object-cover opacity-40" priority />
+            )}
+            <p className="relative text-[15px] text-white">플레이 가능한 웹 빌드는 아직 준비 중입니다</p>
           </div>
-          <GlobalNavigationBar location="Game" />
-        </header>
+        )}
 
-        <article className="mx-auto max-w-200 px-6 pt-16 pb-30">
-          <Link href="/game" className="text-[15px] text-[#9d9d9d] hover:underline">
-            ← 게임 목록으로
-          </Link>
+        <div className="mx-auto max-w-300 px-6 py-14">
+          <div className="grid grid-cols-[1fr_320px] gap-12">
+            <div className="min-w-0">
+              <h1 className="text-[32px] leading-[120%] font-bold">{game.name}</h1>
+              <p className="mt-2 text-[15px] text-[#9d9d9d]">
+                {game.teamLabel ?? game.trackName ?? 'BCSD'}
+                {game.activeBuild && <> · v{game.activeBuild.version}</>}
+              </p>
 
-          <p className="mt-4 text-[19px] text-[#555]">{game.oneLiner}</p>
+              <h2 className="mt-10 text-xl font-semibold">게임 소개</h2>
+              <p className="mt-3 text-[17px] leading-[150%] text-[#555]">{game.oneLiner}</p>
+              {game.description && (
+                // 백엔드에서 jsoup safelist로 저장 시점에 정제한다(ADR-008 재사용).
+                <div className="prose mt-6 max-w-none" dangerouslySetInnerHTML={{ __html: game.description }} />
+              )}
 
-          {game.thumbnailUrl && (
-            <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-2xl bg-[#f4f4f4]">
-              <Image src={game.thumbnailUrl} alt={game.name} fill sizes="800px" className="object-cover" priority />
+              {game.members.length > 0 && (
+                <section className="mt-10">
+                  <h2 className="text-xl font-semibold">만든 사람들</h2>
+                  <div className="mt-4">
+                    <GameMembers members={game.members} />
+                  </div>
+                </section>
+              )}
+
+              {game.screenshots.length > 0 && (
+                <section className="mt-10">
+                  <h2 className="text-xl font-semibold">스크린샷</h2>
+                  <div className="mt-4">
+                    <GameScreenshots screenshots={game.screenshots} name={game.name} />
+                  </div>
+                </section>
+              )}
             </div>
-          )}
 
-          <div className="mt-8 rounded-2xl border border-[#eee] bg-[#fafafa] p-5 text-[15px] text-[#777]">
-            플레이 가능한 웹 빌드는 아직 준비 중입니다. 빌드가 등록되면 이 페이지에서 바로 플레이할 수 있습니다.
+            <aside className="flex flex-none flex-col gap-6">
+              <GameInfoCard game={game} />
+              <RelatedGames games={relatedGames} />
+            </aside>
           </div>
-
-          {game.members.length > 0 && (
-            <section className="mt-12">
-              <h2 className="text-xl font-semibold">만든 사람들</h2>
-              <div className="mt-4">
-                <GameMembers members={game.members} />
-              </div>
-            </section>
-          )}
-
-          {game.screenshots.length > 0 && (
-            <section className="mt-12">
-              <h2 className="text-xl font-semibold">스크린샷</h2>
-              <div className="mt-4">
-                <GameScreenshots screenshots={game.screenshots} name={game.name} />
-              </div>
-            </section>
-          )}
-
-          {game.description && (
-            // 백엔드에서 jsoup safelist로 저장 시점에 정제한다(ADR-008 재사용).
-            <div className="prose mt-12 max-w-none" dangerouslySetInnerHTML={{ __html: game.description }} />
-          )}
-
-          {game.rating && (
-            <section className="mt-12">
-              <h2 className="text-xl font-semibold">등급정보</h2>
-              <div className="mt-4">
-                <GameRatingBadge rating={game.rating} />
-              </div>
-            </section>
-          )}
-        </article>
+        </div>
       </div>
     </main>
   );
