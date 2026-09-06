@@ -11,6 +11,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ARG INTERNAL_API_ORIGIN
 ENV INTERNAL_API_ORIGIN=$INTERNAL_API_ORIGIN
+ARG PUBLIC_ORIGIN
+ENV PUBLIC_ORIGIN=$PUBLIC_ORIGIN
 RUN pnpm build
 
 FROM node:22-alpine AS runner

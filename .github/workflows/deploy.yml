@@ -36,6 +36,7 @@ jobs:
           platforms: linux/arm64
           build-args: |
             INTERNAL_API_ORIGIN=${{ secrets.INTERNAL_API_ORIGIN }}
+            PUBLIC_ORIGIN=https://bcsdlab.com
           tags: |
             ghcr.io/bcsdlab/bcsd-homepage:latest
             ghcr.io/bcsdlab/bcsd-homepage:${{ github.sha }}
