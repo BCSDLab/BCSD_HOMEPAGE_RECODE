@@ -1,12 +1,12 @@
-FROM node:22-alpine AS deps
+FROM node:24-alpine AS deps
 WORKDIR /app
-RUN npm install -g pnpm@10.14.0
+RUN npm install -g pnpm@12.3.4
 COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 
-FROM node:22-alpine AS builder
+FROM node:24-alpine AS builder
 WORKDIR /app
-RUN npm install -g pnpm@10.14.0
+RUN npm install -g pnpm@12.3.4
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ARG INTERNAL_API_ORIGIN
@@ -15,7 +15,7 @@ ARG PUBLIC_ORIGIN
 ENV PUBLIC_ORIGIN=$PUBLIC_ORIGIN
 RUN pnpm build
 
-FROM node:22-alpine AS runner
+FROM node:24-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/public ./public
