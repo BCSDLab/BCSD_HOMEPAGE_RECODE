@@ -83,13 +83,60 @@ export function renderUnityIndexHtml(name: string, assets: UnityBuildAssets): st
 <style>
   html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
   #unity-canvas { width: 100%; height: 100%; display: block; }
+  #unity-loading-cover {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #000;
+  }
+  #unity-progress-bar-track {
+    width: min(320px, 70vw);
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+  }
+  #unity-progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    border-radius: 999px;
+    transition: width 0.15s ease-out;
+  }
+  #unity-loading-percent {
+    color: rgba(255, 255, 255, 0.7);
+    font: 12px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 </style>
 </head>
 <body>
 <canvas id="unity-canvas"></canvas>
+<div id="unity-loading-cover">
+  <div id="unity-progress-bar-track">
+    <div id="unity-progress-bar-fill"></div>
+  </div>
+  <div id="unity-loading-percent">0%</div>
+</div>
 <script src="${assets.loaderUrl}"></script>
 <script>
-  createUnityInstance(document.querySelector("#unity-canvas"), ${JSON.stringify(config)});
+  var unityLoadingCover = document.querySelector("#unity-loading-cover");
+  var unityProgressFill = document.querySelector("#unity-progress-bar-fill");
+  var unityLoadingPercent = document.querySelector("#unity-loading-percent");
+
+  createUnityInstance(document.querySelector("#unity-canvas"), ${JSON.stringify(config)}, function (progress) {
+    var percent = Math.round(progress * 100);
+    unityProgressFill.style.width = percent + "%";
+    unityLoadingPercent.textContent = percent + "%";
+  }).then(function () {
+    unityLoadingCover.style.display = "none";
+  }).catch(function (message) {
+    unityLoadingPercent.textContent = "로드 실패";
+    console.error(message);
+  });
 </script>
 </body>
 </html>
