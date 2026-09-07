@@ -13,14 +13,19 @@ const DEFAULT_CLOSED_MESSAGE = '모집이 마감되었습니다.';
 export default function ApplyButton({ className, label = '지원하기', recruit }: ApplyButtonProps) {
   if (!recruit || !recruit.isOpen) {
     return (
-      <span className={`${className} pointer-events-none opacity-60`} aria-disabled="true">
+      <span className={`${className} pointer-events-none inline-block opacity-60`} aria-disabled="true">
         {recruit?.closedMessage || DEFAULT_CLOSED_MESSAGE}
       </span>
     );
   }
 
   return (
-    <Link href={recruit.googleFormUrl} target="_blank" rel="noopener noreferrer" className={className}>
+    <Link
+      href={recruit.googleFormUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${className} inline-block`}
+    >
       {label}
     </Link>
   );
