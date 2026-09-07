@@ -1,7 +1,5 @@
 const API_ORIGIN = process.env.INTERNAL_API_ORIGIN ?? 'http://localhost:8080';
 
-const SAFETY_NET_REVALIDATE_SECONDS = 3600;
-
 export interface ActivityCategorySummary {
   slug: string;
   name: string;
@@ -44,9 +42,7 @@ export interface ActivityDetail {
 const HIDDEN_ACTIVITY_CATEGORY_SLUGS = new Set(['game']);
 
 export async function listActivityCategories(): Promise<ActivityCategorySummary[]> {
-  const res = await fetch(`${API_ORIGIN}/v1/activity-categories`, {
-    next: { tags: ['activity-category-list'], revalidate: SAFETY_NET_REVALIDATE_SECONDS },
-  });
+  const res = await fetch(`${API_ORIGIN}/v1/activity-categories`, { cache: 'no-store' });
   if (!res.ok) {
     throw new Error(`활동 카테고리를 불러오지 못했습니다: ${res.status}`);
   }
@@ -56,7 +52,7 @@ export async function listActivityCategories(): Promise<ActivityCategorySummary[
 
 export async function getActivityTimeline(categorySlug: string): Promise<ActivityTimelineGroup[]> {
   const res = await fetch(`${API_ORIGIN}/v1/activities?category=${encodeURIComponent(categorySlug)}`, {
-    next: { tags: [`activity:${categorySlug}`], revalidate: SAFETY_NET_REVALIDATE_SECONDS },
+    cache: 'no-store',
   });
   if (res.status === 404) {
     return [];
@@ -68,9 +64,7 @@ export async function getActivityTimeline(categorySlug: string): Promise<Activit
 }
 
 export async function getActivity(id: number): Promise<ActivityDetail | null> {
-  const res = await fetch(`${API_ORIGIN}/v1/activities/${id}`, {
-    next: { tags: [`activity:${id}`], revalidate: SAFETY_NET_REVALIDATE_SECONDS },
-  });
+  const res = await fetch(`${API_ORIGIN}/v1/activities/${id}`, { cache: 'no-store' });
   if (res.status === 404) {
     return null;
   }
