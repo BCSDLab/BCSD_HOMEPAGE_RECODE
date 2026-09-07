@@ -94,16 +94,16 @@ export function renderUnityIndexHtml(name: string, assets: UnityBuildAssets): st
     background: #000;
   }
   #unity-progress-bar-track {
-    width: min(320px, 70vw);
-    height: 6px;
+    width: min(270px, 70vw);
+    height: 4px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     overflow: hidden;
   }
   #unity-progress-bar-fill {
     width: 0%;
     height: 100%;
-    background: #fff;
+    background: #3b82f6;
     border-radius: 999px;
     transition: width 0.15s ease-out;
   }
