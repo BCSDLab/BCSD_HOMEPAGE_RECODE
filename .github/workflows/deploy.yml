@@ -61,7 +61,6 @@ jobs:
               --restart unless-stopped \
               -p 127.0.0.1:3003:3000 \
               -v /data/bcsd-homepage/game-builds:/app/game-builds \
-              -e REVALIDATE_SECRET='${{ secrets.REVALIDATE_SECRET }}' \
               -e INTERNAL_API_ORIGIN='${{ secrets.INTERNAL_API_ORIGIN }}' \
               -e GAME_BUILD_SECRET='${{ secrets.GAME_BUILD_SECRET }}' \
               -e GAME_BUILD_STORAGE_DIR='/app/game-builds' \

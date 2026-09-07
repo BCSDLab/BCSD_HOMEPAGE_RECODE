@@ -1,8 +1,6 @@
 const API_ORIGIN = process.env.INTERNAL_API_ORIGIN ?? 'http://localhost:8080';
 const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN ?? 'http://localhost:3010';
 
-const SAFETY_NET_REVALIDATE_SECONDS = 3600;
-
 export interface GameSummary {
   slug: string;
   name: string;
@@ -69,9 +67,7 @@ function normalizeBuildFileUrl(url: string | null): string | null {
 }
 
 export async function listGames(): Promise<GameSummary[]> {
-  const res = await fetch(`${API_ORIGIN}/v1/games`, {
-    next: { tags: ['game-list'], revalidate: SAFETY_NET_REVALIDATE_SECONDS },
-  });
+  const res = await fetch(`${API_ORIGIN}/v1/games`, { cache: 'no-store' });
   if (!res.ok) {
     throw new Error(`게임 목록을 불러오지 못했습니다: ${res.status}`);
   }
@@ -79,9 +75,7 @@ export async function listGames(): Promise<GameSummary[]> {
 }
 
 export async function getGame(slug: string): Promise<GameDetail | null> {
-  const res = await fetch(`${API_ORIGIN}/v1/games/${slug}`, {
-    next: { tags: [`game:${slug}`], revalidate: SAFETY_NET_REVALIDATE_SECONDS },
-  });
+  const res = await fetch(`${API_ORIGIN}/v1/games/${slug}`, { cache: 'no-store' });
   if (res.status === 404) {
     return null;
   }
