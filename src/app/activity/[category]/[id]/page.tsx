@@ -43,7 +43,6 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
           <h1 className="mt-2 text-[32px] font-bold">{activity.title}</h1>
           <p className="mt-3 text-[17px] text-[#777]">{activity.summary}</p>
 
-          {/* eslint-disable-next-line react/no-danger -- 백엔드에서 jsoup safelist로 저장 시점에 정제한다(T-15). */}
           <div className="prose mt-12 max-w-none" dangerouslySetInnerHTML={{ __html: activity.content }} />
         </article>
       </div>
