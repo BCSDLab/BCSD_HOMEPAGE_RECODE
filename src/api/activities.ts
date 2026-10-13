@@ -1,4 +1,5 @@
 import { apiGet, apiGetOrNull } from '@/api/client';
+import { DEFAULT_ACTIVITY_CATEGORY_SLUG } from '@/constants/defaults';
 
 export interface ActivityCategorySummary {
   slug: string;
@@ -56,4 +57,18 @@ export async function getActivityTimeline(categorySlug: string): Promise<Activit
 
 export function getActivity(id: number): Promise<ActivityDetail | null> {
   return apiGetOrNull(`/v1/activities/${id}`, '활동 상세를 불러오지 못했습니다');
+}
+
+/** /activity 진입 시 보낼 슬러그. 기본값이 목록에 있으면 유지하고, 없으면 첫 카테고리로 대체한다. */
+export async function resolveDefaultActivityCategorySlug(): Promise<string> {
+  try {
+    const categories = await listActivityCategories();
+    return (
+      categories.find(({ slug }) => slug === DEFAULT_ACTIVITY_CATEGORY_SLUG)?.slug ??
+      categories[0]?.slug ??
+      DEFAULT_ACTIVITY_CATEGORY_SLUG
+    );
+  } catch {
+    return DEFAULT_ACTIVITY_CATEGORY_SLUG;
+  }
 }

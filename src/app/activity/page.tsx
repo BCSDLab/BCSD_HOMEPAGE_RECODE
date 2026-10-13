@@ -1,5 +1,6 @@
-import { permanentRedirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { resolveDefaultActivityCategorySlug } from '@/api/activities';
 
-export default function ActivityRoot() {
-  permanentRedirect('/activity/event');
+export default async function ActivityRoot() {
+  redirect(`/activity/${await resolveDefaultActivityCategorySlug()}`);
 }
