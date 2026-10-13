@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Avatar from '@/components/Avatar';
 import type { GameMember } from '@/api/games';
 
 export default function GameMembers({ members }: { members: GameMember[] }) {
@@ -11,9 +11,7 @@ export default function GameMembers({ members }: { members: GameMember[] }) {
       {members.map((member, index) => (
         <div key={index} className="flex items-center gap-2.5 rounded-full bg-[#f9f9f9] py-1.5 pr-4 pl-1.5">
           <div className="relative h-9 w-9 flex-none overflow-hidden rounded-full bg-[#eee]">
-            {member.profileImageUrl && (
-              <Image src={member.profileImageUrl} alt={member.name} fill sizes="36px" className="object-cover" />
-            )}
+            <Avatar name={member.name} imageUrl={member.profileImageUrl} sizes="36px" initialClassName="text-sm" />
           </div>
           <span className="text-sm font-medium">{member.name}</span>
         </div>

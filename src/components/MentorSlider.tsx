@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Avatar from '@/components/Avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -47,16 +48,8 @@ export default function MentorSlider({ mentors }: { mentors: HomeMentor[] }) {
         {mentors.map((mentor, index) => (
           <SwiperSlide key={index}>
             <div className="flex min-h-71 w-55 flex-col items-center rounded-[19px] bg-linear-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 pt-9 pb-7 text-center">
-              <div className="mb-5 h-32 w-32 overflow-hidden rounded-full bg-[#f4f4f4]">
-                {mentor.profileImageUrl && (
-                  <Image
-                    src={mentor.profileImageUrl}
-                    alt={mentor.name}
-                    width={128}
-                    height={128}
-                    className="h-full w-full object-cover"
-                  />
-                )}
+              <div className="relative mb-5 h-32 w-32 overflow-hidden rounded-full bg-[#f4f4f4]">
+                <Avatar name={mentor.name} imageUrl={mentor.profileImageUrl} sizes="128px" initialClassName="text-5xl" />
               </div>
               <p className="mb-2 text-[20px] font-medium text-[#75109C]">{mentor.name}</p>
               <p className="text-[16px] text-neutral-100">{mentor.trackName}</p>
