@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Avatar from '@/components/Avatar';
 import type { TrackMemberItem } from '@/api/tracks';
 import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,9 +12,7 @@ function MemberCard(memberInfo: TrackMemberItem) {
   return (
     <div className="w-74.5">
       <div className="relative aspect-square overflow-hidden rounded-t-2xl bg-[#f4f4f4]">
-        {memberInfo.profileImageUrl && (
-          <Image src={memberInfo.profileImageUrl} alt={memberInfo.name} fill sizes="298px" className="object-cover" />
-        )}
+        <Avatar name={memberInfo.name} imageUrl={memberInfo.profileImageUrl} sizes="298px" initialClassName="text-7xl" />
       </div>
 
       <div className="rounded-b-2xl bg-white px-5 pt-4 pb-5">
