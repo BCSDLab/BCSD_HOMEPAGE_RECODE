@@ -7,6 +7,7 @@ import InstagramIcon from '@/assets/svg/footer/instagram-icon.svg';
 import YoutubeIcon from '@/assets/svg/footer/youtube-icon.svg';
 import Link from 'next/link';
 import { URLS } from '@/constants/urls';
+import { serializeJsonLd } from '@/lib/jsonLd';
 
 const pretendard = localFont({
   src: [
@@ -110,7 +111,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={pretendard.variable}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationStructuredData) }}
         />
         {children}
         <footer className="flex justify-between bg-[#555] px-13.5">

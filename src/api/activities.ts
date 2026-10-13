@@ -1,4 +1,4 @@
-const API_ORIGIN = process.env.INTERNAL_API_ORIGIN ?? 'http://localhost:8080';
+import { apiGet, apiGetOrNull } from '@/api/client';
 
 export interface ActivityCategorySummary {
   slug: string;
@@ -42,34 +42,18 @@ export interface ActivityDetail {
 const HIDDEN_ACTIVITY_CATEGORY_SLUGS = new Set(['game']);
 
 export async function listActivityCategories(): Promise<ActivityCategorySummary[]> {
-  const res = await fetch(`${API_ORIGIN}/v1/activity-categories`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error(`활동 카테고리를 불러오지 못했습니다: ${res.status}`);
-  }
-  const categories: ActivityCategorySummary[] = await res.json();
+  const categories = await apiGet<ActivityCategorySummary[]>('/v1/activity-categories', '활동 카테고리를 불러오지 못했습니다');
   return categories.filter((category) => !HIDDEN_ACTIVITY_CATEGORY_SLUGS.has(category.slug));
 }
 
 export async function getActivityTimeline(categorySlug: string): Promise<ActivityTimelineGroup[]> {
-  const res = await fetch(`${API_ORIGIN}/v1/activities?category=${encodeURIComponent(categorySlug)}`, {
-    cache: 'no-store',
-  });
-  if (res.status === 404) {
-    return [];
-  }
-  if (!res.ok) {
-    throw new Error(`활동 목록을 불러오지 못했습니다: ${res.status}`);
-  }
-  return res.json();
+  const timeline = await apiGetOrNull<ActivityTimelineGroup[]>(
+    `/v1/activities?category=${encodeURIComponent(categorySlug)}`,
+    '활동 목록을 불러오지 못했습니다',
+  );
+  return timeline ?? [];
 }
 
-export async function getActivity(id: number): Promise<ActivityDetail | null> {
-  const res = await fetch(`${API_ORIGIN}/v1/activities/${id}`, { cache: 'no-store' });
-  if (res.status === 404) {
-    return null;
-  }
-  if (!res.ok) {
-    throw new Error(`활동 상세를 불러오지 못했습니다: ${res.status}`);
-  }
-  return res.json();
+export function getActivity(id: number): Promise<ActivityDetail | null> {
+  return apiGetOrNull(`/v1/activities/${id}`, '활동 상세를 불러오지 못했습니다');
 }

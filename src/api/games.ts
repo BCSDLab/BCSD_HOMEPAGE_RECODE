@@ -1,4 +1,5 @@
-const API_ORIGIN = process.env.INTERNAL_API_ORIGIN ?? 'http://localhost:8080';
+import { apiGet, apiGetOrNull } from '@/api/client';
+
 const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN ?? 'http://localhost:3010';
 
 export interface GameSummary {
@@ -66,23 +67,15 @@ function normalizeBuildFileUrl(url: string | null): string | null {
   }
 }
 
-export async function listGames(): Promise<GameSummary[]> {
-  const res = await fetch(`${API_ORIGIN}/v1/games`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error(`게임 목록을 불러오지 못했습니다: ${res.status}`);
-  }
-  return res.json();
+export function listGames(): Promise<GameSummary[]> {
+  return apiGet('/v1/games', '게임 목록을 불러오지 못했습니다');
 }
 
 export async function getGame(slug: string): Promise<GameDetail | null> {
-  const res = await fetch(`${API_ORIGIN}/v1/games/${slug}`, { cache: 'no-store' });
-  if (res.status === 404) {
+  const game = await apiGetOrNull<GameDetail>(`/v1/games/${encodeURIComponent(slug)}`, '게임 상세를 불러오지 못했습니다');
+  if (!game) {
     return null;
   }
-  if (!res.ok) {
-    throw new Error(`게임 상세를 불러오지 못했습니다: ${res.status}`);
-  }
-  const game = (await res.json()) as GameDetail;
   if (game.activeBuild) {
     game.activeBuild = {
       ...game.activeBuild,

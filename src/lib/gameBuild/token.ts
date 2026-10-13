@@ -15,6 +15,9 @@ export interface GameBuildTokenPayload {
  * 서명이므로, 재직렬화하면 키 순서가 달라 검증이 항상 실패한다.
  */
 export function verifyGameBuildToken(token: string): GameBuildTokenPayload | null {
+  if (!GAME_BUILD_SECRET) {
+    return null;
+  }
   const parts = token.split('.');
   if (parts.length !== 2) {
     return null;

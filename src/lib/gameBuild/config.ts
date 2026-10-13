@@ -4,7 +4,12 @@
  */
 export const GAME_BUILD_STORAGE_DIR = process.env.GAME_BUILD_STORAGE_DIR ?? '/tmp/bcsd-game-builds';
 
-export const GAME_BUILD_SECRET = process.env.GAME_BUILD_SECRET ?? 'local-dev-secret';
+/**
+ * 운영에서 값이 없으면 빈 문자열로 두고 토큰 검증을 실패시킨다(fail-closed). 개발 기본값이 운영에서
+ * 그대로 쓰이면 누구나 업로드 토큰을 만들 수 있다. 빌드 시점에는 import만 되므로 여기서 던지지 않는다.
+ */
+export const GAME_BUILD_SECRET =
+  process.env.GAME_BUILD_SECRET ?? (process.env.NODE_ENV === 'production' ? '' : 'local-dev-secret');
 
 export const INTERNAL_API_ORIGIN = process.env.INTERNAL_API_ORIGIN ?? 'http://localhost:8080';
 
