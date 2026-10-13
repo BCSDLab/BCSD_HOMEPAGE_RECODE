@@ -13,13 +13,13 @@ export default function GlobalNavigationBar({ location }: GlobalNavigationBarPro
           Main
         </Link>
         <Link
-          href="/track/frontend"
+          href="/track"
           className={`cursor-pointer hover:underline ${location === 'Track' ? 'text-[#C360F3]' : ''}`}
         >
           Tracks
         </Link>
         <Link
-          href="/activity/event"
+          href="/activity"
           className={`cursor-pointer hover:underline ${location === 'Activity' ? 'text-[#C360F3]' : ''}`}
         >
           Activity

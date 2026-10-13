@@ -1,5 +1,6 @@
-import { permanentRedirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { resolveDefaultTrackSlug } from '@/api/tracks';
 
-export default function TrackRoot() {
-  permanentRedirect('/track/frontend');
+export default async function TrackRoot() {
+  redirect(`/track/${await resolveDefaultTrackSlug()}`);
 }
