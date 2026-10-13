@@ -2,7 +2,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTrack, listTracks } from '@/api/tracks';
+import { getTrack } from '@/api/tracks';
 import TrackTabs from '@/app/track/components/TrackTabs';
 import StudyCards from '@/app/track/components/StudyCard';
 import Curriculum from '@/app/track/components/Curriculum';
@@ -10,11 +10,6 @@ import TrackMember from '@/app/track/components/TrackMember';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 const ScrollUpButton = dynamic(() => import('@/components/ScrollUpButton'));
-
-export async function generateStaticParams() {
-  const tracks = await listTracks();
-  return tracks.map(({ slug }) => ({ track: slug }));
-}
 
 export async function generateMetadata({ params }: { params: TrackPageParams }): Promise<Metadata> {
   const { track } = await params;

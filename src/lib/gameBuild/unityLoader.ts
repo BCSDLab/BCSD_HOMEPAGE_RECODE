@@ -22,7 +22,7 @@ async function resolveAsset(root: string, baseName: string): Promise<string | nu
   for (const suffix of ASSET_SUFFIXES) {
     const candidate = `${baseName}${suffix}`;
     try {
-      const stat = await fs.stat(path.join(root, candidate));
+      const stat = await fs.stat(path.join(/*turbopackIgnore: true*/ root, candidate));
       if (stat.isFile()) {
         return candidate;
       }
