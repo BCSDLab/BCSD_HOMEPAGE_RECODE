@@ -124,7 +124,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               loading="lazy"
               unoptimized
             />
-            <p className="text-xs font-normal text-[#C4C4C4]">© 2025 BCSD. ALL RIGHTS RESERVED.</p>
+            <p className="text-xs font-normal text-[#C4C4C4]">© {new Date().getFullYear()} BCSD. ALL RIGHTS RESERVED.</p>
           </div>
           <div className="flex items-center justify-center gap-4">
             <Link href={URLS.SOCIAL.FACEBOOK}>
