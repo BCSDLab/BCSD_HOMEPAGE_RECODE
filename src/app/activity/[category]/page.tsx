@@ -7,11 +7,6 @@ import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
 const DEFAULT_HERO_IMAGE = 'https://image.bcsdlab.com/bcsd_activity_page.png';
 
-export async function generateStaticParams() {
-  const categories = await listActivityCategories();
-  return categories.map(({ slug }) => ({ category: slug }));
-}
-
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
   const { category } = await params;
   const categories = await listActivityCategories();

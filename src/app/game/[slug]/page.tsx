@@ -12,11 +12,6 @@ interface GameDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const games = await listGames();
-  return games.map(({ slug }) => ({ slug }));
-}
-
 export async function generateMetadata({ params }: GameDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const game = await getGame(slug);
