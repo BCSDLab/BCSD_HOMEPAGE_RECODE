@@ -1,4 +1,4 @@
-const API_ORIGIN = process.env.INTERNAL_API_ORIGIN ?? 'http://localhost:8080';
+import { apiGet, apiGetOrNull } from '@/api/client';
 
 export interface TrackSummary {
   slug: string;
@@ -48,21 +48,10 @@ export interface TrackDetail {
   members: TrackMemberItem[];
 }
 
-export async function listTracks(): Promise<TrackSummary[]> {
-  const res = await fetch(`${API_ORIGIN}/v1/tracks`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error(`트랙 목록을 불러오지 못했습니다: ${res.status}`);
-  }
-  return res.json();
+export function listTracks(): Promise<TrackSummary[]> {
+  return apiGet('/v1/tracks', '트랙 목록을 불러오지 못했습니다');
 }
 
-export async function getTrack(slug: string): Promise<TrackDetail | null> {
-  const res = await fetch(`${API_ORIGIN}/v1/tracks/${slug}`, { cache: 'no-store' });
-  if (res.status === 404) {
-    return null;
-  }
-  if (!res.ok) {
-    throw new Error(`트랙 상세를 불러오지 못했습니다: ${res.status}`);
-  }
-  return res.json();
+export function getTrack(slug: string): Promise<TrackDetail | null> {
+  return apiGetOrNull(`/v1/tracks/${encodeURIComponent(slug)}`, '트랙 상세를 불러오지 못했습니다');
 }

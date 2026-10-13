@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { getHome } from '@/api/home';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 import ApplyButton from '@/components/ApplyButton';
+import { serializeJsonLd } from '@/lib/jsonLd';
 
 const MentorSlider = dynamic(() => import('@/components/MentorSlider'));
 const QnADropdown = dynamic(() => import('@/components/QnADropdown'));
@@ -25,7 +26,7 @@ export default async function Home() {
 
   return (
     <main className="hide-scrollbar w-full overflow-x-auto">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqStructuredData) }} />
       <div className="min-w-360">
         <header className="relative aspect-1440/800 w-full">
           <Image
