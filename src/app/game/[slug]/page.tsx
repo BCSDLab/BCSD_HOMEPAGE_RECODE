@@ -8,6 +8,8 @@ import GamePlayer from '@/app/game/components/GamePlayer';
 import GameScreenshots from '@/app/game/components/GameScreenshots';
 import RelatedGames from '@/app/game/components/RelatedGames';
 
+const DEFAULT_OG_IMAGE = 'https://image.bcsdlab.com/bcsd_main_page_image.png';
+
 interface GameDetailPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -20,7 +22,16 @@ export async function generateMetadata({ params }: GameDetailPageProps): Promise
   }
   return {
     title: game.name,
+    alternates: {
+      canonical: `/game/${slug}`,
+    },
     description: game.oneLiner,
+    openGraph: {
+      url: `https://bcsdlab.com/game/${slug}`,
+      title: `${game.name} | BCSD`,
+      description: game.oneLiner,
+      images: [{ url: game.thumbnailUrl ?? DEFAULT_OG_IMAGE, alt: game.name }],
+    },
   };
 }
 

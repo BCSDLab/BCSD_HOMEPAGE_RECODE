@@ -43,9 +43,6 @@ export const metadata: Metadata = {
     default: 'BCSD - Build Communities, Share Dreams',
     template: '%s | BCSD',
   },
-  alternates: {
-    canonical: '/',
-  },
   icons: {
     icon: '/favicon.ico',
   },
