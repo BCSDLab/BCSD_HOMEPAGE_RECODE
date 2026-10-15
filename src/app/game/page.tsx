@@ -10,6 +10,18 @@ export const metadata: Metadata = {
     canonical: '/game',
   },
   description: 'BCSD 부원들이 직접 기획하고 만든 게임들을 소개합니다.',
+  openGraph: {
+    url: 'https://bcsdlab.com/game',
+    title: '게임 | BCSD',
+    description: 'BCSD 부원들이 직접 기획하고 만든 게임들을 소개합니다.',
+    images: [{ url: 'https://image.bcsdlab.com/bcsd_main_page_image.png', alt: 'BCSD가 만든 게임' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '게임 | BCSD',
+    description: 'BCSD 부원들이 직접 기획하고 만든 게임들을 소개합니다.',
+    images: ['https://image.bcsdlab.com/bcsd_main_page_image.png'],
+  },
 };
 
 export default async function GameListPage() {

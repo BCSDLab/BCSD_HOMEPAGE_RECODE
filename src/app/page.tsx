@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { getHome } from '@/api/home';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
@@ -7,6 +8,12 @@ import { serializeJsonLd } from '@/lib/jsonLd';
 
 const MentorSlider = dynamic(() => import('@/components/MentorSlider'));
 const QnADropdown = dynamic(() => import('@/components/QnADropdown'));
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default async function Home() {
   const { mentors, qna, recruit } = await getHome();

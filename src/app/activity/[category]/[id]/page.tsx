@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { getActivity } from '@/api/activities';
 import GlobalNavigationBar from '@/components/GlobalNavigationBar';
 
+const DEFAULT_OG_IMAGE = 'https://image.bcsdlab.com/bcsd_main_page_image.png';
+
 interface ActivityDetailPageProps {
   params: Promise<{ category: string; id: string }>;
 }
@@ -15,8 +17,23 @@ export async function generateMetadata({ params }: ActivityDetailPageProps): Pro
     return { title: '활동' };
   }
   return {
-    title: `${activity.title} | BCSD`,
+    title: activity.title,
+    alternates: {
+      canonical: `/activity/${activity.categorySlug}/${id}`,
+    },
     description: activity.summary,
+    openGraph: {
+      url: `https://bcsdlab.com/activity/${activity.categorySlug}/${id}`,
+      title: `${activity.title} | BCSD`,
+      description: activity.summary,
+      images: [{ url: activity.images[0] ?? DEFAULT_OG_IMAGE, alt: activity.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${activity.title} | BCSD`,
+      description: activity.summary,
+      images: [activity.images[0] ?? DEFAULT_OG_IMAGE],
+    },
   };
 }
 

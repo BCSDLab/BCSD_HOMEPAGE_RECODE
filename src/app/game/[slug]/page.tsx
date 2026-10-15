@@ -8,6 +8,8 @@ import GamePlayer from '@/app/game/components/GamePlayer';
 import GameScreenshots from '@/app/game/components/GameScreenshots';
 import RelatedGames from '@/app/game/components/RelatedGames';
 
+const DEFAULT_OG_IMAGE = 'https://image.bcsdlab.com/bcsd_main_page_image.png';
+
 interface GameDetailPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -20,7 +22,22 @@ export async function generateMetadata({ params }: GameDetailPageProps): Promise
   }
   return {
     title: game.name,
+    alternates: {
+      canonical: `/game/${slug}`,
+    },
     description: game.oneLiner,
+    openGraph: {
+      url: `https://bcsdlab.com/game/${slug}`,
+      title: `${game.name} | BCSD`,
+      description: game.oneLiner,
+      images: [{ url: game.thumbnailUrl ?? DEFAULT_OG_IMAGE, alt: game.name }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${game.name} | BCSD`,
+      description: game.oneLiner,
+      images: [game.thumbnailUrl ?? DEFAULT_OG_IMAGE],
+    },
   };
 }
 
@@ -48,7 +65,14 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
         ) : (
           <div className="relative flex aspect-video w-full items-center justify-center bg-[#111]">
             {game.thumbnailUrl && (
-              <Image src={game.thumbnailUrl} alt={game.name} fill sizes="100vw" className="object-cover opacity-40" priority />
+              <Image
+                src={game.thumbnailUrl}
+                alt={game.name}
+                fill
+                sizes="100vw"
+                className="object-cover opacity-40"
+                priority
+              />
             )}
             <p className="relative text-[15px] text-white">플레이 가능한 웹 빌드는 아직 준비 중입니다</p>
           </div>

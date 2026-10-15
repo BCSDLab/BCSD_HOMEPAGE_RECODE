@@ -1,11 +1,17 @@
 import type { MetadataRoute } from 'next';
 import { listTracks } from '@/api/tracks';
-import { listActivityCategories } from '@/api/activities';
+import { getActivityTimeline, listActivityCategories } from '@/api/activities';
 import { listGames } from '@/api/games';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const [tracks, categories, games] = await Promise.all([listTracks(), listActivityCategories(), listGames()]);
+  const timelines = await Promise.all(categories.map(({ slug }) => getActivityTimeline(slug)));
+  const activityDetails = categories.flatMap(({ slug }, index) =>
+    timelines[index].flatMap(({ activities }) =>
+      activities.filter(({ hasDetail }) => hasDetail).map(({ id }) => ({ category: slug, id })),
+    ),
+  );
 
   return [
     {
@@ -31,6 +37,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    })),
+    ...activityDetails.map(({ category, id }) => ({
+      url: `https://bcsdlab.com/activity/${category}/${id}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     })),
     ...tracks.map(({ slug }) => ({
       url: `https://bcsdlab.com/track/${slug}`,
