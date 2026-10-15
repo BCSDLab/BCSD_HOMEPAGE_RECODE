@@ -28,6 +28,12 @@ export async function generateMetadata({ params }: ActivityDetailPageProps): Pro
       description: activity.summary,
       images: [{ url: activity.images[0] ?? DEFAULT_OG_IMAGE, alt: activity.title }],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${activity.title} | BCSD`,
+      description: activity.summary,
+      images: [activity.images[0] ?? DEFAULT_OG_IMAGE],
+    },
   };
 }
 

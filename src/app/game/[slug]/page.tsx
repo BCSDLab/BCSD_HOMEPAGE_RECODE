@@ -32,6 +32,12 @@ export async function generateMetadata({ params }: GameDetailPageProps): Promise
       description: game.oneLiner,
       images: [{ url: game.thumbnailUrl ?? DEFAULT_OG_IMAGE, alt: game.name }],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${game.name} | BCSD`,
+      description: game.oneLiner,
+      images: [game.thumbnailUrl ?? DEFAULT_OG_IMAGE],
+    },
   };
 }
 
