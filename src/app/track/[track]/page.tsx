@@ -56,14 +56,15 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
   }
 
   return (
-    <main className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-360">
-        <header className="relative aspect-1440/587 w-full">
+    <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
+      <div className="lg:min-w-360">
+        <header className="relative h-60 w-full md:h-80 lg:aspect-1440/587 lg:h-auto">
           <Image
             src="https://image.bcsdlab.com/bcsd_track_page.png"
             alt="Track hero"
             fill
             sizes="100vw"
+            className="object-cover lg:object-fill"
             priority
             fetchPriority="high"
           />
@@ -72,9 +73,11 @@ export default async function TrackPage({ params }: { params: TrackPageParams })
         </header>
 
         <div className="flex flex-col items-center">
-          <header className="mt-17 text-center">
-            <h1 className="text-[34px] leading-[120%] font-medium text-neutral-100">{trackDetail.name} 트랙</h1>
-            <p className="mt-3 text-[17px] text-neutral-200">{trackDetail.tagline}</p>
+          <header className="mt-12 px-6 text-center lg:mt-17 lg:px-0">
+            <h1 className="text-[26px] leading-[120%] font-medium text-neutral-100 lg:text-[34px]">
+              {trackDetail.name} 트랙
+            </h1>
+            <p className="mt-3 text-[15px] text-neutral-200 lg:text-[17px]">{trackDetail.tagline}</p>
           </header>
           <TrackTabs track={track} />
           <StudyCards studyPoints={trackDetail.studyPoints} />

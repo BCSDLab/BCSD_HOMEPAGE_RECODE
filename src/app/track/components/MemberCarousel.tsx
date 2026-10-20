@@ -10,9 +10,14 @@ import 'swiper/css/a11y';
 
 function MemberCard(memberInfo: TrackMemberItem) {
   return (
-    <div className="w-74.5">
+    <div className="w-60 lg:w-74.5">
       <div className="relative aspect-square overflow-hidden rounded-t-2xl bg-[#f4f4f4]">
-        <Avatar name={memberInfo.name} imageUrl={memberInfo.profileImageUrl} sizes="298px" initialClassName="text-7xl" />
+        <Avatar
+          name={memberInfo.name}
+          imageUrl={memberInfo.profileImageUrl}
+          sizes="298px"
+          initialClassName="text-7xl"
+        />
       </div>
 
       <div className="rounded-b-2xl bg-white px-5 pt-4 pb-5">
@@ -20,7 +25,7 @@ function MemberCard(memberInfo: TrackMemberItem) {
           <div className="text-[10px] leading-none font-semibold text-[#8911B6]">{memberInfo.memberType}</div>
         </div>
 
-        <div className="text-3xl font-semibold">{memberInfo.name}</div>
+        <div className="text-2xl font-semibold lg:text-3xl">{memberInfo.name}</div>
       </div>
     </div>
   );
@@ -32,7 +37,7 @@ export default function MemberCarousel({ members }: { members: TrackMemberItem[]
   return (
     <Swiper modules={[Navigation, A11y]} navigation slidesPerView="auto" loop={canLoop} className="member-swiper">
       {members.map((member) => (
-        <SwiperSlide key={`${member.name}-${member.memberType}`} className="w-74.5!">
+        <SwiperSlide key={`${member.name}-${member.memberType}`} className="w-60! lg:w-74.5!">
           <MemberCard {...member} />
         </SwiperSlide>
       ))}

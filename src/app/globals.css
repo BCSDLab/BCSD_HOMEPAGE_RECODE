@@ -139,5 +139,9 @@
 }
 
 .member-swiper .swiper-wrapper {
-  gap: 36px;
+  gap: 16px;
+
+  @variant lg {
+    gap: 36px;
+  }
 }
