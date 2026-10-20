@@ -104,8 +104,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko">
-      <body className={pretendard.variable}>
+    // font.css가 html에서 --font-pretendard를 참조하므로 변수도 html에 둔다
+    <html lang="ko" className={pretendard.variable}>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationStructuredData) }}
