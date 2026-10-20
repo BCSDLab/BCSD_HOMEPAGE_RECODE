@@ -12,9 +12,11 @@ export interface NavigationLink {
 
 interface GlobalNavigationBarProps {
   location?: locationType;
+  /** 데스크톱 메뉴가 놓이는 배경. 히어로 이미지 없이 흰 배경 위에 둘 때는 onLight */
+  variant?: 'onDark' | 'onLight';
 }
 
-export default async function GlobalNavigationBar({ location }: GlobalNavigationBarProps) {
+export default async function GlobalNavigationBar({ location, variant = 'onDark' }: GlobalNavigationBarProps) {
   const [trackSlug, activitySlug] = await Promise.all([
     resolveDefaultTrackSlug(),
     resolveDefaultActivityCategorySlug(),
@@ -31,7 +33,9 @@ export default async function GlobalNavigationBar({ location }: GlobalNavigation
 
   return (
     <>
-      <nav className="absolute top-12 right-16 hidden items-center justify-between text-white lg:flex">
+      <nav
+        className={`absolute top-12 right-16 hidden items-center justify-between lg:flex ${variant === 'onLight' ? 'text-neutral-100' : 'text-white'}`}
+      >
         <div className="space-x-8">
           {links.map((link) => (
             <Link
