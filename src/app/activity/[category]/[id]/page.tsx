@@ -48,7 +48,7 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
   return (
     <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
       <div className="lg:min-w-360">
-        <GlobalNavigationBar location="Activity" />
+        <GlobalNavigationBar location="Activity" variant="onLight" />
 
         <article className="mx-auto max-w-200 px-6 pt-24 pb-20 lg:pt-40 lg:pb-30">
           <Link href={`/activity/${category}`} className="text-[15px] text-[#9d9d9d] hover:underline">
