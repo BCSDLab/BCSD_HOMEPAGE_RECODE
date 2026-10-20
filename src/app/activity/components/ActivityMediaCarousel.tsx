@@ -15,7 +15,7 @@ interface ActivityMediaCarouselProps {
   title: string;
 }
 
-const IMAGE_SIZES = '(max-width: 768px) 100vw, 686px';
+const IMAGE_SIZES = '(max-width: 1023px) 100vw, 686px';
 
 function getNearbyImageIndices(activeIndex: number, imageCount: number) {
   const indices = new Set([activeIndex]);
@@ -76,7 +76,7 @@ export default function ActivityMediaCarousel({ images, title }: ActivityMediaCa
         type="button"
         data-index={index}
         onClick={handleRenderedImageClick}
-        className="relative block h-96.5 w-171.5"
+        className="relative block h-full w-full lg:h-96.5 lg:w-171.5"
       >
         {shouldLoadImage ? (
           <Image
@@ -94,14 +94,9 @@ export default function ActivityMediaCarousel({ images, title }: ActivityMediaCa
   };
 
   return (
-    <div className="relative h-96.5 w-171.5 shrink-0">
+    <div className="relative aspect-686/386 w-full shrink-0 lg:aspect-auto lg:h-96.5 lg:w-171.5">
       {canSwipe ? (
-        <Swiper
-          modules={[Navigation]}
-          navigation
-          className="h-full w-full"
-          onSlideChange={handleSlideChange}
-        >
+        <Swiper modules={[Navigation]} navigation className="h-full w-full" onSlideChange={handleSlideChange}>
           {images.map((src, index) => (
             <SwiperSlide key={src} className="relative">
               {renderImage(src, index)}

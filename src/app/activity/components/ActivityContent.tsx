@@ -67,15 +67,20 @@ export default function ActivityContent({
   };
 
   return (
-    <div className="mt-20 mb-30 px-50">
-      <div className="flex justify-between">
-        <ActivityTabs categories={categories} current={category} selectedYear={selectedYear} defaultYear={defaultYear} />
+    <div className="mt-12 mb-20 px-6 lg:mt-20 lg:mb-30 lg:px-50">
+      <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-0">
+        <ActivityTabs
+          categories={categories}
+          current={category}
+          selectedYear={selectedYear}
+          defaultYear={defaultYear}
+        />
         {defaultYear && selectedYear && (
           <YearSelect years={years} selectedYear={selectedYear} onSelect={handleSelectYear} />
         )}
       </div>
 
-      <div className="mt-36">
+      <div className="mt-12 lg:mt-36">
         {selectedYear && timeline.length > 0 && (
           <ActivityCards category={category} year={selectedYear} timeline={timeline} />
         )}

@@ -70,7 +70,7 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
     <>
       {isOpen && <div ref={backgroundRef} className="fixed inset-0 z-10" />}
 
-      <div ref={containerRef} className="relative z-20 inline-block w-61">
+      <div ref={containerRef} className="relative z-20 inline-block w-40 lg:w-61">
         <button
           type="button"
           onClick={triggerOpen}

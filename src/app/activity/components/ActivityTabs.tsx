@@ -15,7 +15,8 @@ export default function ActivityTabs({ categories, current, selectedYear, defaul
   const qs = selectedYear !== defaultYear ? `year=${selectedYear}` : '';
 
   return (
-    <div className={'flex gap-6'}>
+    // 모바일은 카테고리가 늘어도 줄바꿈 없이 가로로 스크롤한다
+    <div className="hide-scrollbar -mx-6 flex gap-2 overflow-x-auto px-6 lg:mx-0 lg:gap-6 lg:overflow-visible lg:px-0">
       {categories.map((category) => {
         const active = category.slug === current;
         return (
@@ -24,7 +25,7 @@ export default function ActivityTabs({ categories, current, selectedYear, defaul
             href={`/activity/${category.slug}` + (qs ? `?${qs}` : '')}
             scroll={false}
             className={clsx(
-              'w-40 rounded-full py-2 text-center text-[17px] font-medium transition-colors',
+              'shrink-0 rounded-full px-5 py-2 text-center text-[15px] font-medium transition-colors lg:w-40 lg:px-0 lg:text-[17px]',
               active ? 'bg-[#d365fd] text-white' : 'bg-[#f4f4f4]',
             )}
           >
