@@ -32,11 +32,16 @@ export default function MentorSlider({ mentors }: { mentors: HomeMentor[] }) {
   };
 
   return (
-    <div className="px-30">
+    <div className="px-6 lg:px-30">
       <Swiper
         modules={[Autoplay]}
-        spaceBetween={30}
-        slidesPerView={5}
+        spaceBetween={16}
+        slidesPerView={1.6}
+        breakpoints={{
+          640: { slidesPerView: 2.6 },
+          768: { slidesPerView: 3.4 },
+          1024: { slidesPerView: 5, spaceBetween: 30 },
+        }}
         loop={true}
         autoplay={{
           delay: 2000,
@@ -47,9 +52,14 @@ export default function MentorSlider({ mentors }: { mentors: HomeMentor[] }) {
       >
         {mentors.map((mentor, index) => (
           <SwiperSlide key={index}>
-            <div className="flex min-h-71 w-55 flex-col items-center rounded-[19px] bg-linear-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 pt-9 pb-7 text-center">
+            <div className="flex min-h-71 w-full flex-col items-center rounded-[19px] bg-linear-to-b from-[#F5DBFF] to-[#F9E8FF] px-4 pt-9 pb-7 text-center lg:w-55">
               <div className="relative mb-5 h-32 w-32 overflow-hidden rounded-full bg-[#f4f4f4]">
-                <Avatar name={mentor.name} imageUrl={mentor.profileImageUrl} sizes="128px" initialClassName="text-5xl" />
+                <Avatar
+                  name={mentor.name}
+                  imageUrl={mentor.profileImageUrl}
+                  sizes="128px"
+                  initialClassName="text-5xl"
+                />
               </div>
               <p className="mb-2 text-[20px] font-medium text-[#75109C]">{mentor.name}</p>
               <p className="text-[16px] text-neutral-100">{mentor.trackName}</p>
@@ -57,7 +67,7 @@ export default function MentorSlider({ mentors }: { mentors: HomeMentor[] }) {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="mt-4 flex w-full justify-end px-16">
+      <div className="mt-4 flex w-full justify-end lg:px-16">
         <button
           type="button"
           aria-label={isPlaying ? '멘토 슬라이더 자동재생 일시정지' : '멘토 슬라이더 자동재생 시작'}
