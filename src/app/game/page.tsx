@@ -28,18 +28,18 @@ export default async function GameListPage() {
   const games = await listGames();
 
   return (
-    <main className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-360">
-        <header className="relative flex h-70 w-full items-end bg-[linear-gradient(180deg,#1a1a1a_0%,#3a1a4a_100%)] pb-10 pl-30">
-          <h1 className="text-[34px] leading-[120%] font-medium text-white">BCSD가 만든 게임</h1>
+    <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
+      <div className="lg:min-w-360">
+        <header className="relative flex h-48 w-full items-end bg-[linear-gradient(180deg,#1a1a1a_0%,#3a1a4a_100%)] pb-8 pl-6 md:h-60 lg:h-70 lg:pb-10 lg:pl-30">
+          <h1 className="text-[26px] leading-[120%] font-medium text-white lg:text-[34px]">BCSD가 만든 게임</h1>
           <GlobalNavigationBar location="Game" />
         </header>
 
-        <div className="px-30 py-20">
+        <div className="px-6 py-12 lg:px-30 lg:py-20">
           {games.length === 0 ? (
             <p className="py-20 text-center text-[#9d9d9d]">아직 소개된 게임이 없습니다.</p>
           ) : (
-            <div className="grid grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {games.map((game) => (
                 <Link key={game.slug} href={`/game/${game.slug}`} className="group flex flex-col">
                   <div className="relative aspect-video overflow-hidden rounded-2xl bg-[#f4f4f4]">
@@ -48,7 +48,7 @@ export default async function GameListPage() {
                         src={game.thumbnailUrl}
                         alt={game.name}
                         fill
-                        sizes="(min-width: 1024px) 33vw, 100vw"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover transition-transform group-hover:scale-105"
                       />
                     )}

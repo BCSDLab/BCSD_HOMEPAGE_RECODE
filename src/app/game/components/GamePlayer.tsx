@@ -39,7 +39,7 @@ export default function GamePlayer({ buildFileUrl, name, version, canvasWidth, c
 
   return (
     <section aria-label={name} className="bg-[#111]">
-      <div className="flex items-center justify-between gap-4 px-5 py-3 text-white">
+      <div className="flex items-center justify-between gap-4 px-4 py-3 text-white md:px-5">
         <div className="flex min-w-0 items-center gap-3">
           <Link href="/game" aria-label="게임 목록으로" className="text-[#9d9d9d] hover:text-white">
             ←
@@ -48,9 +48,9 @@ export default function GamePlayer({ buildFileUrl, name, version, canvasWidth, c
           <strong className="truncate text-[15px] font-semibold">{name}</strong>
           <span className="flex-none text-[13px] text-[#9d9d9d]">v{version}</span>
         </div>
-        <div className="flex flex-none items-center gap-4 text-[13px] text-[#9d9d9d]">
+        <div className="flex flex-none items-center gap-3 text-[13px] text-[#9d9d9d] md:gap-4">
           {canvasWidth && canvasHeight && (
-            <span>
+            <span className="hidden md:inline">
               {canvasWidth} × {canvasHeight}
             </span>
           )}

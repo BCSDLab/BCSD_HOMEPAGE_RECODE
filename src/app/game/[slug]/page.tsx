@@ -52,8 +52,8 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
   const relatedGames = allGames.filter((g) => g.slug !== slug).slice(0, 3);
 
   return (
-    <main className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-360">
+    <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
+      <div className="lg:min-w-360">
         {game.activeBuild?.buildFileUrl ? (
           <GamePlayer
             buildFileUrl={game.activeBuild.buildFileUrl}
@@ -78,17 +78,17 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
           </div>
         )}
 
-        <div className="mx-auto max-w-300 px-6 py-14">
-          <div className="grid grid-cols-[1fr_320px] gap-12">
+        <div className="mx-auto max-w-300 px-6 py-10 lg:py-14">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px] lg:gap-12">
             <div className="min-w-0">
-              <h1 className="text-[32px] leading-[120%] font-bold">{game.name}</h1>
+              <h1 className="text-[26px] leading-[120%] font-bold lg:text-[32px]">{game.name}</h1>
               <p className="mt-2 text-[15px] text-[#9d9d9d]">
                 {game.teamLabel ?? game.trackName ?? 'BCSD'}
                 {game.activeBuild && <> · v{game.activeBuild.version}</>}
               </p>
 
               <h2 className="mt-10 text-xl font-semibold">게임 소개</h2>
-              <p className="mt-3 text-[17px] leading-[150%] text-[#555]">{game.oneLiner}</p>
+              <p className="mt-3 text-[15px] leading-[150%] text-[#555] lg:text-[17px]">{game.oneLiner}</p>
               {game.description && (
                 // 백엔드에서 jsoup safelist로 저장 시점에 정제한다(ADR-008 재사용).
                 <div className="prose mt-6 max-w-none" dangerouslySetInnerHTML={{ __html: game.description }} />
