@@ -68,7 +68,7 @@ export default function ActivityContent({
 
   return (
     <div className="mt-12 mb-20 px-6 lg:mt-20 lg:mb-30 lg:px-50">
-      <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:gap-0">
+      <div className="flex items-center gap-3 lg:items-stretch lg:justify-between lg:gap-0">
         <ActivityTabs
           categories={categories}
           current={category}
