@@ -12,17 +12,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/recruit',
   },
-  description:
-    `BCSD ${RECRUIT_TERM} 신입 부원 모집. Frontend, Backend, Android, iOS, Design, Game, Data Analyst, PM, Security 트랙에서 함께 성장할 멤버를 찾습니다.`,
-  keywords: [
-    'BCSD 모집',
-    '동아리 모집',
-    '신입 부원',
-    '개발자 모집',
-    '디자이너 모집',
-    'IT 동아리',
-    '코리아텍',
-  ],
+  description: `BCSD ${RECRUIT_TERM} 신입 부원 모집. Frontend, Backend, Android, iOS, Design, Game, Data Analyst, PM, Security 트랙에서 함께 성장할 멤버를 찾습니다.`,
+  keywords: ['BCSD 모집', '동아리 모집', '신입 부원', '개발자 모집', '디자이너 모집', 'IT 동아리', '코리아텍'],
   openGraph: {
     url: 'https://bcsdlab.com/recruit',
     title: '모집 안내 | BCSD',
@@ -48,26 +39,27 @@ export default async function Recruit() {
   const recruit = await getRecruitLink();
 
   return (
-    <main className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-360">
-        <header className="relative aspect-1440/587 w-full">
+    <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
+      <div className="lg:min-w-360">
+        <header className="relative h-60 w-full md:h-80 lg:aspect-1440/587 lg:h-auto">
           <Image
             src="https://image.bcsdlab.com/bcsd_recruit_page.png"
             alt="BCSD 모집 대표 이미지"
             fill
             sizes="100vw"
+            className="object-cover lg:object-fill"
             priority
           />
 
           <div className="absolute inset-0 flex items-center justify-center text-center">
             <div
               aria-hidden="true"
-              className="absolute z-0 translate-x-0.5 translate-y-2.25 bg-linear-to-t from-[#666] to-[#999] bg-clip-text text-[40px] leading-[120%] font-semibold whitespace-nowrap text-transparent opacity-80"
+              className="absolute z-0 translate-x-0.5 translate-y-1.5 bg-linear-to-t from-[#666] to-[#999] bg-clip-text text-[26px] leading-[120%] font-semibold whitespace-nowrap text-transparent opacity-80 md:text-[36px] lg:translate-y-2.25 lg:text-[40px]"
             >
               <div>각자의 궤도를 그리며</div>
               <div>BCSD와 함께 성장하세요.</div>
             </div>
-            <h1 className="font-inter relative z-10 text-[40px] leading-[120%] font-semibold whitespace-nowrap text-white">
+            <h1 className="font-inter relative z-10 text-[26px] leading-[120%] font-semibold whitespace-nowrap text-white md:text-[36px] lg:text-[40px]">
               <div>각자의 궤도를 그리며</div>
               <div>BCSD와 함께 성장하세요.</div>
             </h1>
@@ -76,11 +68,11 @@ export default async function Recruit() {
           <GlobalNavigationBar location="Recruit" />
         </header>
 
-        <div className="mt-23 bg-[linear-gradient(180deg,#FFF_0%,#FEF2FF_76.44%,#FFF_100%)] pb-48">
+        <div className="mt-16 bg-[linear-gradient(180deg,#FFF_0%,#FEF2FF_76.44%,#FFF_100%)] pb-24 lg:mt-23 lg:pb-48">
           <BeginnerTimeLine />
           <BenefitCards />
         </div>
-        <div className="mb-42.5 flex content-center justify-center">
+        <div className="mb-24 flex content-center justify-center lg:mb-42.5">
           <TrackSection recruit={recruit} />
         </div>
       </div>
