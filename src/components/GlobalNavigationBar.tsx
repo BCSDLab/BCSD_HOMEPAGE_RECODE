@@ -2,6 +2,13 @@ import { locationType } from '@/types/location';
 import Link from 'next/link';
 import { resolveDefaultTrackSlug } from '@/api/tracks';
 import { resolveDefaultActivityCategorySlug } from '@/api/activities';
+import MobileNavigation from '@/components/MobileNavigation';
+
+export interface NavigationLink {
+  label: string;
+  href: string;
+  location?: locationType;
+}
 
 interface GlobalNavigationBarProps {
   location?: locationType;
@@ -13,37 +20,31 @@ export default async function GlobalNavigationBar({ location }: GlobalNavigation
     resolveDefaultActivityCategorySlug(),
   ]);
 
+  const links: NavigationLink[] = [
+    { label: 'Main', href: '/', location: 'Main' },
+    { label: 'Tracks', href: `/track/${trackSlug}`, location: 'Track' },
+    { label: 'Activity', href: `/activity/${activitySlug}`, location: 'Activity' },
+    { label: 'Game', href: '/game', location: 'Game' },
+    { label: 'Blog', href: 'https://blog.bcsdlab.com' },
+    { label: 'Recruit', href: '/recruit', location: 'Recruit' },
+  ];
+
   return (
-    <nav className="absolute top-12 right-16 flex items-center justify-between text-white">
-      <div className="space-x-8">
-        <Link href="/" className={`cursor-pointer hover:underline ${location === 'Main' ? 'text-[#C360F3]' : ''}`}>
-          Main
-        </Link>
-        <Link
-          href={`/track/${trackSlug}`}
-          className={`cursor-pointer hover:underline ${location === 'Track' ? 'text-[#C360F3]' : ''}`}
-        >
-          Tracks
-        </Link>
-        <Link
-          href={`/activity/${activitySlug}`}
-          className={`cursor-pointer hover:underline ${location === 'Activity' ? 'text-[#C360F3]' : ''}`}
-        >
-          Activity
-        </Link>
-        <Link href="/game" className={`cursor-pointer hover:underline ${location === 'Game' ? 'text-[#C360F3]' : ''}`}>
-          Game
-        </Link>
-        <Link href="https://blog.bcsdlab.com" className="cursor-pointer hover:underline">
-          Blog
-        </Link>
-        <Link
-          href="/recruit"
-          className={`cursor-pointer hover:underline ${location === 'Recruit' ? 'text-[#C360F3]' : ''}`}
-        >
-          Recruit
-        </Link>
-      </div>
-    </nav>
+    <>
+      <nav className="absolute top-12 right-16 hidden items-center justify-between text-white lg:flex">
+        <div className="space-x-8">
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className={`cursor-pointer hover:underline ${link.location && location === link.location ? 'text-[#C360F3]' : ''}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+      <MobileNavigation links={links} location={location} />
+    </>
   );
 }
