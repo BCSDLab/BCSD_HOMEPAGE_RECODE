@@ -71,13 +71,13 @@ export default async function Home() {
                 </p>
               </div>
               <Image
-                src="/images/main/main-image.svg"
+                src="/images/main/main-image.webp"
                 alt="BCSD 열린 공간 일러스트"
                 width="540"
                 height="237"
                 loading="lazy"
                 unoptimized
-                className="w-full max-w-135 self-center lg:w-auto lg:max-w-full lg:self-auto"
+                className="w-full max-w-135 self-center lg:w-135 lg:max-w-full lg:self-auto"
               />
             </section>
             <section className="relative flex items-center justify-center bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_-9.38%,#FEF2FF_67.06%,rgba(255,255,255,0.00)_90.62%)] px-6 py-24 lg:h-150 lg:p-0">
@@ -93,7 +93,7 @@ export default async function Home() {
               </div>
               <div className="absolute top-0 left-100 hidden lg:block">
                 <Image
-                  src="/images/main/main-icon-partner.svg"
+                  src="/images/main/main-icon-partner.webp"
                   alt=""
                   aria-hidden="true"
                   width="242"
@@ -104,7 +104,7 @@ export default async function Home() {
               </div>
               <div className="absolute top-16 left-0 hidden lg:block">
                 <Image
-                  src="/images/main/main-icon-pipe.svg"
+                  src="/images/main/main-icon-pipe.webp"
                   alt=""
                   aria-hidden="true"
                   width="326"
@@ -115,7 +115,7 @@ export default async function Home() {
               </div>
               <div className="absolute top-32 right-32 hidden lg:block">
                 <Image
-                  src="/images/main/main-icon-arrow.svg"
+                  src="/images/main/main-icon-arrow.webp"
                   alt=""
                   aria-hidden="true"
                   width="475"
@@ -149,14 +149,14 @@ export default async function Home() {
               </div>
             </div>
             <Image
-              src="/images/main/main-character.svg"
+              src="/images/main/main-character.webp"
               alt=""
               aria-hidden="true"
               width="528"
               height="297"
               loading="lazy"
               unoptimized
-              className="mt-12 w-4/5 max-w-132 self-start lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:w-auto lg:max-w-full"
+              className="mt-12 w-4/5 max-w-132 self-start lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:w-132 lg:max-w-full"
             />
           </section>
           <QnADropdown qna={qna} />
