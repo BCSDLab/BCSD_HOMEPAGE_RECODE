@@ -70,14 +70,14 @@ export default function Selector({ options, value, onSelect }: SelectorProps) {
     <>
       {isOpen && <div ref={backgroundRef} className="fixed inset-0 z-10" />}
 
-      <div ref={containerRef} className="relative z-20 inline-block w-40 lg:w-61">
+      <div ref={containerRef} className="relative z-20 inline-block w-28 shrink-0 lg:w-61">
         <button
           type="button"
           onClick={triggerOpen}
           aria-haspopup="listbox"
           aria-controls={listboxId}
           aria-expanded={isOpen}
-          className="relative flex w-full items-center justify-center rounded-full bg-[#f4f4f4] py-2"
+          className="relative flex w-full items-center justify-center rounded-full bg-[#f4f4f4] py-2 pr-7 lg:pr-0"
         >
           <div className="mx-auto text-[17px]">{showLabel}</div>
           <Image
