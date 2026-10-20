@@ -16,7 +16,12 @@ interface ActivityCardProps {
 }
 
 function ActivityMediaSkeleton() {
-  return <div aria-hidden="true" className="h-96.5 w-171.5 rounded-xl bg-[#f4f4f4]" />;
+  return (
+    <div
+      aria-hidden="true"
+      className="aspect-686/386 w-full rounded-xl bg-[#f4f4f4] lg:aspect-auto lg:h-96.5 lg:w-171.5"
+    />
+  );
 }
 
 const ActivityMediaCarousel = dynamic(() => import('./ActivityMediaCarousel'), {
@@ -26,17 +31,17 @@ const ActivityMediaCarousel = dynamic(() => import('./ActivityMediaCarousel'), {
 
 function ActivityCard({ category, id, year, month, title, summary, images, hasDetail }: ActivityCardProps) {
   const body = (
-    <div className="w-80 leading-[150%] whitespace-pre-line">
-      <div className="text-[17px] text-[#9d9d9d]">
+    <div className="w-full leading-[150%] whitespace-pre-line lg:w-80">
+      <div className="text-[15px] text-[#9d9d9d] lg:text-[17px]">
         {year}.{String(month).padStart(2, '0')}
       </div>
-      <div className="text-2xl font-bold">{title}</div>
+      <div className="text-xl font-bold lg:text-2xl">{title}</div>
       <div className="text-[15px]">{summary}</div>
     </div>
   );
 
   return (
-    <div className="flex justify-between gap-5">
+    <div className="flex flex-col-reverse gap-4 lg:flex-row lg:justify-between lg:gap-5">
       {hasDetail ? (
         <Link href={`/activity/${category}/${id}`} className="hover:underline">
           {body}
@@ -61,7 +66,7 @@ export default function ActivityCardList({ category, year, timeline }: ActivityC
   const activities = group?.activities ?? [];
 
   return (
-    <div className="flex flex-col gap-13">
+    <div className="flex flex-col gap-10 lg:gap-13">
       {activities.length === 0 ? (
         <div className="py-10 text-center text-[#9d9d9d]">선택한 연도의 활동이 없습니다.</div>
       ) : (

@@ -66,19 +66,20 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
   const defaultYear = years[0] ?? '';
 
   return (
-    <main className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-360">
-        <header className="relative aspect-1440/587 w-full">
+    <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
+      <div className="lg:min-w-360">
+        <header className="relative h-60 w-full md:h-80 lg:aspect-1440/587 lg:h-auto">
           <Image
             src={currentCategory.heroImageUrl ?? DEFAULT_HERO_IMAGE}
             alt="BCSD 활동 대표 이미지"
             fill
             sizes="100vw"
+            className="object-cover lg:object-fill"
             priority
             unoptimized
           />
-          <div className="absolute inset-0 flex items-end">
-            <h1 className="font-inter relative bottom-10 left-50 z-10 m-4 rounded-md text-[40px] leading-[120%] font-semibold text-white">
+          <div className="absolute inset-0 flex items-start lg:items-end">
+            <h1 className="font-inter relative z-10 mx-6 mt-20 rounded-md text-[26px] leading-[120%] font-semibold text-white md:text-[36px] lg:bottom-10 lg:left-50 lg:m-4 lg:text-[40px]">
               <span className="block">BCSD에서는</span>
               <span className="block">이런 활동을 하고 있어요.</span>
             </h1>

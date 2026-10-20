@@ -46,19 +46,19 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
   }
 
   return (
-    <main className="hide-scrollbar w-full overflow-x-auto">
-      <div className="min-w-360">
+    <main className="lg:hide-scrollbar w-full lg:overflow-x-auto">
+      <div className="lg:min-w-360">
         <GlobalNavigationBar location="Activity" />
 
-        <article className="mx-auto max-w-200 px-6 pt-40 pb-30">
+        <article className="mx-auto max-w-200 px-6 pt-24 pb-20 lg:pt-40 lg:pb-30">
           <Link href={`/activity/${category}`} className="text-[15px] text-[#9d9d9d] hover:underline">
             ← 목록으로
           </Link>
           <div className="mt-4 text-[15px] text-[#9d9d9d]">
             {activity.year}.{String(activity.month).padStart(2, '0')}
           </div>
-          <h1 className="mt-2 text-[32px] font-bold">{activity.title}</h1>
-          <p className="mt-3 text-[17px] text-[#777]">{activity.summary}</p>
+          <h1 className="mt-2 text-[26px] font-bold lg:text-[32px]">{activity.title}</h1>
+          <p className="mt-3 text-[15px] text-[#777] lg:text-[17px]">{activity.summary}</p>
 
           <div className="prose mt-12 max-w-none" dangerouslySetInnerHTML={{ __html: activity.content }} />
         </article>

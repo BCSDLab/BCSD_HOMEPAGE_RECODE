@@ -71,7 +71,7 @@ export default function ImageModal({ images, alt, initialIndex, onClose }: Image
       >
         <div
           ref={containerRef}
-          className="relative h-[75vh] w-[75vw] overflow-hidden rounded-xl bg-black/40 p-3 shadow-2xl ring-1 ring-white/20"
+          className="relative h-[60vh] w-[92vw] overflow-hidden rounded-xl bg-black/40 p-3 shadow-2xl ring-1 ring-white/20 lg:h-[75vh] lg:w-[75vw]"
         >
           <Swiper
             modules={[Navigation, Keyboard, A11y]}
