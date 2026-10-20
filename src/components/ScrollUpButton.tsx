@@ -27,7 +27,7 @@ export default function ScrollUpButton() {
   if (!isVisible) return null;
 
   return (
-    <button type="button" aria-label="맨 위로 이동" onClick={scrollToTop} className="fixed right-30 bottom-20 z-10">
+    <button type="button" aria-label="맨 위로 이동" onClick={scrollToTop} className="fixed right-5 bottom-5 z-10 lg:right-30 lg:bottom-20">
       <Image src={UpButton} alt="" aria-hidden />
     </button>
   );

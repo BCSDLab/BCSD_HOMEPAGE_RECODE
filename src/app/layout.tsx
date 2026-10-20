@@ -111,8 +111,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationStructuredData) }}
         />
         {children}
-        <footer className="flex justify-between bg-[#555] px-13.5">
-          <div className="flex flex-col justify-center py-10">
+        <footer className="flex flex-col gap-6 bg-[#555] px-6 py-10 md:flex-row md:justify-between md:gap-0 md:px-13.5 md:py-0">
+          <div className="flex flex-col justify-center md:py-10">
             <Image
               src="/images/footer/character-icon.svg"
               alt=""
@@ -126,7 +126,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               © {new Date().getFullYear()} BCSD. ALL RIGHTS RESERVED.
             </p>
           </div>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center gap-4 md:justify-center">
             <Link href={URLS.SOCIAL.FACEBOOK}>
               <Image src={FacebookIcon} alt="" aria-hidden />
             </Link>
