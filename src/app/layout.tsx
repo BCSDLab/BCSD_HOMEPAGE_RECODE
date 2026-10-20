@@ -115,7 +115,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <footer className="flex flex-col gap-6 bg-[#555] px-6 py-10 md:flex-row md:justify-between md:gap-0 md:px-13.5 md:py-0">
           <div className="flex flex-col justify-center md:py-10">
             <Image
-              src="/images/footer/character-icon.svg"
+              src="/images/footer/character-icon.webp"
               alt=""
               aria-hidden="true"
               width="181"
