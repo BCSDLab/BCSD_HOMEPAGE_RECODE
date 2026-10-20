@@ -1,14 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRef } from 'react';
 import Portal from '@/components/Portal';
-import CloseIcon from '@/assets/svg/x-icon.svg';
 import useBooleanState from '@/hooks/useBooleanState';
 import useScrollLock from '@/hooks/useScrollLock';
 import useEscapeKeyDown from '@/hooks/useEscapeKeyDown';
-import useHandleOutside from '@/hooks/useOutsideClick';
 import type { NavigationLink } from '@/components/GlobalNavigationBar';
 import { locationType } from '@/types/location';
 
@@ -17,70 +13,71 @@ interface MobileNavigationProps {
   location?: locationType;
 }
 
+const PANEL_ID = 'mobile-navigation-panel';
+
 export default function MobileNavigation({ links, location }: MobileNavigationProps) {
-  const [isOpen, open, close] = useBooleanState(false);
+  const [isOpen, , close, toggle] = useBooleanState(false);
 
   return (
     <>
-      {/* 페이지마다 GNB 위치 기준이 달라 버튼은 뷰포트에 고정하고, 흰 배경 위에서도 보이도록 어두운 배경을 깐다 */}
+      {/* 페이지마다 GNB 위치 기준이 달라 버튼은 뷰포트에 고정하고, 흰 배경 위에서도 보이도록 어두운 배경을 깐다.
+          열린 동안에는 패널 위에 올라와 닫기 버튼 역할을 한다 */}
       <button
         type="button"
-        aria-label="메뉴 열기"
+        aria-label={isOpen ? '메뉴 닫기' : '메뉴 열기'}
         aria-expanded={isOpen}
-        onClick={open}
-        className="fixed top-4 right-4 z-50 flex size-11 flex-col items-center justify-center gap-1.25 rounded-full bg-black/50 backdrop-blur-sm lg:hidden"
+        aria-controls={PANEL_ID}
+        onClick={toggle}
+        className={`fixed top-4 right-4 flex size-11 flex-col items-center justify-center gap-1.25 rounded-full bg-black/50 backdrop-blur-sm lg:hidden ${isOpen ? 'z-1001' : 'z-50'}`}
       >
-        <span className="h-0.5 w-5 rounded-full bg-white" />
-        <span className="h-0.5 w-5 rounded-full bg-white" />
-        <span className="h-0.5 w-5 rounded-full bg-white" />
+        <span
+          className={`h-0.5 w-5 rounded-full bg-white transition-transform duration-300 motion-reduce:transition-none ${isOpen ? 'translate-y-1.75 rotate-45' : ''}`}
+        />
+        <span
+          className={`h-0.5 w-5 rounded-full bg-white transition-opacity duration-300 motion-reduce:transition-none ${isOpen ? 'opacity-0' : ''}`}
+        />
+        <span
+          className={`h-0.5 w-5 rounded-full bg-white transition-transform duration-300 motion-reduce:transition-none ${isOpen ? '-translate-y-1.75 -rotate-45' : ''}`}
+        />
       </button>
-      {isOpen && <MobileNavigationDrawer links={links} location={location} onClose={close} />}
+      {isOpen && <MobileNavigationPanel links={links} location={location} onClose={close} />}
     </>
   );
 }
 
-interface MobileNavigationDrawerProps extends MobileNavigationProps {
+interface MobileNavigationPanelProps extends MobileNavigationProps {
   onClose: () => void;
 }
 
-function MobileNavigationDrawer({ links, location, onClose }: MobileNavigationDrawerProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const backdropRef = useRef<HTMLDivElement>(null);
-
+function MobileNavigationPanel({ links, location, onClose }: MobileNavigationPanelProps) {
   useScrollLock(true);
   useEscapeKeyDown(onClose);
-  useHandleOutside({
-    containerRef,
-    backgroundRef: backdropRef,
-    onOutsideClick: onClose,
-  });
 
   return (
     <Portal>
-      <div ref={backdropRef} className="fixed inset-0 z-1000 bg-black/60 lg:hidden">
+      <div className="fixed inset-0 z-1000 lg:hidden">
+        {/* 같은 버튼으로 여닫기 때문에 useOutsideClick(mousedown)을 쓰면 닫힌 직후 click으로 다시 열린다 */}
         <div
-          ref={containerRef}
-          role="dialog"
-          aria-modal="true"
+          aria-hidden="true"
+          onClick={onClose}
+          className="absolute inset-0 bg-black/60 transition-opacity duration-300 motion-reduce:transition-none starting:opacity-0"
+        />
+        <nav
+          id={PANEL_ID}
           aria-label="전체 메뉴"
-          className="ml-auto flex h-full w-72 max-w-[80vw] flex-col bg-[#111] px-8 pt-5 text-white"
+          className="relative flex flex-col bg-[#111] px-6 pt-20 pb-8 text-white transition-transform duration-300 motion-reduce:transition-none starting:-translate-y-full"
         >
-          <button type="button" aria-label="메뉴 닫기" onClick={onClose} className="self-end p-2.5">
-            <Image src={CloseIcon} alt="" aria-hidden width={20} height={20} />
-          </button>
-          <nav className="mt-6 flex flex-col">
-            {links.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={onClose}
-                className={`py-3.5 text-xl ${link.location && location === link.location ? 'text-[#C360F3]' : ''}`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              onClick={onClose}
+              className={`py-3 text-xl ${link.location && location === link.location ? 'text-[#C360F3]' : ''}`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </Portal>
   );
